@@ -17,7 +17,7 @@ export default {
       })();
     },
   },
-  beforeMount() {
+  mounted() {
     this.baiduLoad();
   },
 }
