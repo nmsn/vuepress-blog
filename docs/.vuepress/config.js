@@ -2,8 +2,10 @@ module.exports = {
   title: "NMSN",
   description: 'Somebody has to win, so why not be me?',
   head: [
-    ['link', { rel: 'icon', href: `/favicon.ico` }],
-    ['script', {}, baiduLoad()],
+    ['link', { rel: 'icon', href: '/favicon.ico' }],
+    ['script', {}, mountBaiduAnalytics()],
+    ['script', { aysnc: true, src: 'https://www.googletagmanager.com/gtag/js?id=UA-127895888-1' }],
+    ['script', {}, mountGoogleAnalytics()],
   ],
   themeConfig: {
     // sidebar: 'auto',
@@ -43,7 +45,7 @@ function genSidebarConfig(title) {
   }]
 }
 
-function baiduLoad() {
+function mountBaiduAnalytics() {
   return `
   var _hmt = _hmt || [];
   (function() {
@@ -51,5 +53,17 @@ function baiduLoad() {
     hm.src = "https://hm.baidu.com/hm.js?6594ba1364804631f0a8fd4452766fed";
     var s = document.getElementsByTagName("script")[0]; 
     s.parentNode.insertBefore(hm, s);
-  })();`
+  })();
+  `;
 }
+
+function mountGoogleAnalytics() {
+  return `
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-127895888-1');
+  `;
+}
+
