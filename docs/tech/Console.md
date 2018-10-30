@@ -217,5 +217,33 @@ console.groupCollapsed();
 
 无
 
+## console.info()
+
+向web控制台输出一个通知信息。在Firefox和Chrome中，web控制台的日志中的项目旁边会显示一个小的‘I‘图标.
+(在Chrome 70.0.3538.77版本中和下面的console.log没有任何区别)
+
+### 语法
+
+```js
+console.info(obj1 [, obj2, ..., objN]);
+console.info(msg [, subst1, ..., substN]);
+```
+
+### 参数
+
+`obj1 ... objN`
+
+要输出的JavaScript对象列表。对象obj1,obj2,...列出顺序和输出顺序一致。
+
+`msg`
+
+JavaScript字符串。可包含零个或多个替换字符串。
+
+`subst1 ... substN`
+
+ 用于替换msg内的替换字符串的JavaScript对象。 可以对输出的格式进行额外的控制。
+
+
+
 待续......
 
