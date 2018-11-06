@@ -3,7 +3,6 @@ module.exports = {
   description: 'Somebody has to win, so why not be me?',
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }],
-    ['script', {}, mountAliMonitoring()],
     ['script', {}, mountBaiduAnalytics()],
     ['script', { aysnc: true, src: 'https://www.googletagmanager.com/gtag/js?id=UA-127895888-1' }],
     ['script', {}, mountGoogleAnalytics()],
@@ -64,14 +63,6 @@ function mountGoogleAnalytics() {
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'UA-127895888-1');
-  `;
-}
-
-function mountAliMonitoring() {
-  return `
-  !(function(c,b,d,a){c[a]||(c[a]={});c[a].config={pid:"de5i8y5c56@2e3a6c0c5764760",imgUrl:"https://arms-retcode.aliyuncs.com/r.png?",enableSPA:true,useFmp:true,sendResource:true};
-  with(b)with(body)with(insertBefore(createElement("script"),firstChild))setAttribute("crossorigin","",src=d)
-  })(window,document,"https://retcode.alicdn.com/retcode/bl.js","__bl");
   `;
 }
 
