@@ -41,6 +41,8 @@ function genSidebarConfig(title) {
       '',
       'Markdown',
       'Console',
+      'Git',
+      'RegEx',
     ]
   }]
 }
