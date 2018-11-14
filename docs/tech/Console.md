@@ -243,6 +243,68 @@ JavaScript字符串。可包含零个或多个替换字符串。
 
  用于替换msg内的替换字符串的JavaScript对象。 可以对输出的格式进行额外的控制。
 
+ ## console.log()
+
+向 Web 控制台输出一条消息。
+
+### 语法
+
+```js
+console.log(obj1 [, obj2, ..., objN);
+console.log(msg [, subst1, ..., substN);
+console.log('String: %s, Int: %d,Float: %f, Object: %o', str, ints, floats, obj)
+console.log(`temp的值为: ${temp}`)
+```
+
+### 参数
+
+`obj1 ... objN`
+
+一个用于输出的 JavaScript 对象列表。其中每个对象会以字符串的形式按照顺序依次输出到控制台。
+
+`msg`
+
+一个JavaScript字符串，其中包含零个或多个替代字符串。
+
+`subst1 ... substN`
+
+ JavaScript 对象，用来依次替换msg中的替代字符串。你可以在替代字符串中指定对象的输出格式。
+
+## console.profile()
+
+(存在兼容性问题)
+
+开始记录性能描述信息。
+
+你可以选择提供一个参数来命名描述信息，这将允许你在有多个描述信息被记录时来选择只停止那个描述信息（被你命名的那个）。请查阅Console.profileEnd()来确认这个参数是如何被解释的。
+
+要停止记录，请调用`Console.profileEnd()`。
+
+## console.table()
+
+### 语法
+
+```js
+console.table(data [, columns]);
+```
+
+### 参数
+
+`数据`
+
+要显示的数据必须是数组或者是对象.
+
+`列元素`
+
+一个数组需要包含列的名称进行输出否则显示为索引.
+
+### 案例
+
+![console.table](../.vuepress/public/images/console.table.png "console.table")
+
+![console.table2](../.vuepress/public/images/console.table2.png "console.table2")
+
+![console.table3](../.vuepress/public/images/console.table3.png "console.table3")
 
 
 待续...
