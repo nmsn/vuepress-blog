@@ -43,6 +43,7 @@ function genSidebarConfig(title) {
       'Console',
       'Git',
       'RegEx',
+      'MongoDB'
     ]
   }]
 }
