@@ -274,11 +274,11 @@ $ git reset --keep [commit]
 $ git revert [commit]
 ```
 
-### 变基
+### 变基*
 
-不同分支间用于合并分支，将本分支的commits顶到最顶端(没有合并的痕迹，合并后的分支看起来像是只在一个分支上开发的)
+- 不同分支间用于合并分支，将本分支的commits顶到最顶端(没有合并的痕迹，合并后的分支看起来像是只在一个分支上开发的)
 
-单独分支使用可以调整分支上的commits(合并/删除/修改commits信息等功能)
+- 单独分支使用可以调整分支上的commits(合并/删除/修改commits信息等功能)
 
 ```
 # 将某个分支变基到当前分支的最顶端(最新)
@@ -289,7 +289,20 @@ $ git rebase --continue
 
 # 终止rebase
 $ git rebase --abort
+
+# 将指定区间的提交复制到某个分支上
+$ git rebase -i [startpoint]  [endpoint]] --onto  [branchName] 
+
+$ 对HEAD后面的n条commits做变基处理
+# git rebase -i HEAD~n 
 ```
+
+其中-i的意思是--interactive，即弹出交互式的界面让用户编辑完成合并操作
+
+[startpoint]  [endpoint]则指定了一个编辑区间，如果不指定[endpoint]，则该区间的终点默认是当前分支HEAD所指向的commit(注：该区间指定的是一个前开后闭的区间)
+
+--onto的意思是要将该指定的提交复制到哪个分支上
+
 ### 其他
 
 ```
@@ -297,7 +310,9 @@ $ git rebase --abort
 $ git archive
 ```
 
-参考: [稀土技术团队博客]('http://xitu.github.io/2016/04/06/git-start/')
+参考: 
+- [稀土技术团队博客: http://xitu.github.io/2016/04/06/git-start](http://xitu.github.io/2016/04/06/git-start/)
+- [Git rebase 用法小结: https://www.jianshu.com/p/4a8f4af4e803](https://www.jianshu.com/p/4a8f4af4e803)
 
 ## gitflow
 
