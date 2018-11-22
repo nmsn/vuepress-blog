@@ -273,6 +273,23 @@ $ git reset --keep [commit]
 # 后者的所有变化都将被前者抵消，并且应用到当前分支
 $ git revert [commit]
 ```
+
+### 变基
+
+不同分支间用于合并分支，将本分支的commits顶到最顶端(没有合并的痕迹，合并后的分支看起来像是只在一个分支上开发的)
+
+单独分支使用可以调整分支上的commits(合并/删除/修改commits信息等功能)
+
+```
+# 将某个分支变基到当前分支的最顶端(最新)
+$ git rebase [branch]
+
+# 解决冲突后，继续rebase
+$ git rebase --continue
+
+# 终止rebase
+$ git rebase --abort
+```
 ### 其他
 
 ```
