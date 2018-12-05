@@ -11,12 +11,13 @@ module.exports = {
     // sidebar: 'auto',
     nav: [
       { text: '主页', link: '/' },
-      { text: '技术', link: '/tech/' },
+      { text: '技术总结', link: '/tech/' },
+      { text: '笔记', link: '/notes/' },
       { text: '计划', link: '/plan/' },
     ],
     lastUpdated: 'Last Updated',
     sidebar: {
-      '/tech/': genSidebarConfig('技术')
+      '/tech/': genSidebarConfig('技术总结'),
     },
     // sidebar: {
     //   '/tech/':[
