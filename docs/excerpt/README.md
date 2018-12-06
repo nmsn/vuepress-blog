@@ -69,6 +69,10 @@ element.addEventListener(event-name, callback, useCapture)
 
 阻止默认事件行为触发
 
+#### touchstart & click
+
+意思的是，当我们在目标元素同时绑定 touchstart 和 click 事件时，在 touchstart 事件回调函数中使用该方法，可以阻止后续 click 事件的发生。
+
 #### event.stopPropagation() & event.stopImmediatePropagation()
 
 event.stopPropagation() 方法阻止事件冒泡到父元素，阻止任何父事件处理程序被执行
