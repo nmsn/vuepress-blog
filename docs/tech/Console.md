@@ -241,9 +241,9 @@ JavaScript字符串。可包含零个或多个替换字符串。
 
 `subst1 ... substN`
 
-用于替换msg内的替换字符串的JavaScript对象。 可以对输出的格式进行额外的控制。
+ 用于替换msg内的替换字符串的JavaScript对象。 可以对输出的格式进行额外的控制。
 
-## console.log()
+ ## console.log()
 
 向 Web 控制台输出一条消息。
 
@@ -268,7 +268,7 @@ console.log(`temp的值为: ${temp}`)
 
 `subst1 ... substN`
 
-JavaScript 对象，用来依次替换msg中的替代字符串。你可以在替代字符串中指定对象的输出格式。
+ JavaScript 对象，用来依次替换msg中的替代字符串。你可以在替代字符串中指定对象的输出格式。
 
 ## console.profile()
 
@@ -338,10 +338,3 @@ console.timeEnd(label);
 
 待续...
 
-## console.trace()
-
-### 语法
-
-```js
-console.trace()
-```

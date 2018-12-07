@@ -19,6 +19,3 @@ sidebar: auto
 ## 2018-09
 
 - 待完成
-
-
-<Gitalk/>
