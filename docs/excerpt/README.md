@@ -82,4 +82,3 @@ event.stopImmediatePropagation 既能阻止事件向父元素冒泡，也能阻�
 #### event.target & event.currentTarget
 
 event.target指向引起触发事件的元素，而event.currentTarget则是事件绑定的元素，只有被点击的那个目标元素的event.target才会等于event.currentTarget。也就是说，event.currentTarget始终是监听事件者，而event.target是事件的真正发出者。
-
