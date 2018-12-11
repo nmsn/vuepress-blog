@@ -101,3 +101,32 @@ event.target指向引起触发事件的元素，而event.currentTarget则是事�
 |`&ensp;`|该空格学名不详。为了便于记忆，我们不妨就叫它“恶念(e n-ian)空格”。此空格传承空格家族一贯的特性：透明滴！此空格有个相当稳健的特性，就是其**占据的宽度正好是1/2个中文宽度**，而且基本上不受字体影响。|
 |`&emsp;`|该空格学名不详。为了便于记忆，我们不妨就叫它”恶魔(e m-o)空格”。此空格也传承空格家族一贯的特性：透明滴！此空格也有个相当稳健的特性，就是其**占据的宽度正好是1个中文宽度**，而且基本上不受字体影响。|
 |`&thinsp;`|该空格学名不详。我们不妨称之为“瘦弱空格”，就是该空格长得比较瘦弱，身体单薄，占据的宽度比较小。我目前是没用过这个东西，这里亮出来是让其过一下群众演员的瘾。|
+
+### MuationObserver
+
+参考：[了解HTML5中的MutationObserver](https://segmentfault.com/a/1190000012787829)
+
+MutationObserver翻译过来就是变动观察器，字面上就可以理解这是用来观察Node（节点）变化的。
+
+MutationObserver是一个构造器，接受一个callback参数，用来处理节点变化的回调函数，返回两个参数，mutations：节点变化记录列表（`sequence<MutationRecord>`），observer：构造MutationObserver对象。
+
+```js
+var observe = new MutationObserver(function(mutations,observer){
+})
+```
+
+MutationObserver对象有三个方法，分别如下：
+
+1. **observe**：设置观察目标，接受两个参数，target：观察目标，options：通过对象成员来设置观察选项
+2. **disconnect**：阻止观察者观察任何改变
+3. **takeRecords**：清空记录队列并返回里面的内容
+
+关于observe方法中options参数有已下几个选项：
+
+1. **childList**：设置true，表示观察目标子节点的变化，比如添加或者删除目标子节点，不包括修改子节点以及子节点后代的变化
+2. **attributes**：设置true，表示观察目标属性的改变
+3. **characterData**：设置true，表示观察目标数据的改变
+4. **subtree**：设置为true，目标以及目标的后代改变都会观察
+5. **attributeOldValue**：如果属性为true或者省略，则相当于设置为true，表示需要记录改变前的目标属性值，设置了attributeOldValue可以省略attributes设置
+6. **characterDataOldValue**：如果characterData为true或省略，则相当于设置为true,表示需要记录改变之前的目标数据，设置了characterDataOldValue可以省略characterData设置
+7. **attributeFilter**：如果不是所有的属性改变都需要被观察，并且attributes设置为true或者被忽略，那么设置一个需要观察的属性本地名称（不需要命名空间）的列表
