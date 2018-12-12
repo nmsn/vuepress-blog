@@ -130,3 +130,11 @@ MutationObserver对象有三个方法，分别如下：
 5. **attributeOldValue**：如果属性为true或者省略，则相当于设置为true，表示需要记录改变前的目标属性值，设置了attributeOldValue可以省略attributes设置
 6. **characterDataOldValue**：如果characterData为true或省略，则相当于设置为true,表示需要记录改变之前的目标数据，设置了characterDataOldValue可以省略characterData设置
 7. **attributeFilter**：如果不是所有的属性改变都需要被观察，并且attributes设置为true或者被忽略，那么设置一个需要观察的属性本地名称（不需要命名空间）的列表
+
+### css加载会造成阻塞吗？
+
+参考：[css加载会造成阻塞吗？](https://www.cnblogs.com/chenjg/p/7126822.html)
+
+1. css加载不会阻塞DOM
+2. css加载会阻塞DOM树的渲染
+3. css加载会阻塞后面js语句的执行
