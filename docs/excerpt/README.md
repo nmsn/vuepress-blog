@@ -138,3 +138,14 @@ MutationObserver对象有三个方法，分别如下：
 1. css加载不会阻塞DOM
 2. css加载会阻塞DOM树的渲染
 3. css加载会阻塞后面js语句的执行
+
+### ios12键盘收起页面不回弹问题
+
+原文: [ios 最新系统bug与解决——微信公众号中弹出键盘再收起时，原虚拟键盘位点击事件无效](https://juejin.im/post/5c07442f51882528c4469769?tdsourcetag=s_pcqq_aiomsg)
+
+```js
+;(/iphone|ipod|ipad/i.test(navigator.appVersion)) && document.addEventListener('blur', (e) => {
+    // 这里加了个类型判断，因为a等元素也会触发blur事件
+    ['input', 'textarea'].includes(e.target.localName) && document.body.scrollIntoView(false)
+}, true)
+```
