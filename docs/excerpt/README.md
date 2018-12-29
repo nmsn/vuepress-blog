@@ -149,3 +149,86 @@ MutationObserver对象有三个方法，分别如下：
     ['input', 'textarea'].includes(e.target.localName) && document.body.scrollIntoView(false)
 }, true)
 ```
+
+### 在单页应用中，如何优雅的监听url的变化
+
+原文: [在单页应用中，如何优雅的监听url的变化](https://juejin.im/post/5c26ec2f51882501cd6f497a)
+
+#### 1. 单页应用原理
+
+通过hash或者html5 Bom对象中的history可以做到改变url，但是不刷新页面。
+
+(1)通过hash来实现单页路由
+
+```js
+window.location.hash
+```
+
+(2)通过history实现前端路由
+
+HTML5的History接口，History对象是一个底层接口，不继承于任何的接口。History接口允许我们操作浏览器会话历史记录。
+
+属性:
+
+- History.length
+- History.state
+
+方法:
+
+- History.back (会刷新)
+- History.forward (会刷新)
+- History.go (会刷新)
+- History.pushState (不会刷新)
+- History.replaceState (不会刷新)
+
+#### 2. 监听url中的hash变化
+
+```js
+1.
+window.onhashchange=function(event){
+  console.log(event);
+}
+2.
+window.addEventListener('hashchange',function(event){
+   console.log(event);
+})
+
+```
+
+#### 3. 监听通过history来改变url的事件
+
+监听 back,forward和go
+
+```js
+window.addEventListener('popstate', function(event) {
+     console.log(event);
+})
+```
+
+监听 replaceState和pushState
+
+手动创建全局事件
+
+```js
+var _wr = function(type) {
+   var orig = history[type];
+   return function() {
+       var rv = orig.apply(this, arguments);
+      var e = new Event(type);
+       e.arguments = arguments;
+       window.dispatchEvent(e);
+       return rv;
+   };
+};
+ history.pushState = _wr('pushState');
+ history.replaceState = _wr('replaceState');
+```
+
+```js
+window.addEventListener('replaceState', function(e) {
+  console.log('THEY DID IT AGAIN! replaceState 111111');
+});
+window.addEventListener('pushState', function(e) {
+  console.log('THEY DID IT AGAIN! pushState 2222222');
+});
+```
