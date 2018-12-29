@@ -232,3 +232,27 @@ window.addEventListener('pushState', function(e) {
   console.log('THEY DID IT AGAIN! pushState 2222222');
 });
 ```
+
+### 深浅拷贝
+
+#### 浅拷贝
+
+- Object.assign()
+
+- 拓展运算符
+
+- Array.prototype.slice()
+
+#### 深拷贝
+
+- JSON.stringify()
+
+注意事项: 
+1. 拷贝的对象的值中如果有函数,undefined,symbol则经过JSON.stringify()序列化后的JSON字符串中这个键值对会消失。
+2. 无法拷贝不可枚举的属性，无法拷贝对象的原型链。
+3. 拷贝Date引用类型会变成字符串。
+4. 拷贝RegExp引用类型会变成空对象。
+5. 对象中含有NaN、Infinity和-Infinity，则序列化的结果会变成null。
+6. 无法拷贝对象的循环应用(即obj[key] = obj)。
+
+- lodash & jQuery
