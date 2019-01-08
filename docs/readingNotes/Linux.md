@@ -37,3 +37,11 @@ man page
 将数据同步写入硬盘中的命令：sync
 惯用的关机命令：shutdown
 重启、关机：reboot、halt、poweroff
+
+### 6.2.2
+
+chgrp: 改变文件所属用户组
+chown: 改变文件所有者
+chmod: 改变文件的权限
+
+cp: 复制
