@@ -270,6 +270,12 @@ console.log(`temp的值为: ${temp}`)
 
  JavaScript 对象，用来依次替换msg中的替代字符串。你可以在替代字符串中指定对象的输出格式。
 
+### 注意事项
+
+console.log打印出来的数据存在快照与引用的关系。
+
+![console.log](../.vuepress/public/images/console.log.png "console.log")
+
 ## console.profile()
 
 (存在兼容性问题)
