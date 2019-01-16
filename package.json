@@ -11,5 +11,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "gitalk": "^1.4.1"
   }
 }
