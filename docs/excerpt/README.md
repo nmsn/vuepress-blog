@@ -247,7 +247,8 @@ window.addEventListener('pushState', function(e) {
 
 - JSON.stringify()
 
-注意事项: 
+注意事项:
+
 1. 拷贝的对象的值中如果有函数,undefined,symbol则经过JSON.stringify()序列化后的JSON字符串中这个键值对会消失。
 2. 无法拷贝不可枚举的属性，无法拷贝对象的原型链。
 3. 拷贝Date引用类型会变成字符串。
@@ -275,3 +276,10 @@ window.addEventListener('pushState', function(e) {
 
 $_变量是上次执行的结果的引用。
 
+### setTimeout & requestAnimationFrame
+
+原文: [你知道的requestAnimationFrame【从0到0.1】](https://juejin.im/post/5c3ca3d76fb9a049a979f429)
+
+- 使用 setTimeout 实现的动画，当页面被隐藏或最小化时，定时器setTimeout仍在后台执行动画任务，此时刷新动画是完全没有意义的（实际上 FireFox/Chrome 浏览器对定时器做了优化：页面闲置时，如果时间间隔小于 1000ms，则停止定时器，与requestAnimationFrame行为类似。如果时间间隔>=1000ms，定时器依然在后台执行）
+
+- 使用requestAnimationFrame，当页面处于未激活的状态下，该页面的屏幕刷新任务会被系统暂停，由于requestAnimationFrame保持和屏幕刷新同步执行，所以也会被暂停。当页面被激活时，动画从上次停留的地方继续执行，节约 CPU 开销。
