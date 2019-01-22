@@ -212,7 +212,7 @@ $ git show --name-only [commit]
 # 显示某次提交时，某个文件的内容
 $ git show [commit]:[filename]
 
-# 显示当前分支的最近几次提交
+# 显示所有分支的所有操作记录（包括commit和reset的操作），包括已经被删除的commit记录（可用于回复删除的数据）
 $ git reflog
 ```
 ### 远程同步
