@@ -284,5 +284,68 @@ $_变量是上次执行的结果的引用。
 
 - 使用requestAnimationFrame，当页面处于未激活的状态下，该页面的屏幕刷新任务会被系统暂停，由于requestAnimationFrame保持和屏幕刷新同步执行，所以也会被暂停。当页面被激活时，动画从上次停留的地方继续执行，节约 CPU 开销。
 
+### 真值和虚值
+
+原文: [[译] 优秀 JavaScript 开发人员应掌握的 9 个技巧](https://juejin.im/post/5c4506c9e51d45524c7cf206)
+
+当我们使用默认值时，通常要对现有值进行一系列判断，这种方法使代码变得异常繁琐，而现在我们可以真值（Truthy）和虚值（Falsy）的方式来改进它，不仅可以节省代码量，还使人更加信服。
+
+```js
+if (myBool === true) {
+    console.log(...)
+}
+// OR
+if (myString.length > 0) {
+    console.log(...)
+}
+// OR
+if (isNaN(myNumber)) {
+    console.log(...)
+}
+```
+
+```js
+if (myBool) {
+    console.log(...)
+}
+// OR
+if (myString) {
+    console.log(...)
+}
+// OR
+if (!myNumber) {
+    console.log(...)
+}
+```
+
+Falsy
+
+```js
+if (false)
+if (null)
+if (undefined)
+if (0)
+if (NaN)
+if ('')
+if ("")
+if (``)
+if (document.all)
+```
+
+Truthy
+
+```js
+if (true)
+if ({})
+if ([])
+if (42)
+if ("foo")
+if (new Date())
+if (-42)
+if (3.14)
+if (-3.14)
+if (Infinity)
+if (-Infinity)
+```
 
 <Gitalk />
