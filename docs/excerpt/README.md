@@ -6,7 +6,7 @@ sidebar: auto
 
 ## 行高
 
-参考：[前端读书寻宝记之读《包容性Web设计》有感](https://juejin.im/post/5bfa8f4be51d4574b133d0a0)
+参考: [前端读书寻宝记之读《包容性Web设计》有感](https://juejin.im/post/5bfa8f4be51d4574b133d0a0)
 
 行高要设置成无单位的相对值，建议1.5倍间距
 
@@ -21,7 +21,7 @@ p{
 
 ### DOM级别
 
-参考：[DOM事件机制](https://juejin.im/post/5bd2e5f8e51d4524640e1304)
+参考: [DOM事件机制](https://juejin.im/post/5bd2e5f8e51d4524640e1304)
 
 DOM级别一共可以分为四个级别：DOM0级、DOM1级、DOM2级和DOM3级。而DOM事件分为3个级别：DOM 0级事件处理，DOM 2级事件处理和DOM 3级事件处理。由于DOM 1级中没有事件的相关内容，所以没有DOM 1级事件。
 
@@ -93,7 +93,7 @@ event.target指向引起触发事件的元素，而event.currentTarget则是事�
 
 ## 空格字符
 
-参考：[小tips: 使用&#x3000;等空格实现最小成本中文对齐](https://www.zhangxinxu.com/wordpress/2015/01/tips-blank-character-chinese-align/)
+参考: [小tips: 使用&#x3000;等空格实现最小成本中文对齐](https://www.zhangxinxu.com/wordpress/2015/01/tips-blank-character-chinese-align/)
 
 |字符以及HTML实体|描述以及说明|
 |---|---|
@@ -324,11 +324,11 @@ if (-Infinity)
 
 当你在CSS中改变一个图片的大小，如果没有设置宽高的话，图片的大小会被压缩或拉伸。解决方法很简单，就是使用CSS的 object-fit，它的实用性跟背景图片的 background-size: cover 很类似。
 
-链接： [object-fit](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit)
+链接: [object-fit](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit)
 
 `object-fit` CSS 属性指定可替换元素的内容应该如何适应到其使用的高度和宽度确定的框。
 
-取值：
+取值:
 
 `contain`
 
@@ -349,5 +349,16 @@ if (-Infinity)
 `scale-down`
 
 内容的尺寸与 none 或 contain 中的一个相同，取决于它们两个之间谁得到的对象尺寸会更小一些。
+
+## 不同刷新的请求执行过程
+
+原文: [HTTP----HTTP缓存机制](https://juejin.im/post/5a1d4e546fb9a0450f21af23)
+
+1. 浏览器地址栏中写入URL，回车  
+   浏览器发现缓存中有这个文件了，不用继续请求了，直接去缓存拿。（最快）
+2. F5  
+   F5就是告诉浏览器，别偷懒，好歹去服务器看看这个文件是否有过期了。于是浏览器就胆胆襟襟的发送一个请求带上If-Modify-since。
+3. Ctrl+F5  
+   告诉浏览器，你先把你缓存中的这个文件给我删了，然后再去服务器请求个完整的资源文件下来。于是客户端就完成了强行更新的操作。
 
 <Gitalk />
