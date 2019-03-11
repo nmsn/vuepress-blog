@@ -354,7 +354,7 @@ if (-Infinity)
 
 原文: [HTTP----HTTP缓存机制](https://juejin.im/post/5a1d4e546fb9a0450f21af23)
 
-1. 浏览器地址栏中写入URL，回车  
+1. 浏览器地址栏中写入URL，回车
    浏览器发现缓存中有这个文件了，不用继续请求了，直接去缓存拿。（最快）
 2. F5  
    F5就是告诉浏览器，别偷懒，好歹去服务器看看这个文件是否有过期了。于是浏览器就胆胆襟襟的发送一个请求带上If-Modify-since。
@@ -366,5 +366,21 @@ if (-Infinity)
 这个属性只用于iOS（iPhone和iPad）。当你点击一个链接或者通过Javascript定义的可点击元素的时候，它就会出现一个半透明的灰色背景。要重设这个表现，你可以设置-webkit-tap-highlight-color为任何颜色。
 
 想要禁用这个高亮，设置颜色的alpha值为0即可。
+
+## text-align:justify
+
+text-align:justify 属性规定元素中的文本水平对齐方式为两端对齐文本效果。
+
+移动端`&npsp``&ensp``&emsp``&thinsp`的显示效果与浏览器端不同，不能够完美占位就需要使用text-align: justify;
+
+但该属性对于单行及多行的最后一行不起作用，可以用（伪类）伪元素解决
+
+```css
+::after{
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+```
 
 <Gitalk />
