@@ -361,4 +361,10 @@ if (-Infinity)
 3. Ctrl+F5  
    告诉浏览器，你先把你缓存中的这个文件给我删了，然后再去服务器请求个完整的资源文件下来。于是客户端就完成了强行更新的操作。
 
+## -webkit-tap-highlight-color
+
+这个属性只用于iOS（iPhone和iPad）。当你点击一个链接或者通过Javascript定义的可点击元素的时候，它就会出现一个半透明的灰色背景。要重设这个表现，你可以设置-webkit-tap-highlight-color为任何颜色。
+
+想要禁用这个高亮，设置颜色的alpha值为0即可。
+
 <Gitalk />
