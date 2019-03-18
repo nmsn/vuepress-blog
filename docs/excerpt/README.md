@@ -383,4 +383,7 @@ text-align:justify 属性规定元素中的文本水平对齐方式为两端对�
 }
 ```
 
+## meta
+
+`<meta http-equiv="X-UA-Compatible" content="IE=edge">`
 <Gitalk />

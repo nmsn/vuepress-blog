@@ -446,4 +446,18 @@ tar [-j|-z] [xv] [-f 新建的文件名] [-C 目录] <==解压缩
 其实最简单的使用tar就只要记忆下面的方式即可:
 压缩: tar -jcv -f filename.tar.bz2要被压缩的文件或目录名称
 查询: tar -jtv -f filename.tar.bz2
-解压缩: tar -jxv -f filename.tar.bz2 -C 欲解压缩的目录 
+解压缩: tar -jxv -f filename.tar.bz2 -C 欲解压缩的目录
+
+## 9.4.1 dump
+
+dump [-Suvj] [-level] [-f 备份文件] 待备份数据
+
+参数：
+
+- -S: 仅列出后面的待备份数据需要多少磁盘空间才能够备份完毕
+- -u: 将这次的dump的时间记录到/etc/dumpdateS文件中
+- -v: 将dump的文件过程显示出来
+- -j: 加入bzip2的支持，将数据进行压缩，默认bzip2压缩等级为2
+- level: 等级，-0~-9共10级
+- -f: 有点类似tar，后面接产生的文件，可接例如/dev/st0设备文件名等
+- -W: 列出在/etc/fstab里面的具有dump设置的分区是否有备份过
