@@ -383,7 +383,11 @@ text-align:justify 属性规定元素中的文本水平对齐方式为两端对�
 }
 ```
 
-## meta
+## sessionStorage共享问题
 
-`<meta http-equiv="X-UA-Compatible" content="IE=edge">`
+页面会话在浏览器打开期间一直保持，并且重新加载或恢复页面仍会保持原来的页面会话。
+在新标签或窗口打开一个页面时会在顶级浏览上下文中初始化一个新的会话。
+
+**通过点击链接（或者用了window.open）打开的新标签页之间是属于同一个 session 的**，但新开一个标签页总是会初始化一个新的 session，即使网站是一样的，它们也不属于同一个 session。
+
 <Gitalk />
