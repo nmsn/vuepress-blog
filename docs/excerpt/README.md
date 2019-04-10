@@ -390,4 +390,16 @@ text-align:justify 属性规定元素中的文本水平对齐方式为两端对�
 
 **通过点击链接（或者用了window.open）打开的新标签页之间是属于同一个 session 的**，但新开一个标签页总是会初始化一个新的 session，即使网站是一样的，它们也不属于同一个 session。
 
+## 即时计算属性获取导致回流（reflow）
+
+offset(Top/Left/Width/Height)
+
+scroll(Top/Left/Width/Height)
+
+client(Top/Left/Width/Height)
+
+...
+
+使用这些属性时，需要通过及时计算得到，因此浏览器为了获取这些值，也会进行回流
+
 <Gitalk />
