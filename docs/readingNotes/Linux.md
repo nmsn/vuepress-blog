@@ -828,3 +828,42 @@ xargs [-0epn] command
 ## 12.2.5
 
 sed [-nefr] [动作]
+
+## 12.4.1
+
+printf '打印格式' 实际内容
+
+## 12.4.2
+
+awk '条件类型1{动作1} 条件类型2{动作2} ...' filename
+
+## 12.4.3
+
+diff [-bBi] from-file to-file
+
+参数:
+
+from-file: 一个文件名，作为欲比较文件的文件名
+to-file: 一个文件名， 作为目的比较文件的文件名
+
+注意: frmo-file或to-file可以-替换，那个-代表'Standard input'之意
+
+- -b: 忽略一行当中仅有的多个空白的区别
+- -B: 忽略空白行的区别
+- -i：忽略大小写的不同
+
+cmp [-s] file1 file2
+
+参数:
+
+- -s: 将所有的不同点的字节处都列出来，cmp默认仅会输出第一个不同点
+
+patch
+
+## 12.4.4
+
+pr 打印
+
+## 13.3.1
+
+test
