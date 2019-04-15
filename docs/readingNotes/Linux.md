@@ -867,3 +867,55 @@ pr 打印
 ## 13.3.1
 
 test
+
+## 13.6
+
+sh [-nvx] scripts.sh
+
+参数:
+
+- -n: 不要执行script，仅检查语法的问题
+- -v: 在执行script前，先将script的内容输出到屏幕上
+- -x: 将使用到的script内容显示到屏幕上
+
+## 14.2.1
+
+useradd [-u UId] [-g 初始用户组] [-G 次要用户组] [-mM] [-c 说明栏] [-d 主文件夹绝对路径] [-s shell] 用户账号名
+
+passwd [--stdin] 修改自己的密码
+passwd [-l] [-u] [--stdin] [-S] [-n 日数] [-x 日数] [-w 日数] [-i 日期] 账号
+
+change [-ldEImMw] 账号名
+
+usermod [-cdegGlsuLU] username
+
+userdel [-r] username
+
+## 14.2.2
+
+finger [-s] username
+
+参数:
+
+- -s: 仅列出用户的账号、全名、终端机代号与登录时间等
+
+chfn [-foph] [账号名]
+
+chsh [-ls]
+
+参数:
+
+- -l: 列出目前系统上面可用的shell，其实就是/etc/shells的内容
+- -s: 设置修改自己的shell
+
+id
+
+## 14.2.3
+
+groupadd [-g] [-r] 用户组名
+
+groupmod [-g] [-n group_name] 用户组名
+
+groupdel 用户组名
+
+gpasswd 用户组管理员功能
