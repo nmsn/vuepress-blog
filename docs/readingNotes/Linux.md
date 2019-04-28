@@ -1127,3 +1127,111 @@ uname [-asrmpi]
 uptime
 
 查看系统启动时间与工作负载
+
+netstat [-atunlp]
+
+参数:
+
+- -a: 将系统上所有的连接，监听，Socket数据都列出来
+- -t: 列出tcp网络数据包的数据
+- -u: 列出udp网络数据包的数据
+- -n: 不列出进程的服务名称，以端口号来显示
+- -l: 列出目前正在网络监听的服务
+- -p: 列出该网络服务的进程PID
+
+因特网连接（Active Internet connections）字段:
+
+- Proto: 网络的数据包协议，主要分为TCP与UDP数据包，相关数据请参考服务器篇
+- Recv-Q: 非由用户进程连接到此socket的复制的总字节数
+- Send-Q: 非由远程主机传送过来的acknowledged总字节数
+- LocalAddress: 本地的IP端口情况
+- ForeignAddress: 远程主机的IP端口情况
+- State: 连接状态，主要有建立（ESTABLISED）及监听（LISTEN）
+
+Socket连接 （Active UNIX domain sockets）字段:
+
+- Proto: 一般就是unix
+- RefCnt: 连接到此socket的进程数量
+- Flags: 连接的标识
+- Type: socket访问的类型，主要有确认连接的STREAM与不需确认的DGRAM两种
+- State: 若为CONNECTED表示多个进程之间已经连接建立
+- Path: 连接到此socket的相关程序的路径，或者是相关数据输出的路径
+
+dmesg 分析内核产生的信息
+
+dmesg | more
+
+vmstat [-a] [-fs] [-S 单位] [-d] [-p 分区]
+
+检测系统资源变化
+
+## 17.4.3
+
+fuser [-umv] [-k [-i] [-signal]] file/dir
+
+通过文件找出正在使用该文件的程序
+
+lsof 列出被进程所打开的文件名
+
+pidof [-sx] program_name 找出某个正在执行的进程的PID
+
+## 17.5
+
+SELinux
+
+## 22.3.2
+
+make
+
+makefile
+
+## 23.1.1
+
+|distribution代表|软件管理机制|使用命令|在线升级机制（命令）|
+|---|---|---|---|
+|Red Hat/Fedora|RPM|rpm rpmbuild|YUM(yum)|
+|Debian/Ubuntu|DPKG|dpkg|APT(apt-get)|
+
+## 23.1.5
+
+yum
+
+## 23.2.2
+
+rpm -ivh package_name
+
+参数:
+
+- -i: install的意思
+- -v: 查看更详细的安装信息画面
+- -h: 以安装信息栏显示安装进度
+
+## 23.4.1
+
+yum [option] [查询工作项目] [相关参数]
+
+[option] 主要的参数包括有
+
+- -y: 当yum等待用户输入时，这个选项可以自动提供yes的响应
+- --installroot=/some/path: 将改软件安装在/some/path中而不使用默认路径
+
+[查询工作项目] [相关参数]
+
+- search: 搜索某个软件名称或者是描述(description)的重要关键字
+- list: 列出目前yum所管理的所有的软件名称与版本，有点类似与 rpm -qa
+- info: 同上，有点类似于rpm -qai的运行结果
+- provides: 从文件中去搜索软件，类似与rpm -qf的功能
+
+yum [install|update] 软件
+
+yum [remove] 软件
+
+yum clean [package|headers|all]
+
+yum [组功能] [软件组]
+
+yum -y update
+
+## 23.4.3
+
+yum [组功能] [软件组]
