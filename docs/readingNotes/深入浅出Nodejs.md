@@ -63,3 +63,13 @@ node在启动时会生成一个全局变量process
 C/C++拓展模块属于文件模块的一类，预先编译为.node文件，然后调用process.dlopen()方法加载执行
 
 为了实现跨平台， dlopen()在内部实现时区分了平台，分别用的是加载.so(*nix)和.dll(Window)的方式
+
+### 2.6.1
+
+包目录
+
+- package.json 包描述文件
+- bin 用于存放可执行二进制文件的目录
+- lib 用于存放javaScript代码的目录
+- doc 用于存放文档的目录
+- test 用于存放单元测试用例的代码
