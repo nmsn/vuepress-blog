@@ -128,3 +128,81 @@ setTimeout()和serInterval()与浏览器中的API是一致的，实现原理与�
   - 在行为上，process.nextTick()在每轮循环中会将数组中的回调函数全部执行完，而setImmediate()在每轮循环中执行链表中的一个回调函数
 
 之所以这这样设计，是为了保证每轮循环能够较快地执行结束，防止CPU占用过多而阻塞后续I/O调用的情况
+
+各观察者优先级
+
+- idle观察者 > I/O观察者 > check观察者
+- idle观察者: process.nextTick()
+- I/O观察者: 一般性的I/O回调，如网络，文件，数据库I/O
+- check: setImmediate，setTimeout
+
+// TODO
+setTimmediate setTimeout 执行顺序问题
+
+### 3.5
+
+经典服务器模型:
+
+- 同步式: 对于同步时式的服务，一次只能执行一个请求，并且其余请求都处于等待状态
+- 每进程/每强求: 为每个请求启动一个进程，这样可以处理多个请求，但是它不具备拓展性，因为系统资源只有那么多
+- 每线程/每请求: 为每个请求启动一个线程来处理。尽管线程比进程要轻量，但是由于每个线程都占用一定内存，当大并发请求到来时，内存将会被很快用光，导致服务器缓慢
+
+### 4.1.1
+
+高阶函数
+
+除了通常意义的函数调用返回外，还形成了一种后续传递风格的结果接收方式，而非单一的返回值形式，后续传递风格的程序编写将函数的业务重点从返回值转移到了回调函数中
+
+### 4.2.2
+
+异步编程难点:
+
+1. 异常处理
+
+```js
+try {
+  JSON.parse(json);
+} catch(e) {
+  // TODO
+}
+```
+
+但是这对于异步编程而言不适应适用。
+异步I/O的实现主要包含两个阶段: 提交请求和处理结果。这两个阶段中间有事件循环的调度，两者彼此不关联。异步方法则通常在第一阶段提交请求后立即返回，因为异常并不一定发生在这个阶段，try/catch的功效不会发挥任何作用。
+
+```js
+var async = function(callback) {
+  process.nextTick(callback);
+};
+```
+
+调用async()后，callback直到下一个事件循环(Tick)才会取出来执行。尝试对异步方法执行try/catch操作只能捕获当次事件循环内的异常，对callback执行是爆出的异常将无能为力。
+
+Node在处理异常上形成一种约定，将异常作为回调函数的第一个实参传回如果是空值，则表明异步调用没有异常抛出:
+
+```js
+async(function (err, results) {
+  // TODO
+})
+```
+
+在我们自行编写的异步方法上，也需要去遵循这样一些原则:
+
+- 必须执行调用者传入的回调函数
+- 正确传递回异常供调用者判断
+
+```js
+var async = function (callback) {
+  process.nextTick(function() {
+    var results = somethings;
+    if (error) {
+      return callback(error);
+    }
+    callback(null, results);
+  });
+};
+```
+
+2. 函数嵌套过深
+
+3. 阻塞代码
