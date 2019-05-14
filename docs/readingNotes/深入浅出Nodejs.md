@@ -206,3 +206,73 @@ var async = function (callback) {
 2. 函数嵌套过深
 
 3. 阻塞代码
+
+    没有sleep()这样的线程沉睡功能，遇见这样的需求时，在统一规划业务逻辑后，调用setTimeout()的效果会更好
+
+4. 多线程编程
+
+5. 异步转同步
+
+### 4.3.1 事件发布/订阅模式
+
+事件监听器模式是一种广泛用于异步编程的模式，是回调函数的事件话，又称发布/订阅模式。
+Node自身提供的events模块是发布/订阅模式的一个简单实现，比线段浏览器中的大量DOM事件简单，不存在事件冒泡，也不存在preventDefault()，stopPropagation()和stopImmediatePropagation()等控制事件传递的方法。它具有addListener/on()、once()、removeListener()、removeAllListeners()和emit()等几本的事件监听模式的方法实现。
+
+```js
+// 订阅
+emitter.on('event', function(message) {
+  console.log(message);
+});
+// 发布
+emitter.emit('event','I am message!');
+```
+
+事件订阅就是一个高阶函数的应用。事件发布/订阅模式可以实现一个事件与多个回调函数的关联，这些回调函数被称为事件监听器。
+通过emit()发布事件后，消息会立即传递给当前事件的所有监听器执行。
+
+Node对事件发布/订阅的机制做了一些额外的处理，这大多是基于健壮性而考虑的
+
+- 如果对一个事件添加了超过10个监听器，将会得到一条警告。这一设计与Node自身单线程运行有关，设计者认为监听器太多可能导致内存泄露，所以存在这样一条警告。调用emitter.setMaxListener(0);可以将这个限制去掉
+- 为了处理异常，EventEmitter对象对error事件进行了特殊处理。如果运行期间的错误触发了error事件，EventEmitter会检查是否对error事件添加过监听器。若果添加了，这个错误将会交由该监听器处理，否则这个错误将会作为异常抛出。如果外部没有捕获这个异常，将会引起线程退出。一个健壮的EventEmitter实例应该对error事件做处理
+
+利用事件队列解决雪崩问题
+
+在计算机中，缓存由于存放在内存中，访问速度十分快，常常用于加速数据访问，让绝大多数的请求不必重复去做一些低效的数据读取。所谓雪崩问题，就是在高访问量、大并发量的情况下缓存失效的情景，此时大量的请求同时涌入数据库中，数据库无法同时承受如此大的查询请求，进而往前影响到网站整体的相应速度
+
+一种改进方案是添加一个状态锁
+
+```js
+var status = 'ready';
+var select = function(callback) {
+  if (status === 'ready') {
+    status = 'pending';
+    db.select('SQL', function(results) {
+      status = 'ready';
+      callback(results);
+    });
+  }
+};
+```
+
+但在这种情况下，连续多次调用select()时，只有第一次调用是生效的，后续的select()是没有数据服务的，这个时候可以引入事件队列
+
+```js
+var proxy = new events.EventEmitter();
+var status = 'ready';
+var select = function(callback) {
+  proxy.once('select',callback);
+  if (status === 'ready') {
+    status = 'pending';
+    db.select('SQL', function(results) {
+      proxy.emit('selected', results);
+      status = 'ready';
+    });
+  }
+};
+```
+
+利用once()方法，将所有请求的会掉都压入事件队列中，利用其执行一次就会将监视器移除的特点，保证每一个回调只会被执行一次
+
+### 4.3.2 Promise/Deferred模式 *
+
+### 4.3.3 流程控制库
