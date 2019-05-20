@@ -506,3 +506,74 @@ Buffer.isEncoding(encoding) // 判断编码是否支持
 ```
 
 ### 6.3 Buffer的拼接
+
+```js
+var fs = require('fs');
+var rs = fs.createReadStream('test.md');
+var data = '';
+rs.on('data', function(trunk) {
+  data += trunk;
+});
+rs.on('end', function() {
+  console.log(data);
+})
+```
+
+一旦输入流中有宽字节码时，可能会出现乱码
+
+问题在于
+
+```js
+data += trunk // data = data.toString() + trunk.toString()
+```
+
+### 6.3.1 乱码是如何产生的
+
+buf.toString()方法默认以UTF-8为编码，中文字在UTF-8下占3个字节，所以一个中文字中的三个字节可能被分隔到两个Buffer对象中，造成不能形成文字的字节，只能显示乱码
+
+对于任意长度的Buffer而言，宽字节字符串都有可能存在被截断的情况，只不过Buffer的长度越大出现的概率越低而已
+
+### 6.3.2 setEncoding()与string_decoder()
+
+可读流设置编码
+
+```js
+setEncoding()
+```
+
+该方法的作用是让data事件中传递的不再是一个Buffer对象，而是编码候得字符串
+
+```js
+var rs = fs.createReadStream('test.md');
+rs.setEncoding('utf-8');
+```
+
+在调用setEncoding()时， 可读流对象在内部设置了一个decoder对象，每次data事件都通过该decoder对象进行Buffer到字符串的解码，然后传递给调用者
+
+decoder对象来自于string_decoder模块StringDecoder的实例对象
+
+```js
+var StringDecoder = require('string_decoder').StringDecoder;
+var decoder = new StringDecoder('utf-8');
+decoder.write(xxx);
+```
+
+StringDecoder在得到编码后，知道宽字节字符串在UTF-8编码下是以3字节的方式存储的，所以本应被截断的字节保留在StringDecoder实例内部，第二次write()时，将保留下来的字节和后续的拼在一起
+
+### 6.3.3 正确拼接Buffer
+
+```js
+var chunks = [];
+var size = 0;
+res.on('data', function(chunk) {
+  chunks.push(chunk);
+  size += chunk.length;
+});
+res.on('end',function() {
+  var buf = Buffer.concat(chunks, size);
+  var str = iconv.decode(buf, 'utf-8');
+  console.log(str);
+})
+```
+
+正确的拼接方法使用一个数组来存储接收到的所有Buffer片段并记录下所有片段的总长度，然后调用Buffer.concat()方法生成一个合并的Buffer对象
