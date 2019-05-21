@@ -497,7 +497,7 @@ buf.write(string, [offset], [length], [encoding])
 buf.toString([encoding], [start], [end])
 ```
 
-如果Buffer对象由多种编码写入，就需要在局部指定不同的编码，才能转换回正常的编码
+如果Buffer对象由多种编码写入，就需要在局部指定不同的编码，**才能转换回正常的编码**
 
 ### 6.2.3 Buffer不支持的编码类型
 
@@ -577,3 +577,16 @@ res.on('end',function() {
 ```
 
 正确的拼接方法使用一个数组来存储接收到的所有Buffer片段并记录下所有片段的总长度，然后调用Buffer.concat()方法生成一个合并的Buffer对象
+
+### 6.4 Buffer与性能
+
+通过预先转换静态内容为Buffer对象，可以有效地减少CPU的重复使用，节省服务器资源
+
+highWaterMark的大小对性能影响
+
+- highWaterMark设置对Buffer内存的分配和使用有一定影响
+- highWaterMark设置过小，可能导致系统调用次数过多
+
+## 7 网络编程
+
+### 7.1 构建TCP服务
