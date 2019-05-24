@@ -500,4 +500,34 @@ client(Top/Left/Width/Height)
 
 协程和线程区别：协程避免了无意义的调度，由此可以提高性能，但也因此，程序员必须自己承担调度的责任，同时，协程也失去了标准线程使用多CPU的能力。
 
+## click事件存在的问题
+
+### IE
+
+IE8&9，具有background-color样式计算为transparent的元素覆盖在其他元素顶端时，不会收到click事件。取而代之，所有的click事件将被触发于其地下的元素
+
+已知会触发此漏洞的情景:
+
+- 仅针对IE9
+  - 设置`background-color: rgba(0,0,0,0)`
+  - 设置`opacity: 0`并且明确指定background-color而不是transparent
+- 对于IE8和IE9: 设置`filter: alpha(opacity = 0);`并且明确指定`background-color`而不是transparent
+
+### Safari
+
+safari手机版会有一个bug，当点击事件不是绑定在交互式的元素上（比如说HTML的div），并且也没有直接的事件监听器绑定在他们自身。
+
+解决方法如下：
+
+为其元素或者祖先元素，添加cursor: pointer的样式，使元素具有交互式点击为需要交互式点击的元素添加onclick="void(0)"的属性，但并不包括body元素使用可点击元素如`<a>`,代替不可交互式元素如div不使用click的事件委托。
+
+Safari 手机版里，以下元素不会受到上述bug的影响：
+
+- `<a>` 需要href链接
+- `<area>` 需要href
+- `<button>`
+- `<img>`
+- `<input>`
+- `<label>` 需要与form控制器连接
+
 <Gitalk />
