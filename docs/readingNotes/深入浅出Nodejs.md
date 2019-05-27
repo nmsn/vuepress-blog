@@ -617,6 +617,40 @@ UDP又称用户数据包协议，与TCP一样同属于网络传输层。UDP与TC
 
 HTTP全称是超文本传输协议。HTTP构建在TCP之上，属于应用层协议
 
-### 7.3.2
+### 7.3.2 http模块
 
 HTTP与TCP服务模型有区别的地方在于，在开启keepalive后，一个TCP会话可以用于多次请求和响应。TCP服务以connection为单位进行服务，HTTP服务以request为单位进行服务。http模块即是connection到request的过程进行了封装
+
+#### 1. HTTP请求
+
+#### 2. HTTP响应
+
+    res.setHeader() 可以调用多次进行设置，但只有调用writeHead后，报头才会写入到连接中
+
+    res.writeHead()
+
+    res.write()
+
+    res.end()
+
+#### 3. HTTP服务的事件
+
+如同TCP服务一样，HTTP服务器页抽象了一些事件，以供应用层使用，同样典型的是，服务器也是一个EventEmitter实例
+
+- connection
+- request
+- close
+- checContinue
+- connect
+- upgrade
+- clientError
+
+### 7.3.3 HTTP客户端
+
+1. HTTP响应
+
+2. HTTP代理
+
+3. HTTP客户端事件
+
+### 7.4 构建WebSocket服务
