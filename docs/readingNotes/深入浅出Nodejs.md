@@ -693,8 +693,48 @@ Node在网路安全上提供了三个模块，分别是crypto、tls、https。
 
 ### 7.5.1 TLS/SSL
 
-#### 密钥
+#### 1.密钥
 
 TLS/SSL是一公钥/私钥的结构，非对称，每一个服务器端和客户端都有自己的公私钥。公钥用来加密要传输的数据，私钥用来解密接收到的数据。公钥私钥配对，所以在建立安全传输之前，客户端和服务端之间需要互换公钥
 
 Node在底层采用的是openssl实现TLS/SSL的，为此要生成公钥和私钥可以通过openssl完成
+
+```bash
+// 生成服务器私钥
+openssl genrsa -out server.key 1024
+// 生成客户端私钥
+openssl genrsa -out client.key 1024
+```
+
+上述命令生成了两个1024位长的RSA私钥，我们可以通过它继续生成公钥
+
+```bash
+openssl rsa -in server.key -pubout -out server.pem
+openssl rsa -in client.key -pubout -out client.pem
+```
+
+公私钥的非对称加密虽好，但是网络中依然可能存在窃听的情况，典型的例子是中间人攻击，为了解决这个问题，TLS/SSL引入了数字证书来进行认证。与直接用公钥不同，数字证书中包含了服务器的名称和主机名、服务器的公钥、签名颁发机构的名称、来自签名颁发机构的签名。在连接建立前，会通过证书中的签名确认收到的公钥是来自目标服务器的，从而产生信任关系。
+
+#### 2.数字证书
+
+为了确保我们的数据安全，现在我们引入了一个第三方: CA(Certificate Authority,数字证书认证中心)。
+
+为了得到签名证书，服务器需要通过自己的私钥生成CSR(Certificate Signing Request，证书签名请求)文件。CA机构将通过这个文件办法属于服务器端的签名证书，只要通过CA机构就能验证证书是否合法。
+
+对于中小型企业而言，多半是采用自签名证书来构建安全网络的。所谓自签名证书，就是自己扮演CA机构，给自己的服务器端颁发签名证书。以下为生成私钥、生成私钥、生成CSR文件、通过私钥自签名生成证书的过程
+
+```bash
+openssl genrsa -out ca.key 1024
+openssl req -new -key ca.key -out ca.csr
+open x509 -req -in ca.csr -signkey ca.key -out ca.crt
+```
+
+### 7.5.2 TLS服务
+
+### 7.5.3 HTTPS服务
+
+#### 1.准备证书
+
+#### 2.创建HTTPS服务
+
+#### 3.HTTPS客户端
