@@ -27,3 +27,25 @@ Node中有两个类似但却各自代表着不同含义的对象
 - global: 和window一样，任何global对象上的属性都可以被全局访问到
 - process: 所有全局执行上下文中的内容都在process对象中
 
+## 5命令行工具（CLI）以及FS API
+
+### 创建模块
+
+npm最寻一个名为semver的版本控制标准
+
+[https://semver.org/](https://semver.org/)
+
+### 理解什么是流（stream）
+
+process全局对象中包含了三个流对象，分别对应三个UNIX标准流:
+
+- stdin 标准输入
+- stdout 标准输出
+- stderr 标准错误
+
+
+
+## TCP
+
+## HTTP
+
