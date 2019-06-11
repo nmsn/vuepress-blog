@@ -809,3 +809,39 @@ Cookie的处理分为如下几步
 - 缓存服务通常与Node进程运行在相同的机器上或者相同的机房里，网络速度受到的影响较小
 
 #### Session与安全
+
+### 8.1.6 缓存
+
+- If-Modified-Since/Last-Modified
+
+- If-None-Match/ETag
+
+- Expires
+
+- Cache-Control
+
+### 8.1.7 Basic认证
+
+## 8.2 数据上传
+
+Node的http模块只对HTTP报文的头部进行了解析，然后出发request事件。如果请求中还带有内容部分（如POST请求，它具有报头和内容），内容部分需要用户自行接收和解析。通过报头的Transfer-Encoding或Content-Length即可判断请求中是否带有内容
+
+```js
+var hasBody = function(req) {
+  return 'transfer-encoding' in req.headers || 'content-length' in req.headers;
+}
+```
+
+### 8.2.1 表单数据
+
+默认的表单提交，请求头中的Content-Type字段值为application/x-www-form-urlencoded
+
+### 8.2.2 其他格式
+
+1. JSON application/json
+
+2. JSON application/xml
+
+### 8.2.3 附件上传
+
+multipart/form-data
