@@ -131,5 +131,44 @@ Telnet是一个早期的网络协议，旨在提供双向的虚拟终端。在SS
 
 ### 连接
 
+## 8 Connect
 
+Connect是一个基于HTTP服务器的工具集，它提供了一种新的组织代码的方式来与请求、相应对象进行交互，称为中间件
+
+简单来哦说，中间件由幻术组成，它除了处理req和res对象外，还接受一个next函数来做流控制
+
+### static中间件
+
+Connect允许中间件挂载到URL上。比如。static允许将任意一个URL匹配到文件系统中任意一个目录
+
+### query中间件
+
+使用query中间件，就能够通过req.query对象自动获取查询字符串数据
+
+### logger中间件
+
+logger中间件是一个对Web应用非常有用的诊断工具。它将发送过来的请求信息和发送出去的相应信息打印在终端
+
+提供四种日志格式
+
+- default
+- dev
+- short
+- tiny
+
+logger中间允许自定义日志输出格式
+
+下面是完整的可用token
+
+- ：req[header]
+- :res[header]
+- :http-version
+- response-time
+- remote-addr
+- date
+- method
+- url
+- referrer
+- user-agent
+- status
 
