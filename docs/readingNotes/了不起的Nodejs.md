@@ -172,3 +172,21 @@ logger中间允许自定义日志输出格式
 - user-agent
 - status
 
+### body parser中间件
+
+### cookie
+
+### session
+
+### redis session
+
+生产环境中，需要使用一种当应用重启后，还能够将session信息持久化存储下来的机制，如Redis
+
+### methodOverride中间件
+
+### basicAuth中间件
+
+## 9 Express
+
+鉴于Connect基于HTTP模块提供了开发Web应用的常用的基础功能，Express基于Connect为个构建整个网站以及Web应用提供了更为方便的API
+
