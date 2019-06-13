@@ -894,3 +894,43 @@ RESTful的全称是Representational State Transfer，中文含义为表现程状
 所以REST的设计就是，通过URL设计资源，请求方法定义资源的操作（POST DELETE PUT GET），通过Accept决定资源的表现形式
 
 RESTful与MVC设计并不冲突，而且是更好的改进。相比MVC，RESTful只是将HTTP请求方法也加入了路由的过程，以及在URL路径上体现得更资源化
+
+### 8.4 中间件 *
+
+在最早的中间件的定义中，它是一种在操作系统上为应用软件提供服务的计算机软件。它既不是操作系统的一部分，也不是应用软件的一部分，它处于操作系统与应用软件之间，让应用软件更好、更方便地使用底层服务
+
+如今中间件含义借指了这种封装底层细节，为上层提供更方便服务的意义，并非限定在操作系统层面。这里要提到的中间件，就是为我们封装上文提及的所有HTTP请求细节处理的中间件，开发者可以脱离这部分细节，专注在业务上
+
+### 8.4.1 异常处理
+
+### 8.4.2 中间件与性能
+
+1. 编写高效的中间件
+2. 合理使用路由
+
+### 8.5 页面渲染
+
+### 8.5.1 内容响应
+
+1. MIME
+
+    浏览器正是通过不同的Content-Type的值来决定采用不同的渲染方式，这个值我们简称为MIME值
+    MIME的全称是Multipurpose Internet Mail Extensions，最早用于电子邮件，后来也应用到浏览器中。不同的文件类型具有不同的MIME值
+
+    除了MIME外，Content-Type的值也可以包含一些参数，如字符集
+
+2. 附件下载
+
+    Content-Disposition字段影响的行为是客户端会根据它的值判断是应该将报文数据当作及时浏览的内容，还是可下载的附件
+    当内同只需即时查看时，它的值为inline，当数据可以存为附件时，它的值为attachment。另外，Content-Disposition字段还能通过参数指定保存时应该使用的文件名
+
+    ```
+    Content-Disposition: attachment; filename="filename.ext"
+    ```
+
+3. 响应JSON
+
+  Content-Type: application/json
+
+
+4. 响应跳转
