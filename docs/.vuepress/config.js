@@ -38,6 +38,8 @@ module.exports = {
         children: [
           // '',
           'Linux',
+          '了不起的Nodejs',
+          '深入浅出Nodejs',
         ]
       },
     ],
