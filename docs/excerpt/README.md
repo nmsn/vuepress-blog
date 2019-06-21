@@ -645,6 +645,7 @@ rc(release candidate)：最终测试版本；可能成为最终产品的候选�
 ```
 
 #### npm script
+
 如果全局安装@vue/cli-service的话，@vue/cli-service源文件会被安装在全局源文件安装目录（/user/local/lib/node_modules）下，而npm会在全局可执行bin文件安装（/usr/local/bin）目录下创建一个指向../lib/node_modules/@vue/cli-service/bin/vue-cli-service.js文件的名为vue-cli-service的软链接，这样就可以直接在终端输入vue-cli-service来执行。
 
 如果局部安装@vue/cli-service的话，npm则会在本地项目node_modules/.bin目录下创建一个指向../@vue/cli-service/bin/vue-cli-service.js名为vue-cli-service的软链接，这个时候需要在终端中输入./node_modules/.bin/vue-cli-service来执行（也可以使用npx vue-cli-service命令来执行，npx 的作用就是为了方便调用项目内部安装的模块）。
@@ -653,5 +654,11 @@ rc(release candidate)：最终测试版本；可能成为最终产品的候选�
 
 - && 串行
 - & 并行
+
+### Oliver Steele的嵌套对象访问模式
+
+const name = ((user || {}).personalInfo || {}).name;
+
+使用这种表示法，永远不会遇到无法读取未定义的属性“name”。做法是检查用户是否存在，如果不存在，就创建一个空对象，这样，下一个级别的键将始终从存在的对象访问。
 
 <Gitalk />
