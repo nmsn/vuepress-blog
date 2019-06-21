@@ -4,4 +4,25 @@ node_js:
 install: yarn
 before_script: 
   - chmod +x ./build.sh
-script: ./build.sh
+script:
+
+- yarn run docs:build
+
+# 进入生成的构建文件夹
+- cd docs/.vuepress/dist
+
+# 如果你是要部署到自定义域名
+- echo 'nmsn.site' > CNAME
+
+- git init
+
+- git config user.name "${U_NAME}"
+- git config user.email "${U_EMAIL}"
+
+- git add -A
+- git commit -m 'deploy'
+
+- echo ${$GITHUB_TOKEN}
+
+# 如果你想要部署到 https://<USERNAME>.github.io
+- git push -f "https://${$GITHUB_TOKEN}@github.com:nmsn/nmsn.github.io.git" master
