@@ -190,3 +190,40 @@ logger中间允许自定义日志输出格式
 
 鉴于Connect基于HTTP模块提供了开发Web应用的常用的基础功能，Express基于Connect为个构建整个网站以及Web应用提供了更为方便的API
 
+## 10 WebSocket
+
+## 11 Socket.IO
+
+### 传输
+
+Socket.IO最诱人的特性之一就是消息的传递时基于传输的，而非全部依靠WebSocket，也就是说，Socket.IO可以在绝大部分的浏览器和设备上运行
+
+### 断开VS关闭
+
+Socket.IO带来的另一个基础功能就是对超时的支持
+
+### 事件
+
+### 命名空间
+
+Socket.IO还提供了另一个强大的特性，它允许在单个连接中利用命名空间来将消息区分开来
+
+### 事件和广播
+
+## 12 MongoDB
+
+## 13 MySql
+
+## Redis
+
+支持数据类型
+
+- 字符串（String）
+- 列表（list）
+- 数据集（set）
+- 哈希（hash）
+- 有序数据集（sorted set）
+
+### 15 代码共享
+
+### 16 测试
