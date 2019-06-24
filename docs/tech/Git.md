@@ -30,7 +30,7 @@ Git(读音为/gɪt/。)是一个开源的分布式版本控制系统，可以有
 
 ### 新建
 
-```
+```bash
 # 在当前目录新建一个 Git 代码库
 $ git init
 
@@ -42,7 +42,8 @@ $ git clone [url]
 ```
 
 ### 配置
-```
+
+```bash
 Git 的设置文件为.gitconfig，它可以在用户主目录下（全局配置），也可以在项目目录下（项目配置）。
 
 # 显示当前的 Git 配置
@@ -58,7 +59,7 @@ $ git config [--global] user.email "[email address]"
 
 ### 增加删除文件
 
-```
+```bash
 # 添加指定文件到暂存区
 $ git add [file1] [file2] ...
 
@@ -141,9 +142,10 @@ $ git cherry-pick [commit]
 $ git branch -d [branch-name]
 
 # 删除远程分支
-$ git push origin --delete 
+$ git push origin --delete
 $ git branch -dr
 ```
+
 ### 标签
 
 ```
@@ -167,8 +169,8 @@ $ git push [remote] --tags
 
 # 新建一个分支，指向某个 tag
 $ git checkout -b [branch] [tag]
-
 ```
+
 ### 查看信息
 
 ```
@@ -294,7 +296,7 @@ $ git rebase --abort
 $ git rebase -i [startpoint]  [endpoint]] --onto  [branchName] 
 
 $ 对HEAD后面的n条commits做变基处理
-# git rebase -i HEAD~n 
+# git rebase -i HEAD~n
 ```
 
 其中-i的意思是--interactive，即弹出交互式的界面让用户编辑完成合并操作
