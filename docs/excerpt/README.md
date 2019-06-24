@@ -661,4 +661,13 @@ const name = ((user || {}).personalInfo || {}).name;
 
 使用这种表示法，永远不会遇到无法读取未定义的属性“name”。做法是检查用户是否存在，如果不存在，就创建一个空对象，这样，下一个级别的键将始终从存在的对象访问。
 
+### 如何让 `a == 1 && a == 2 && a == 3`
+
+```js
+const a = {
+   value:[3,2,1],
+   valueOf: function () {return this.value.pop(); },
+}
+```
+
 <Gitalk />
