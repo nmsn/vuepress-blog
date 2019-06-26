@@ -532,14 +532,14 @@ Safari 手机版里，以下元素不会受到上述bug的影响：
 
 ### 文本换行css属性
 
-overflow-wrap
+#### overflow-wrap
 
 用来说明当一个不能被分开的字符串太长而不能填充其包裹盒时，为防止其溢出，浏览器是否允许这样的单词中断换行
 
 - normal 表示在正常的单词结束处换行
 - break-word 表示如果行内没有多余的地方容纳该单词到结尾，则那些正常的不能被分隔的单词会被强制分隔换行
 
-word-break
+#### word-break
 
 指定了怎样在单词内断行
 
@@ -548,7 +548,7 @@ word-break
 - keep-all CJK文本不断行。Non-CJK文本表现同normal
 - break-word （非标准）
 
-white-space
+#### white-space
 
 用来设置如何处理元素中的空白
 
@@ -667,6 +667,28 @@ const name = ((user || {}).personalInfo || {}).name;
 const a = {
    value:[3,2,1],
    valueOf: function () {return this.value.pop(); },
+}
+```
+
+### new的实现原理
+
+原文: [这儿有20道大厂面试题等你查收](https://juejin.im/post/5d124a12f265da1b9163a28d?tdsourcetag=s_pcqq_aiomsg)
+
+1. 创建一个空对象，构造函数中的this指向这个空对象
+2. 这个新对象被执行[[原型]]连接
+3. 执行构造函数方法，属性和方法被添加到this引用的对象中
+4. 如果构造函数中没有返回其它对象，那么返回this，即创造的这个的新对象，否则，返回构造函数中返回的对象
+
+```js
+function _new() {
+  let target = {}; // 创造的新对象
+  let [constructor, ...args] = [...arguments]; // 第一个参数是构造函数
+  target.___proto__ = constructor.prototype; // 执行[[原型]]连接；target是constructor的实例
+  let result = constructor.apply(target, args); // 执行构造函数，将属性或方法添加到创建的空对象上
+  if (result && (typeof (result) == 'object' || typeof (result) == 'function')) {
+    return result; // 如果构造函数执行的结构返回的是一个对象，那么返回这个对象
+  }
+  return target; // 如果构造函数返回的不是一个对象，返回创建的新对象
 }
 ```
 
