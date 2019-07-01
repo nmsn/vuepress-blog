@@ -166,3 +166,50 @@ git branch [branch-name]
 #### 分支切换
 
 git checkout [branch-name]
+
+### 分支的新建与合并
+
+#### 新建分支
+
+git checkout -b [new_branch]
+
+新建一个分支并同时切换到那个分支上
+
+等于
+
+git branch [new_branch]
+git checkout [new_branch]
+
+git merge --no-ff
+
+git branch -d
+
+#### 分支的合并
+
+需要指出的是，Git会自行决定选区哪一个提交作为最优的共同祖先，并以此作为合并的基础
+
+#### 遇到冲突时的分支合并
+
+### 分支管理
+
+git branch -v --merged | --no-merged
+
+### 分支开发工作流
+
+#### 长期分支
+
+#### 特性分支
+
+### 远程分支
+
+#### 推送
+
+git push 
+
+#### 跟踪分支
+
+git checkout --track origin/xxx
+
+git checkou -b xx origin/xxx
+
+git branch -u origin/xxx
