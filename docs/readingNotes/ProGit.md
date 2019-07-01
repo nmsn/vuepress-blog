@@ -79,4 +79,90 @@ git reset HEAD `<file>`
 
 git checkout -- `<file>`
 
-###
+### 远程仓库的使用
+
+#### 查看远程仓库
+
+git remote -v 显示远程仓库使用的Git保存的简写与其对应的URL
+
+#### 添加远程仓库
+
+git remote add `<shortname>` url 添加一个新的远程Git仓库，同时指定一个你可以轻松引用的简写
+
+#### 从远程仓库中抓取与拉取
+
+git fetch [remote-name]
+
+git pull
+
+#### 推送到远程仓库
+
+git push origin master
+
+#### 查看远程仓库
+
+git remote show [remote-name]
+
+#### 远程仓库的移除与重命名
+
+git remote rename [old_name] [new_name]
+
+git remote rm [remote-name]
+
+### 打标签
+
+git tag
+
+#### 创建标签
+
+Git使用两种主要类型的标签: 轻量标签与附注标签
+
+#### 附注标签
+
+git tag -a [tag] -m [message]
+
+#### 轻量标签
+
+git tag [message]
+
+#### 后期打标签
+
+git tag -a [tag] [hash]
+
+#### 共享标签
+
+git push origin [tag]
+
+一次性推送多个标签
+
+git push --tags
+
+#### 检出标签
+
+git checkout -b [branchname] [tag]
+
+### Git别名
+
+Git 并不会在你输入部分命令时自动推断出你想要的命令。如果不想每次都输入完整的 Git 命令，可以通过 git
+config 文件来轻松地为每一个命令设置一个别名
+
+例如:
+
+```bash
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.ci commit
+git config --global alias.st status
+```
+
+## Git分支
+
+### 分支简介
+
+#### 分支创建
+
+git branch [branch-name]
+
+#### 分支切换
+
+git checkout [branch-name]
