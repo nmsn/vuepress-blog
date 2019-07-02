@@ -692,4 +692,12 @@ function _new() {
 }
 ```
 
+### 为什么div里嵌套了img底部会有白块
+
+因为img默认是按基线(baseline)对齐的。对比一下图片和右边的p, q, y等字母，你会发现这三个字母的“小尾巴”和图片下方的空白一样高。下面这张图中的黑线就是那条基线
+
+![img](../.vuepress/public/images/img_inline.png )
+
+要去掉空格可以使用vertical-align: bottom或将img标签变为块级元素
+
 <Gitalk />
