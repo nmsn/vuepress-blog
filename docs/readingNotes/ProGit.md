@@ -204,7 +204,7 @@ git branch -v --merged | --no-merged
 
 #### 推送
 
-git push 
+git push
 
 #### 跟踪分支
 
@@ -213,3 +213,25 @@ git checkout --track origin/xxx
 git checkou -b xx origin/xxx
 
 git branch -u origin/xxx
+
+#### 拉取
+
+git fetch  get merge
+
+git pull
+
+#### 删除远程分支
+
+git push origin --delete [branch_name]
+
+### 变基
+
+#### 变基的基本操作
+
+git checkout [current_branch]
+
+git rebase [target_branch]
+
+#### 更有趣的变基例子
+
+git rebase --onto [target_branch] [mid_branch] [current_branch]
