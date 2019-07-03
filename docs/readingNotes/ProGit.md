@@ -235,3 +235,29 @@ git rebase [target_branch]
 #### 更有趣的变基例子
 
 git rebase --onto [target_branch] [mid_branch] [current_branch]
+
+#### 变基的风险
+
+不要对在你的仓库外有副本的分支执行变基
+
+### 用变基解决变基
+
+## 服务器上的Git
+
+### 协议
+
+#### 本地协议
+
+git clone /xxx/xxx.git
+
+git clone file:///xxx/xxx.git
+
+git remote add
+
+#### HTTP协议
+
+#### SSH协议
+
+#### Git协议
+
+
