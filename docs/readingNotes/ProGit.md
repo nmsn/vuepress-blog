@@ -313,3 +313,13 @@ Git 允许你在任意引用前加上 ^ 字符或者 --not 来指明你不希望
 
 git log refA refB ^refC
 git log refA refB --not refC
+
+### 交互式暂存
+
+git add -i
+
+### 储藏与清理
+
+git stash
+
+git stash apply 如果不指定储藏，Git认为指定的是最近的储藏
