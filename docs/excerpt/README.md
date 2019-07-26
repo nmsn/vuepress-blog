@@ -797,4 +797,10 @@ JWT对象通常由三部分构成:
 
 ### OAuth(开放授权)
 
+## npm 参数问题
+
+在window系统中，类似`$npm_package_xxx`的变量是无法使用的，需要用`%npm_package_xxx%`形式代替
+
+[stackoverflow中的解答](https://stackoverflow.com/questions/43705195/how-can-i-use-variables-in-package-json)
+
 <Gitalk />
