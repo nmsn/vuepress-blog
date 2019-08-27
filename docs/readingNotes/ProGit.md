@@ -528,3 +528,42 @@ help.autocorrect
 
 如果你把help.autocorrect设置成1，那么只要有一个命令被模糊匹配到了，Git会自动运行该命令
 
+#### Git中的着色
+
+
+color.ui
+
+color.*
+
+
+#### 格式化与多余的空白字符
+
+core.autocrlf
+
+Window使用回车（CR）和换行（LF）两个字符来结束一行，而Mac和Linudx只使用（LF）一个字符
+Git可以在你提交时自动把回车和换行转换成换行
+如果是在Windows系统上，把它设置成true，这样在检出代码时，换行会被转换成回车和换行
+
+git config --global core.autocrlf true
+
+git config --global core.autocrlf input 在提交时把回车和换行转换成换行，检出时不转换
+
+core.whitespace
+
+Git预先设置了一些选项来探测和修正多余空白字符的问题
+
+#### 服务端配置
+
+receive.fsckObjects
+
+receive.denyNonFastForwards
+
+receive.denyDeletes
+
+
+
+
+
+
+
+
