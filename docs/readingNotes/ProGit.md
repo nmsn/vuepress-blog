@@ -493,3 +493,77 @@ git config --global 读写该文件
 最后检查你正在操作的版本库所对应的Git目录下的配置文件
 
 以上三个层次中每层的配置（系统、全局、本地）都会覆盖掉上一层额度配置
+
+#### 客户端基本配置
+
+core.editor
+
+git config --global core.editor emacs 
+
+使用core.editor选项来修改默认的编辑器
+
+commit.template
+
+如果把此项指定为你的系统上的某个文件的路径，当你提交得到时候，Git会使用该文件的内容作为提交的默认信息
+
+git config --global commit.template ~/.gitmessage.txt
+
+core.paper
+
+该配置项指定诸如log和diff等命令所使用的分页器
+
+user.signingkey
+
+如果你要创建经签署的含附注的标签，那么把你的GPG签署密钥设置为配置项会更好
+
+git config --global user.signingkey <gpg-key-id>
+
+core.excludesfile
+
+这个配置允许你设置类似于全局生效的.gitignore文件
+
+创建 ~/.gitignore 然后运行 git config --global core.excludesfile ~/.gitignore_global，Git将把那些文件永远地拒之门外
+
+help.autocorrect
+
+如果你把help.autocorrect设置成1，那么只要有一个命令被模糊匹配到了，Git会自动运行该命令
+
+#### Git中的着色
+
+
+color.ui
+
+color.*
+
+
+#### 格式化与多余的空白字符
+
+core.autocrlf
+
+Window使用回车（CR）和换行（LF）两个字符来结束一行，而Mac和Linudx只使用（LF）一个字符
+Git可以在你提交时自动把回车和换行转换成换行
+如果是在Windows系统上，把它设置成true，这样在检出代码时，换行会被转换成回车和换行
+
+git config --global core.autocrlf true
+
+git config --global core.autocrlf input 在提交时把回车和换行转换成换行，检出时不转换
+
+core.whitespace
+
+Git预先设置了一些选项来探测和修正多余空白字符的问题
+
+#### 服务端配置
+
+receive.fsckObjects
+
+receive.denyNonFastForwards
+
+receive.denyDeletes
+
+
+
+
+
+
+
+
