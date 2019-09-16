@@ -803,4 +803,15 @@ JWT对象通常由三部分构成:
 
 [stackoverflow中的解答](https://stackoverflow.com/questions/43705195/how-can-i-use-variables-in-package-json)
 
+## 最后一行列表左对齐的N种方式
+
+原文：[让CSS flex布局最后一行列表左对齐的N种方法](https://www.zhangxinxu.com/wordpress/2019/08/css-flex-last-align/?tdsourcetag=s_pcqq_aiomsg)
+
+1. Grid布局（注意兼容性）
+2. 使用空白标签进行填充占位（容易理解，但引入无用标签）
+3. 使用margin模拟space-between和间隙
+4. 根据个数最后一个元素动态margin
+
+
+
 <Gitalk />
