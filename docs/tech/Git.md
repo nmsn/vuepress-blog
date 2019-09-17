@@ -30,7 +30,7 @@ Git(读音为/gɪt/。)是一个开源的分布式版本控制系统，可以有
 
 ### 新建
 
-```bash
+```shell
 # 在当前目录新建一个 Git 代码库
 $ git init
 
@@ -43,7 +43,7 @@ $ git clone [url]
 
 ### 配置
 
-```bash
+```shell
 Git 的设置文件为.gitconfig，它可以在用户主目录下（全局配置），也可以在项目目录下（项目配置）。
 
 # 显示当前的 Git 配置
@@ -59,7 +59,7 @@ $ git config [--global] user.email "[email address]"
 
 ### 增加删除文件
 
-```bash
+```shell
 # 添加指定文件到暂存区
 $ git add [file1] [file2] ...
 
@@ -81,7 +81,7 @@ $ git mv [file-original] [file-renamed]
 
 ### 代码提交
 
-```
+```shell
 # 提交暂存区到仓库区
 $ git commit -m [message]
 
@@ -104,7 +104,7 @@ $ git commit --amend   ...
 
 ### 分支
 
-```
+```shell
 # 列出所有本地分支
 $ git branch
 
@@ -148,7 +148,7 @@ $ git branch -dr
 
 ### 标签
 
-```
+```shell
 # 列出所有 tag
 $ git tag
 
@@ -173,7 +173,7 @@ $ git checkout -b [branch] [tag]
 
 ### 查看信息
 
-```
+```shell
 # 显示有变更的文件
 $ git status
 
@@ -217,9 +217,10 @@ $ git show [commit]:[filename]
 # 显示所有分支的所有操作记录（包括commit和reset的操作），包括已经被删除的commit记录（可用于回复删除的数据）
 $ git reflog
 ```
+
 ### 远程同步
 
-```
+```shell
 # 下载远程仓库的所有变动
 $ git fetch [remote]
 
@@ -244,9 +245,10 @@ $ git push [remote] --force
 # 推送所有分支到远程仓库
 $ git push [remote] --all
 ```
+
 ### 撤销
 
-```
+```shell
 # 恢复暂存区的指定文件到工作区
 $ git checkout [file]
 
@@ -282,7 +284,7 @@ $ git revert [commit]
 
 - 单独分支使用可以调整分支上的commits(合并/删除/修改commits信息等功能)
 
-```
+```shell
 # 将某个分支变基到当前分支的最顶端(最新)
 $ git rebase [branch]
 
@@ -293,7 +295,7 @@ $ git rebase --continue
 $ git rebase --abort
 
 # 将指定区间的提交复制到某个分支上
-$ git rebase -i [startpoint]  [endpoint]] --onto  [branchName] 
+$ git rebase -i [startpoint]  [endpoint]] --onto  [branchName]
 
 $ 对HEAD后面的n条commits做变基处理
 # git rebase -i HEAD~n
@@ -307,12 +309,13 @@ $ 对HEAD后面的n条commits做变基处理
 
 ### 其他
 
-```
+```shell
 # 生成一个可供发布的压缩包
 $ git archive
 ```
 
-参考: 
+参考:
+
 - [稀土技术团队博客: http://xitu.github.io/2016/04/06/git-start](http://xitu.github.io/2016/04/06/git-start/)
 - [Git rebase 用法小结: https://www.jianshu.com/p/4a8f4af4e803](https://www.jianshu.com/p/4a8f4af4e803)
 
