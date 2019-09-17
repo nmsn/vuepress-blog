@@ -131,7 +131,7 @@ MutationObserver对象有三个方法，分别如下：
 6. **characterDataOldValue**：如果characterData为true或省略，则相当于设置为true,表示需要记录改变之前的目标数据，设置了characterDataOldValue可以省略characterData设置
 7. **attributeFilter**：如果不是所有的属性改变都需要被观察，并且attributes设置为true或者被忽略，那么设置一个需要观察的属性本地名称（不需要命名空间）的列表
 
-## css加载会造成阻塞吗？
+## css加载会造成阻塞吗
 
 参考：[css加载会造成阻塞吗？](https://www.cnblogs.com/chenjg/p/7126822.html)
 
@@ -139,7 +139,7 @@ MutationObserver对象有三个方法，分别如下：
 2. css加载会阻塞DOM树的渲染
 3. css加载会阻塞后面js语句的执行
 
-## 浏览器如果渲染过程遇到JS文件怎么处理？
+## 浏览器如果渲染过程遇到JS文件怎么处理
 
 原文：[你不知道的浏览器页面渲染机制](https://juejin.im/post/5ca0c0abe51d4553a942c17d?tdsourcetag=s_pcqq_aiomsg)
 
@@ -714,23 +714,23 @@ function _new() {
 
 2. 服务器向客户端发送验证请求代码401,（WWW-Authenticate: Basic realm=”google.com”这句话是关键，如果没有客户端不会弹出用户名和密码输入界面）
 
-```
-HTTP/1.0 401 Unauthorised 
-  Server: SokEvo/1.0 
-  WWW-Authenticate: Basic realm=”google.com” 
-  Content-Type: text/html 
-  Content-Length: xxx
-```
+    ```txt
+    HTTP/1.0 401 Unauthorised
+      Server: SokEvo/1.0
+      WWW-Authenticate: Basic realm=”google.com”
+      Content-Type: text/html
+      Content-Length: xxx
+    ```
 
 3. 当符合http1.0或1.1规范的客户端（如IE，FIREFOX）收到401返回值时，将自动弹出一个登录窗口，要求用户输入用户名和密码。
 
 4. 用户输入用户名和密码后，将用户名及密码以BASE64加密方式加密，并将密文放入前一条请求信息中，则客户端发送的第一条请求信息则变成如下内容：
 
-```
-Get /index.html HTTP/1.0 
-  Host:www.google.com 
-  Authorization: Basic d2FuZzp3YW5n
-```
+    ```txt
+    Get /index.html HTTP/1.0
+      Host:www.google.com
+      Authorization: Basic d2FuZzp3YW5n
+    ```
 
 5. 服务器收到上述请求信息后，将Authorization字段后的用户信息取出、解密，将解密后的用户名及密码与用户数据库进行比较验证，如用户名及密码正确，服务器则根据请求，将所请求资源发送给客户端
 
@@ -738,11 +738,11 @@ Get /index.html HTTP/1.0
 
 ### session-cookie
 
-1. 服务器在接受客户端首次访问时在服务器端创建seesion，然后保存seesion(我们可以将seesion保存在内存中，也可以保存在redis中，推荐使用后者)，然后给这个session生成一个唯一的标识字符串,然后在响应头中种下这个唯一标识字符串。 
+1. 服务器在接受客户端首次访问时在服务器端创建seesion，然后保存seesion(我们可以将seesion保存在内存中，也可以保存在redis中，推荐使用后者)，然后给这个session生成一个唯一的标识字符串,然后在响应头中种下这个唯一标识字符串。
 
-2. 签名。这一步只是对sid进行加密处理，服务端会根据这个secret密钥进行解密。（非必需步骤） 
+2. 签名。这一步只是对sid进行加密处理，服务端会根据这个secret密钥进行解密。（非必需步骤）
 
-3. 浏览器中收到请求响应的时候会解析响应头，然后将sid保存在本地cookie中，浏览器在下次http请求de 请求头中会带上该域名下的cookie信息， 
+3. 浏览器中收到请求响应的时候会解析响应头，然后将sid保存在本地cookie中，浏览器在下次http请求de 请求头中会带上该域名下的cookie信息，
 
 4. 服务器在接受客户端请求时会去解析请求头cookie中的sid，然后根据这个sid去找服务器端保存的该客户端的session，然后判断该请求是否合法。
 
@@ -811,7 +811,5 @@ JWT对象通常由三部分构成:
 2. 使用空白标签进行填充占位（容易理解，但引入无用标签）
 3. 使用margin模拟space-between和间隙
 4. 根据个数最后一个元素动态margin
-
-
 
 <Gitalk />
