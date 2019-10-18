@@ -87,6 +87,7 @@
 |删除代码\注释|`(?<!http:|S)//.*$`|
 |Unicode编码中的汉字范围|`/^[\u2E80-\u9FFF]+$/`|
 |Emoji|`/[\ud800-\udbff][\udc00-\udfff]/`|
+|连续数字转换成千分位|`String(Number).replace(/(\d)(?=(\d{3})+$)/g, "$1,")`|
 
 ## 常用方法
 
