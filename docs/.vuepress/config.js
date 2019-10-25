@@ -66,6 +66,7 @@ module.exports = {
       repo: 'blog-comments',
       clientId: '233b22bf00c6bf0029e8',
       clientSecret: 'a26bdb297de9c860c0f7515cb56f91d4a9534354',
+      autoCreateIssue: true,
     },
   }
 }
