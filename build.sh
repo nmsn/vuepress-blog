@@ -1,5 +1,4 @@
-# 构建
-yarn run docs:build
+npm run docs:build
 
 # 进入生成的构建文件夹
 cd docs/.vuepress/dist
