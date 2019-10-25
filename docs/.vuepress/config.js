@@ -7,6 +7,11 @@ module.exports = {
     ['script', { aysnc: true, src: 'https://www.googletagmanager.com/gtag/js?id=UA-127895888-1' }],
     ['script', {}, mountGoogleAnalytics()],
   ],
+  locales: {
+    '/': {
+      lang: 'zh-CN',
+    },
+  },
   themeConfig: {
     nav: [
       { text: '主页', link: '/' },
@@ -50,7 +55,19 @@ module.exports = {
     repoLabel: 'Github',
     ga: 'UA-127895888-1',
   },
-  plugins: ['@vuepress/active-header-links', '@vuepress/back-to-top']
+  plugins: {
+    '@vuepress/active-header-links': {},
+    '@vuepress/back-to-top': {},
+    '@vssue/vuepress-plugin-vssue': {
+      // 设置 `platform` 而不是 `api`
+      platform: 'github-v4',
+      // 其他的 Vssue 配置
+      owner: 'nmsn',
+      repo: 'blog-comments',
+      clientId: '233b22bf00c6bf0029e8',
+      clientSecret: 'a26bdb297de9c860c0f7515cb56f91d4a9534354',
+    },
+  }
 }
 
 function mountBaiduAnalytics() {
