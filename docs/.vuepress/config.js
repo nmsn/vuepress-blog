@@ -18,7 +18,7 @@ module.exports = {
       { text: '技术总结', link: '/tech/' },
       { text: '摘录', link: '/excerpt/' },
       { text: '读书笔记', link: '/readingNotes/' },
-      { text: '计划', link: '/plan/' },
+      // { text: '计划', link: '/plan/' },
     ],
     lastUpdated: 'Last Updated',
     sidebar: {
@@ -32,7 +32,7 @@ module.exports = {
             'Console',
             'Git',
             'RegEx',
-            'MongoDB',
+            // 'MongoDB',
           ]
         },
       ],
