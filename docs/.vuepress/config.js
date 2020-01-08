@@ -17,6 +17,7 @@ module.exports = {
       { text: '主页', link: '/' },
       { text: '技术总结', link: '/tech/' },
       { text: '摘录', link: '/excerpt/' },
+      { text: '面试题', link: '/interviewQuestions/' },
       { text: '读书笔记', link: '/readingNotes/' },
       // { text: '计划', link: '/plan/' },
     ],
