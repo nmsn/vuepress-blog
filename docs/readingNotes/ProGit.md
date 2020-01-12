@@ -85,6 +85,8 @@ git checkout -- `<file>`
 
 git remote -v 显示远程仓库使用的Git保存的简写与其对应的URL
 
+git remote show [remote-name]
+
 #### 添加远程仓库
 
 git remote add `<shortname>` url 添加一个新的远程Git仓库，同时指定一个你可以轻松引用的简写
@@ -98,10 +100,6 @@ git pull
 #### 推送到远程仓库
 
 git push origin master
-
-#### 查看远程仓库
-
-git remote show [remote-name]
 
 #### 远程仓库的移除与重命名
 
@@ -498,7 +496,7 @@ git config --global 读写该文件
 
 core.editor
 
-git config --global core.editor emacs 
+git config --global core.editor emacs
 
 使用core.editor选项来修改默认的编辑器
 
@@ -516,7 +514,7 @@ user.signingkey
 
 如果你要创建经签署的含附注的标签，那么把你的GPG签署密钥设置为配置项会更好
 
-git config --global user.signingkey <gpg-key-id>
+git config --global user.signingkey `<gpg-key-id>`
 
 core.excludesfile
 
@@ -530,11 +528,9 @@ help.autocorrect
 
 #### Git中的着色
 
-
 color.ui
 
 color.*
-
 
 #### 格式化与多余的空白字符
 
@@ -559,11 +555,3 @@ receive.fsckObjects
 receive.denyNonFastForwards
 
 receive.denyDeletes
-
-
-
-
-
-
-
-
