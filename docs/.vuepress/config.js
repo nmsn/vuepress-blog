@@ -48,7 +48,18 @@ module.exports = {
           '深入浅出Nodejs',
         ]
       },
-    ],
+      ],
+      '/interviewQuestions/': [
+        {
+        title: '面试题',
+        collapsable: false,
+        children: [
+          // '',
+          'css',
+          'network',
+        ]
+      },
+      ],
     },
     repo: 'nmsn',
     // 自定义项目仓库链接文字
