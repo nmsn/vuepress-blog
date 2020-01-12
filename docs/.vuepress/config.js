@@ -15,7 +15,7 @@ module.exports = {
   themeConfig: {
     nav: [
       { text: '主页', link: '/' },
-      { text: '技术总结', link: '/tech/' },
+      { text: '快查总结', link: '/tech/' },
       { text: '摘录', link: '/excerpt/' },
       { text: '面试题', link: '/interviewQuestions/' },
       { text: '读书笔记', link: '/readingNotes/' },
@@ -25,7 +25,7 @@ module.exports = {
     sidebar: {
       '/tech/': [
           {
-          title: '技术总结',
+          title: '快查总结',
           collapsable: false,
           children: [
             // '',
@@ -46,6 +46,9 @@ module.exports = {
           'Linux',
           '了不起的Nodejs',
           '深入浅出Nodejs',
+          '代码整洁之道',
+          'HTTP权威指南',
+          'ProGit',
         ]
       },
       ],
