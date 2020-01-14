@@ -4,35 +4,6 @@ sidebar: auto
 
 # css
 
-## css加载会造成阻塞吗
-
-原文：[css加载会造成阻塞吗](https://segmentfault.com/a/1190000018130499)
-
-结论：
-
-1. css加载不会阻塞DOM树的解析
-2. css加载会阻塞DOM树的渲染
-3. css加载会阻塞后面js语句的执行
-
-浏览器渲染流程如下：
-
-1. HTML解析文件，生成DOM树，解析CSS文件生成CSSOM树
-2. 将DOM树和CSSOM树结合，生成Render树
-3. 根据Render树渲染绘制，将像素渲染到屏幕上
-
-解释：
-
-1. DOM解析和CSS解析是两个并行的进程，所以这也就是了为什么CSS加载不会阻塞DOM的解析
-2. 然而由于Render树是依赖DOM树和CSSOM树的，所以它必须等待到CSSOM树构建完成，也就是CSS资源加载完成（或加载失败）后，才能开始渲染。因此CSS加载是会阻塞DOM的渲染的。
-3. 由于js可能会操作之前的DOM节点和CSS样式，因此浏览器会维持html中css和js的顺序。因此样式表会在后面的js执行前先加载执行完成。所以css会阻塞后面的js执行。
-
-DOMContentLoaded
-
-1. 如果页面中同时存在css和js，并且存在js在css后面，则DOMContentLoaded事件会在css加载完后才执行，因为js下载解析执行使用js引擎线程阻塞GUI渲染线程。
-2. 其他情况下，DOMContentLoaded都不会等待css加载，并且DOMContentLoaded事件也不会等待图片、视频等其他资源加载。
-
-当文档中没有脚本时，浏览器解析完文档便能触发DOMContentLoaded事件。如果文档中包含脚本，则脚本会阻塞文档的解析，而脚本需要等CSSOM构建完才能执行(JS因为可能会去获取DOM的样式，所以JS会等待样式表加载完毕，而JS是阻塞DOM的解析的，所以在有外部样式表的时候，JS会一直阻塞到外部样式表下载完毕)。在任何情况下DOMContentLoaded的触发不需要等待图片或其他资源加载完成。
-
 ## css性能优化
 
 原文：[CSS性能优化的8个技巧](https://juejin.im/post/5b6133a351882519d346853f?utm_source=gold_browser_extension)
