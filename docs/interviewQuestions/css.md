@@ -70,3 +70,66 @@ sidebar: auto
 1. 使用@import引入css会影响浏览器的并行下载。使用@import引用的css闻不见只有在引用它的那个css文件被下载、解析之后，浏览器才会知道还有另外一个css需要下载，这时才去下载，然后下载后开始解析、构建render树等一系列操作。这就导致浏览器无法并行下载所需的样式文件
 
 2. 多个@import会导致下载顺序混乱。在IE中，@import会引发资源文件的下载顺序被打乱，即排列在@import后面的js文件先于@import下载，并且打乱甚至破坏@import自身的并行下载
+
+## BFC
+
+块级格式化上下文，是一个独立的渲染区域，让处于BFC内部的元素与外部的元素相互隔离，是内外元素的定位不会相互影响
+
+触发条件：
+
+- 根元素
+- position: absolute/fixed
+- display: inline-block/table
+- float
+- overflow !== visible
+
+规则：
+
+- 属于同一个BFC的两个相邻Box垂直排列
+- 属于同一个BFC的两个相邻Box的margin会发生重叠
+- BFC中子元素的margin box的左边，与包含块（BFC）border box的左边相接触（子元素absolute）
+- BFC的区域不会与float的元素区域重叠
+- 计算BFC的高度时，浮动元素也参与计算
+- 文字层不会被浮动层覆盖，环绕于周围
+
+应用：
+
+- 阻止margin重叠
+- 可以包含浮动元素——清除内部浮动（清除浮动的原理时两个div都位于同一个BFC区域之中）
+- 自适应两栏布局
+- 可以阻止元素被浮动元素覆盖
+
+## 居中布局
+
+水平居中：
+
+- 行内元素： text-align: center
+- 块级元素： margin: 0 auto
+- absolute + transform（不需知道元素宽度）/ 负margin（需知道元素宽度）
+- flex + justify-content: center
+
+垂直居中：
+
+- line-height: height
+- absolute + transform（不需知道元素宽度）/ 负margin（需知道元素宽度）
+- flex + align-items: center
+- table
+
+水平垂直居中：
+
+- absolute + transform（不需知道元素宽度）/ 负margin（需知道元素宽度）
+- flex + justify-content + align-items
+
+## 选择器优先级
+
+1. 类型选择器（例如：`h1`）和伪元素（例如：`::before`）
+2. 类选择器（例如：`.class`），属性选择器（例如：`[type="radio"]`）和伪类（例如：`:hover`）
+3. ID选择器（例如：`#id`）
+
+通配符选择器（*）关系选恶气（+，>，~,' ',||）和否定伪类（例如：`:not()`）对优先级没有影响（但是在`:not()`内部声明的选择器会影响优先级）
+
+给元素添加内联样式（例如：`style="font-weight: blod"`）总会覆盖外部样式表的任何样式，因此可看作具有最高的优先级
+
+!important例外规则
+
+当在一个样式声明中使用一个 !important 规则时，此声明将覆盖任何其他声明。虽然，从技术上讲，!important 与优先级无关，但它与最终的结果直接相关。使用 !important 是一个坏习惯，应该尽量避免，因为这破坏了样式表中的固有的级联规则 使得调试找bug变得更加困难了。当两条相互冲突的带有 !important 规则的声明被应用到相同的元素上时，拥有更大优先级的声明将会被采用。
