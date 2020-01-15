@@ -61,6 +61,7 @@ module.exports = {
           'css',
           'network',
           '浏览器',
+          'React',
         ]
       },
       ],
