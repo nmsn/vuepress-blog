@@ -873,4 +873,16 @@ JWT对象通常由三部分构成:
 
     函数式编程没有副作用，只要保证接口不变，内部实现是外部无关的。
 
+## SOLID（面向对象设计）
+
+在程序设计领域，SOLID（单一功能、开闭原则、里氏替换、接口隔离以及依赖反转），指代了面向对象编程和面向对象设计的五个基本原则
+
+|首字母|全称|指代|概念|
+|---|---|---|---|
+|S|The Single Responsibility Principle|单一功能原则|认为对象应该仅具有一种单一功能的概念|
+|O|The Open Closed Principle|开闭原则|认为软件应该是对于扩展开放的，但是对于修改封闭的概念|
+|L|Liskov Substitution Principle|里氏替换原则|认为程序中的对象应该是可以在不改变程序正确性的前提下被它的子类所替换的概念|
+|I|The Interface Segregation Principle|接口隔离原则|认为多个特定的客户端接口要好于一个宽泛用途的接口的概念|
+|D|The Dependency Inversion Principle|依赖反转原则|认为一个方法应该遵从依赖于抽象而不是一个实例的概念，依赖注入是该原则的一种实现方式|
+
 <Vssue />
