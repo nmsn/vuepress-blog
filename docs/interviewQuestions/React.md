@@ -6,7 +6,9 @@
 
 产生原因：
 
-随着应用变得越来越庞大，整个更新渲染的过程开始变得吃力，大量的组件渲染会导致主进程长时间被占用，导致一些动画或高频操作出现卡顿和掉帧的情况。而关键点，便是`同步阻塞`。在之前的调度算法中，React 需要实例化每个类组件，生成一颗组件树，使用`同步递归`的方式进行遍历渲染，而这个过程最大的问题就是无法`暂停和恢复`
+随着应用变得越来越庞大，整个更新渲染的过程开始变得吃力，大量的组件渲染会导致主进程长时间被占用，
+导致一些动画或高频操作出现卡顿和掉帧的情况。而关键点，便是`同步阻塞`。
+在之前的调度算法中，React 需要实例化每个类组件，生成一颗组件树，使用`同步递归`的方式进行遍历渲染，而这个过程最大的问题就是无法`暂停和恢复`
 
 解决方法：
 
@@ -43,11 +45,15 @@ class Fiber {
 - **任务分割**，React 中的渲染更新可以分成两个阶段:
 
   - **reconciliation**阶段: vdom 的数据对比，是个适合拆分的阶段，比如对比一部分树后，先暂停执行个动画调用，待完成后再回来继续比对
-  - **Commit**阶段: 将 change list 更新到 dom 上，并不适合拆分，才能保持数据与 UI 的同步。否则可能由于阻塞 UI 更新，而导致数据更新和 UI 不一致的情况
+  - **Commit**阶段: 将 change list 更新到 dom 上，并不适合拆分，才能保持数据与 UI 的同步。否则可能由于阻塞 UI 更新，
+  而导致数据更新和 UI 不一致的情况
 
-- **分散执行**: 任务分割后，就可以把小任务单元分散到浏览器的空闲期间去排队执行，而实现的关键是两个新API: `requestIdleCallback`与 `requestAnimationFrame`
+- **分散执行**: 任务分割后，就可以把小任务单元分散到浏览器的空闲期间去排队执行，
+  而实现的关键是两个新API: `requestIdleCallback`与 `requestAnimationFrame`
 
-  - 低优先级的任务交给`requestIdleCallback`处理，这是个浏览器提供的事件循环空闲期的回调函数，需要 pollyfill，而且拥有 deadline 参数，限制执行事件，以继续切分任务
+  - 低优先级的任务交给`requestIdleCallback`处理，这是个浏览器提供的事件循环空闲期的回调函数，需要 pollyfill，
+  而且拥有 deadline 参数，限制执行事件，以继续切分任务
+
   - 高优先级的任务交给`requestAnimationFrame`处理
 
     ```js
@@ -55,7 +61,8 @@ class Fiber {
     requestIdleCallback((deadline) => {
         // 当有空闲时间时，我们执行一个组件渲染；
         // 把任务塞到一个个碎片时间中去；
-        while ((deadline.timeRemaining() > 0 || deadline.didTimeout) && nextComponent) {
+        while ((deadline.timeRemaining() > 0 || deadline.didTimeout)
+          && nextComponent) {
             nextComponent = performWork(nextComponent);
         }
     });
@@ -65,7 +72,13 @@ class Fiber {
 
 ## 生命周期
 
-在新版本中，React对生命周期有了新的`变动建议`
+v16.3版本之前的生命周期
+
+![react生命周期](../.vuepress/public/images/react-old-lifecycle.png)
+
+在v16.3中，React对生命周期有了新的`变动建议`
+
+![react生命周期](../.vuepress/public/images/react-new-lifecycle.png)
 
 - 使用`getDerivedStateFromProps`替换`componentWillMount`
 - 使用`getSnapshotBeforeUpdate`替换`componentWillUpdate`
@@ -147,8 +160,10 @@ React 中用于修改状态，更新视图。它具有以下特点:
 
     - 原因：原生事件是浏览器本身的实现，与事务流无关，自然是同步；而setTimeout是放置于定时器线程中延后执行，此时事务流已结束，因此也是同步
 
-- **批量更新**：在**合成事件**和**生命周期钩子**中，setState更新队列时，存储的是**合并状态**(Object.assign)。因此前面设置的 key 值会被后面所覆盖，最终只会执行一次更新
+- **批量更新**：在**合成事件**和**生命周期钩子**中，setState更新队列时，存储的是**合并状态**(Object.assign)。
+  因此前面设置的 key 值会被后面所覆盖，最终只会执行一次更新
 
-- **函数式**：于 Fiber 及 合并 的问题，官方推荐可以传入 函数 的形式。setState(fn)，在fn中返回新的state对象即可，例如this.setState((state, props) => newState)
+- **函数式**：于 Fiber 及 合并 的问题，官方推荐可以传入 函数 的形式。setState(fn)，在fn中返回新的state对象即可，
+  例如this.setState((state, props) => newState)
 
-  - 使用函数式，可以用于避免setState的批量更新的逻辑，传入的函数将会被 顺序调用
+  - 使用函数式，可以用于避免setState的批量更新的逻辑，传入的函数将会被 顺序调用。
