@@ -1,8 +1,4 @@
----
-sidebar: auto
----
-
-# css
+# CSS
 
 ## css性能优化
 
