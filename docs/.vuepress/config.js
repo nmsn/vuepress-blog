@@ -33,6 +33,7 @@ module.exports = {
             'Console',
             'Git',
             'RegEx',
+            'Github',
             // 'MongoDB',
           ]
         },
