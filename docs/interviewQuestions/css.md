@@ -16,7 +16,9 @@
     myCSS.rel = "stylesheet";
     myCSS.href = "mystyles.css";
     // 插入到header的最后位置
-    document.head.insertBefore( myCSS, document.head.childNodes[ document.head.childNodes.length - 1 ].nextSibling );
+    document.head.insertBefore(
+      myCSS, document.head.childNodes[document.head.childNodes.length - 1].nextSibling
+    );
     ```
 
 2. 将link元素的media属性设置为用户浏览器不匹配的媒体类型（或媒体查询），如media="print"，甚至可以是完全不存在的类型media="noexist"。对浏览器来说，如果样式表不适用于当前媒体类型，其优先级会被放低，会在不阻塞页面渲染的情况下再进行下载
@@ -126,6 +128,89 @@
 
 给元素添加内联样式（例如：`style="font-weight: blod"`）总会覆盖外部样式表的任何样式，因此可看作具有最高的优先级
 
-!important例外规则
+`!important`例外规则
 
-当在一个样式声明中使用一个 !important 规则时，此声明将覆盖任何其他声明。虽然，从技术上讲，!important 与优先级无关，但它与最终的结果直接相关。使用 !important 是一个坏习惯，应该尽量避免，因为这破坏了样式表中的固有的级联规则 使得调试找bug变得更加困难了。当两条相互冲突的带有 !important 规则的声明被应用到相同的元素上时，拥有更大优先级的声明将会被采用。
+当在一个样式声明中使用一个`!important`规则时，此声明将覆盖任何其他声明。虽然，从技术上讲，!important 与优先级无关，但它与最终的结果直接相关。
+使用`!important`是一个坏习惯，应该尽量避免，因为这破坏了样式表中的固有的级联规则 使得调试找bug变得更加困难了。当两条相互冲突的带有`!important`规则的声明被应用到相同的元素上时，拥有更大优先级的声明将会被采用。
+
+## 1px解决方案
+
+### 形成原因
+
+我们知道，像素可以分为物理像素（CSS像素）和设备像素。由于现在手机大部分是Retina高清屏幕，所以在PC端和移动端存在设备像素比的概念。简单说就是你在pc端看到的1px和在移动端看到的1px是不一样的。
+
+在PC端上，像素可以称为CSS像素，PC端上dpr为1。也就说你书写css样式是是多少在pc上就显示多少。而在移动端上，像素通常使用设备像素。往往PC端和移动端上在不做处理的情况下1px显示是不同的。
+
+一个物理像素等于多少个设备像素取决于移动设备的屏幕特性(是否是Retina)和用户缩放比例。
+
+如果是Retina高清屏幕，那么dpr的值可能为2或者3，那么当你在pc端上看到的1px时，在移动端上看到的就会是2px或者3px。
+
+由于业务需求，我们需要一些方法来实现移动端上的1px。
+
+### border-image
+
+```css
+.border-image-1px {
+  border-width: 1px 0;
+  border-image: url(linenew.png) 2 0 stretch;
+}
+```
+
+缺点是修改起来很麻烦，需要替换图片
+
+### transform伪类（推荐）
+
+```css
+.setOnePx{
+  position: relative;
+  &::after{
+    position: absolute;
+    content: '';
+    background-color: #e5e5e5;
+    display: block;
+    width: 100%;
+    height: 1px;
+    transform: scale(1, 0.5);
+    top: 0;
+    left: 0;
+  }
+}
+```
+
+### box-shadow
+
+```css
+.box-shadow-1px {
+box-shadow: inset 0px -1px 1px -1px #c8c7cc;
+}
+```
+
+缺点是实现效果和边框还是有细微差异
+
+### viewport设置scale
+
+```js
+<script>
+var viewport = document.querySelector("meta[name=viewport]");
+//下面是根据设备像素设置viewport
+if (window.devicePixelRatio == 1) {
+    viewport.setAttribute(
+      'content',
+      'width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no'
+    );
+}
+if (window.devicePixelRatio == 2) {
+    viewport.setAttribute(
+      'content',
+      'width=device-width,initial-scale=0.5,maximum-scale=0.5,minimum-scale=0.5,user-scalable=no'
+      );
+}
+if (window.devicePixelRatio == 3) {
+    viewport.setAttribute(
+      'content',
+      'width=device-width,initial-scale=0.333,maximum-scale=0.333,minimum-scale=0.333,user-scalable=no'
+    );
+}
+```
+
+此方案全局更改显示方案，还是要慎重考虑
