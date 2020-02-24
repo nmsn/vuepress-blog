@@ -59,7 +59,7 @@ module.exports = {
         collapsable: false,
         children: [
           // '',
-          'css',
+          'CSS',
           'JS',
           'Network',
           '浏览器',
