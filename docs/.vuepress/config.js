@@ -60,7 +60,8 @@ module.exports = {
         children: [
           // '',
           'css',
-          'network',
+          'JS',
+          'Network',
           '浏览器',
           'React',
           'Webpack',
