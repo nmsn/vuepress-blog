@@ -65,6 +65,7 @@ module.exports = {
           '浏览器',
           'React',
           'Webpack',
+          '设计模式',
         ]
       },
       ],
