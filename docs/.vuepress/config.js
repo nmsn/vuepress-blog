@@ -34,6 +34,7 @@ module.exports = {
             'Git',
             'RegEx',
             'Github',
+            'JS继承',
             // 'MongoDB',
           ]
         },
