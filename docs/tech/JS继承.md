@@ -27,10 +27,6 @@ var child2 = new Child();
 console.log(child2.names); // ["kevin", "daisy", "yayu"]
 ```
 
-
-
-
-
 缺点
 
 1. 引用类型的属性被所有实例共享，多个实例对引用类型的操作会被篡改
