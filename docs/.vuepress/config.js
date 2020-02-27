@@ -34,6 +34,7 @@ module.exports = {
             'Git',
             'RegEx',
             'Github',
+            'JS继承',
             // 'MongoDB',
           ]
         },
@@ -59,12 +60,13 @@ module.exports = {
         collapsable: false,
         children: [
           // '',
-          'css',
+          'CSS',
           'JS',
           'Network',
           '浏览器',
           'React',
           'Webpack',
+          '设计模式',
         ]
       },
       ],

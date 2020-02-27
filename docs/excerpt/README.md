@@ -84,23 +84,6 @@ event.stopImmediatePropagation 既能阻止事件向父元素冒泡，也能阻�
 
 event.target指向引起触发事件的元素，而event.currentTarget则是事件绑定的元素，只有被点击的那个目标元素的event.target才会等于event.currentTarget。也就是说，event.currentTarget始终是监听事件者，而event.target是事件的真正发出者。
 
-## HTTP
-
-### HTTP/2 vs HTTP/1.x
-
-- HTTP/2性能提升的核心就在于二进制分帧层。HTTP/2是二进制协议，他采用二进制格式传输数据而不是1.x的文本格式。
-  - HTTP/2中，同域名下所有通信都在单个连接上完成
-  - 单个连接可以承载任何数量的双向数据流
-  - 每个数据流都已消息的形式发送，而消息又由一个或多个帧组成，多个帧之间可以乱序发送，根据帧首部的流标识可以重新组装
-- HTTP/2对头部进行压缩。
-  - 在客户端与服务端使用“首部表”来跟踪和存储之前发送的键值对，对于相同的数据，不再通过每次请求和响应发送
-  - 首部表再HTTP/2的连续存续期内始终存在，由客户端和服务器共同渐进地更新
-  - 每个新的首部键值对要么被追加到当前表的末尾，要么替换表中之前的值
-- HTTP/2多路复用解决HTTP/1.x的线头阻塞和多个TCP连接的问题。
-- Server Push
-
-在HTTP/2中，多个请求时跑在同一个TCP管道当中。但当出现了丢包时，HTTP/2整个TCP都要开始等待重传，那么会阻塞该TCP连接中的所有请求。而对于HTTP/1.1来说，可以开启多个TCP连接，出现这种i情况反倒只回影响其中一个连接，剩余的TCP连接还可以正常传输数据
-
 ## 空格字符
 
 参考: [小tips: 使用&#x3000;等空格实现最小成本中文对齐](https://www.zhangxinxu.com/wordpress/2015/01/tips-blank-character-chinese-align/)

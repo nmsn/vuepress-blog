@@ -1,5 +1,47 @@
 # CSS
 
+## BFC
+
+> 块格式化上下文（Block Formatting Context，BFC） 是Web页面的可视化CSS渲染的一部分，是块盒子的布局过程发生的区域，也是浮动元素与其他元素交互的区域。
+
+具有 BFC 特性的元素可以看作是隔离了的独立容器，容器里面的元素不会在布局上影响到外面的元素，并且 BFC 具有普通容器所没有的一些特性。
+
+### 1. 如何形成BFC
+
+只要元素满足下面任一条件即可触发 BFC 特性:
+
+- 根元素(`<html>`)
+- 浮动元素（元素的 float 不是 none）
+- 绝对定位元素（元素的 position 为 absolute 或 fixed）
+- overflow 值不为 visible 的块元素(hidden、auto、scroll)
+- contain 值为 layout、content或 paint 的元素
+- 弹性元素（display为 flex 或 inline-flex元素的直接子元素）
+- 网格元素（display为 grid 或 inline-grid 元素的直接子元素）
+- 多列容器（元素的 column-count 或 column-width 不为 auto，包括 column-count 为 1）
+- column-span 为 all 的元素始终会创建一个新的BFC，即使该元素没有包裹在一个多列容器中（标准变更，Chrome bug）
+- display
+  - 行内块元素（元素的 display 为 inline-block）
+  - 表格单元格（元素的 display为 table-cell，HTML表格单元格默认为该值）
+  - 表格标题（元素的 display 为 table-caption，HTML表格标题默认为该值）
+  - 匿名表格单元格元素（元素的 display为 table、table-row、 table-row-group、table-header-group、
+  table-footer-group（分别是HTML table、row、tbody、thead、tfoot的默认属性）或 inline-table）
+  - display 值为 flow-root 的元素
+
+### 2. BFC的原理/BFC的布局规则
+
+- BFC 内部的子元素，在垂直方向，边距会发生重叠
+- BFC在页面中是独立的容器，外面的元素不会影响里面的元素，反之亦然
+- BFC区域不与旁边的float box区域重叠
+- 计算BFC的高度时，浮动的子元素也参与计算
+- 文字层不会被浮动层覆盖，环绕于周围
+
+### 3. BFC的原理应用
+
+- 阻止margin重叠
+- 可以包含浮动元素——清除内部浮动（清除浮动的原理时两个div都位于同一个BFC区域之中）
+- 自适应两栏布局
+- 可以阻止元素被浮动元素覆盖
+
 ## css性能优化
 
 原文：[CSS性能优化的8个技巧](https://juejin.im/post/5b6133a351882519d346853f?utm_source=gold_browser_extension)
@@ -68,34 +110,6 @@
 1. 使用@import引入css会影响浏览器的并行下载。使用@import引用的css闻不见只有在引用它的那个css文件被下载、解析之后，浏览器才会知道还有另外一个css需要下载，这时才去下载，然后下载后开始解析、构建render树等一系列操作。这就导致浏览器无法并行下载所需的样式文件
 
 2. 多个@import会导致下载顺序混乱。在IE中，@import会引发资源文件的下载顺序被打乱，即排列在@import后面的js文件先于@import下载，并且打乱甚至破坏@import自身的并行下载
-
-## BFC
-
-块级格式化上下文，是一个独立的渲染区域，让处于BFC内部的元素与外部的元素相互隔离，是内外元素的定位不会相互影响
-
-触发条件：
-
-- 根元素
-- position: absolute/fixed
-- display: inline-block/table
-- float
-- overflow !== visible
-
-规则：
-
-- 属于同一个BFC的两个相邻Box垂直排列
-- 属于同一个BFC的两个相邻Box的margin会发生重叠
-- BFC中子元素的margin box的左边，与包含块（BFC）border box的左边相接触（子元素absolute）
-- BFC的区域不会与float的元素区域重叠
-- 计算BFC的高度时，浮动元素也参与计算
-- 文字层不会被浮动层覆盖，环绕于周围
-
-应用：
-
-- 阻止margin重叠
-- 可以包含浮动元素——清除内部浮动（清除浮动的原理时两个div都位于同一个BFC区域之中）
-- 自适应两栏布局
-- 可以阻止元素被浮动元素覆盖
 
 ## 居中布局
 
