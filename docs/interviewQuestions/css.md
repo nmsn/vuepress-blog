@@ -228,3 +228,16 @@ if (window.devicePixelRatio == 3) {
 ```
 
 此方案全局更改显示方案，还是要慎重考虑
+
+## display:none,visibility:hidden,opacity:0三者区别
+
+||display:none|visibility:hidden|opacity:0|
+|---|---|---|---|
+|是否占据页面控件|x|√|√|
+|对子元素影响|√|x|√|
+|自身绑定的事件能否继续触发|x|x|√|
+|是否影响其他元素触发事件（例如被遮挡的元素）|x|x|√|
+|是否产生回流（reflow）|√|x|x|
+|是否产生重绘（repaint）|√|√|不一定|
+
+元素提升为合成层后，transform 和 opacity 不会触发 repaint，如果不是合成层，则其依然会触发 repaint。在 Blink 和 WebKit 内核的浏览器中，对于应用了 transition 或者 animation 的 opacity 元素，浏览器会将渲染层提升为合成层。也可以使用 translateZ(0) 或者 translate3d(0,0,0) 来人为地强制性地创建一个合成层。
