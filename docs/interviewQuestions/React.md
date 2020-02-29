@@ -130,6 +130,10 @@ class Component extends React.Component {
 }
 ```
 
+### 新的生命周期用法
+
+![新生命周期](../.vuepress/public/images/react_new_lifecycle_usage.jpg)
+
 ## setState
 
 ### 事务
@@ -167,3 +171,7 @@ React 中用于修改状态，更新视图。它具有以下特点:
   例如this.setState((state, props) => newState)
 
   - 使用函数式，可以用于避免setState的批量更新的逻辑，传入的函数将会被 顺序调用。
+
+## diff
+
+![diff](../.vuepress/public/images/react_diff.jpg)
