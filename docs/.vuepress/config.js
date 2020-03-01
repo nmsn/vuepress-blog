@@ -19,6 +19,7 @@ module.exports = {
       { text: '摘录', link: '/excerpt/' },
       { text: '面试题', link: '/interviewQuestions/' },
       { text: '读书笔记', link: '/readingNotes/' },
+      { text: '工作总结', link: '/work/' },
       // { text: '计划', link: '/plan/' },
     ],
     lastUpdated: 'Last Updated',
@@ -67,6 +68,20 @@ module.exports = {
           'React',
           'Webpack',
           '设计模式',
+        ]
+      },
+      ],
+      '/work/': [
+        {
+        title: '工作总结',
+        collapsable: false,
+        children: [
+          // '',
+          'axios取消请求',
+          'axios文件处理',
+          'fetch',
+          // '图片切割',
+          // '走马灯',
         ]
       },
       ],
