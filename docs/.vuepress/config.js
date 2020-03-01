@@ -80,7 +80,7 @@ module.exports = {
           'axios取消请求',
           'axios文件处理',
           'fetch',
-          // '图片切割',
+          'dsBridge',
           // '走马灯',
         ]
       },
