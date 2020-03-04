@@ -517,3 +517,7 @@ DoS 攻击就是通过大量恶意流量占用带宽和计算资源以达到瘫�
 ### 308 Permanent Redirect 的定义
 
 308 的定义实际上和 301 是一致的，唯一的区别在于，308 状态码不允许浏览器将原本为 POST 的请求重定向到 GET 请求上。
+
+## OSI七层模型
+
+![osi](../.vuepress/public/images/osi.png)
