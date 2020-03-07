@@ -76,6 +76,8 @@ v16.3版本之前的生命周期
 
 ![react生命周期](../.vuepress/public/images/react-old-lifecycle.png)
 
+![react生命周期](../.vuepress/public/images/react-old-lifecycle2.png)
+
 在v16.3中，React对生命周期有了新的`变动建议`
 
 ![react生命周期](../.vuepress/public/images/react-new-lifecycle.png)
@@ -83,6 +85,10 @@ v16.3版本之前的生命周期
 - 使用`getDerivedStateFromProps`替换`componentWillMount`
 - 使用`getSnapshotBeforeUpdate`替换`componentWillUpdate`
 - 避免使用`componentWillReceiveProps`
+
+在v16.4中，修正了getDerivedStateFromProps
+
+![react生命周期](../.vuepress/public/images/react-new-lifecycle-16.4.png)
 
 其实该变动的原因，正是由于上述提到的 Fiber。首先，从上面我们知道 React 可以分成 reconciliation 与 commit 两个阶段，对应的生命周期如下:
 
