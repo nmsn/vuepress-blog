@@ -36,7 +36,7 @@ module.exports = {
             'RegEx',
             'Github',
             'JS继承',
-            // 'MongoDB',
+            '前端性能优化之雅虎35条军规',
           ]
         },
       ],
