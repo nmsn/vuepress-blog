@@ -277,3 +277,82 @@ bar要取得a的值，就要到创建bar这个函数的作用域中取值（这�
 #### 作用域链
 
 当查找变量的时候，会先从当前上下文的变量对象中查找，如果没有找到，就会从父级(词法层面上的父级)执行上下文的变量对象中查找，一直找到全局上下文的变量对象，也就是全局对象。这样由多个执行上下文的变量对象构成的链表就叫做作用域链。
+
+## 手动实现Promise
+
+```js
+class Prom {
+  static resolve (value) {
+    if (value && value.then) {
+      return value
+    }
+    return new Prom(resolve => resolve(value))
+  }
+
+  constructor (fn) {
+    this.value = undefined
+    this.reason = undefined
+    this.status = 'PENDING'
+
+    // 维护一个 resolve/pending 的函数队列
+    this.resolveFns = []
+    this.rejectFns = []
+
+    const resolve = (value) => {
+      // 注意此处的 setTimeout
+      setTimeout(() => {
+        this.status = 'RESOLVED'
+        this.value = value
+        this.resolveFns.forEach(({ fn, resolve: res, reject: rej }) => res(fn(value)))
+      })
+    }
+
+    const reject = (e) => {
+      setTimeout(() => {
+        this.status = 'REJECTED'
+        this.reason = e
+        this.rejectFns.forEach(({ fn, resolve: res, reject: rej }) => rej(fn(e)))
+      })
+    }
+
+    fn(resolve, reject)
+  }
+
+
+  then (fn) {
+    if (this.status === 'RESOLVED') {
+      const result = fn(this.value)
+      // 需要返回一个 Promise
+      // 如果状态为 resolved，直接执行
+      return Prom.resolve(result)
+    }
+    if (this.status === 'PENDING') {
+      // 也是返回一个 Promise
+      return new Prom((resolve, reject) => {
+        // 推进队列中，resolved 后统一执行
+        this.resolveFns.push({ fn, resolve, reject })
+      })
+    }
+  }
+
+  catch (fn) {
+    if (this.status === 'REJECTED') {
+      const result = fn(this.value)
+      return Prom.resolve(result)
+    }
+    if (this.status === 'PENDING') {
+      return new Prom((resolve, reject) => {
+        this.rejectFns.push({ fn, resolve, reject })
+      })
+    }
+  }
+}
+
+Prom.resolve(10).then(o => o * 10).then(o => o + 10).then(o => {
+  console.log(o)
+})
+
+return new Prom((resolve, reject) => reject('Error')).catch(e => {
+  console.log('Error', e)
+})
+```
