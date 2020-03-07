@@ -175,3 +175,34 @@ React 中用于修改状态，更新视图。它具有以下特点:
 ## diff
 
 ![diff](../.vuepress/public/images/react_diff.jpg)
+
+## Render Props
+
+The Render Props是一种在不重复代码的情况下共享组件间功能的方法。
+
+```js
+<DataProvider render={data => (
+  <h1>Hello {data.target}</h1>
+)}/>
+```
+
+通过使用prop来定义呈现的内容，组件只是注入功能，而不需要知道它如何应用于UI。render prop 模式意味着用户通过定义单独组件来传递prop方法，来指示共享组件应该返回的内容。
+
+Render Props 的核心思想是，通过一个函数将class组件的state作为props传递给纯函数组件
+
+```js
+import React from 'react';
+
+const SharedComponent extends React.Component {
+  state = {...}
+  render() {
+    return (
+      <div>
+        {this.props.render(this.state)}
+      </div>
+    );
+  }
+}
+
+export default SharedComponent;
+```
