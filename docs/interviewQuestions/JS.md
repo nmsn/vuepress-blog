@@ -386,3 +386,49 @@ function Person(name) {
 
 var a = create(Person, 'xiaoming')
 ```
+
+## promise.race和prmise.all实现
+
+### promise.race
+
+```js
+Promise.race = function (promises) {
+  return new Promise(((resolve, reject) => {
+    for (let i = 0; i < promises.length; i++) {
+      Promise.resolve(promises[i]).then((data) => {
+        resolve(data);
+        return;
+      }, err=>reject(err));
+    }
+  }
+));
+}
+```
+
+### promise.all
+
+```js
+function promiseAll(promises) {
+  return new Promise(function(resolve, reject) {
+    if (!isArray(promises)) {
+      return reject(new TypeError('arguments must be an array'));
+    }
+    var resolvedCounter = 0;
+    var promiseNum = promises.length;
+    var resolvedValues = new Array(promiseNum);
+    for (var i = 0; i < promiseNum; i++) {
+      (function(i) {
+        Promise.resolve(promises[i]).then(function(value) {
+          resolvedCounter++
+          resolvedValues[i] = value
+          if (resolvedCounter == promiseNum) {
+            return resolve(resolvedValues)
+          }
+        }, function(reason) {
+          return reject(reason)
+        })
+      })(i)
+    }
+  })
+}
+```
