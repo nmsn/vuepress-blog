@@ -356,3 +356,33 @@ return new Prom((resolve, reject) => reject('Error')).catch(e => {
   console.log('Error', e)
 })
 ```
+
+## new操作符的工作原理
+
+1. 新建一个对象
+2. 设置原型链
+3. 让F中的this指向instance，执行F的函数体
+4. 判断F的返回值类型
+   - 如果是值类型，返回instance
+   - 如果是引用类型，就返回这个引用类型的对象，替换掉instance
+
+```js
+function create () {
+   // 创建一个空对象
+  let obj = new Object();
+  // 获取构造函数
+  let Constructor = [].shift.call(arguments);
+  // 链接到原型
+  obj.__proto__ =  Constructor.prototype;
+  // 绑定this值
+  let result = Constructor.apply(obj, arguments);
+  //. 返回新对象
+  return typeof result === "object" ? result : obj
+}
+
+function Person(name) {
+  this.name = name;
+}
+
+var a = create(Person, 'xiaoming')
+```
