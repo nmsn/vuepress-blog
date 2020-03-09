@@ -111,6 +111,14 @@
 
 2. 多个@import会导致下载顺序混乱。在IE中，@import会引发资源文件的下载顺序被打乱，即排列在@import后面的js文件先于@import下载，并且打乱甚至破坏@import自身的并行下载
 
+## link和@import的区别
+
+- link属于XHTML标签，而@import是CSS提供的。
+- 页面被加载时，link会同时被加载，而@import引用的CSS会等到页面被加载完再加载。
+- import只在IE 5以上才能识别，而link是XHTML标签，无兼容问题。
+- link方式的样式权重高于@import的权重。
+- 使用dom控制样式时的差别。当使用javascript控制dom去改变样式的时候，只能使用link标签，因为@import不是dom可以控制的
+
 ## 居中布局
 
 水平居中：
@@ -241,3 +249,69 @@ if (window.devicePixelRatio == 3) {
 |是否产生重绘（repaint）|√|√|不一定|
 
 元素提升为合成层后，transform 和 opacity 不会触发 repaint，如果不是合成层，则其依然会触发 repaint。在 Blink 和 WebKit 内核的浏览器中，对于应用了 transition 或者 animation 的 opacity 元素，浏览器会将渲染层提升为合成层。也可以使用 translateZ(0) 或者 translate3d(0,0,0) 来人为地强制性地创建一个合成层。
+
+## CSS定位方式
+
+- static: 正常文档流定位，此时 top, right, bottom, left 和 z-index 属性无效，块级元素从上往下纵向排布，行级元素从左向右排列。
+- relative：相对定位，此时的『相对』是相对于正常文档流的位置。
+- absolute：相对于最近的非 static 定位祖先元素的偏移，来确定元素位置，比如一个绝对定位元素它的父级、和祖父级元素都为relative，它会相对他的父级而产生偏移。
+- fixed：指定元素相对于屏幕视口（viewport）的位置来指定元素位置。元素的位置在屏幕滚动时不会改变，比如那种回到顶部的按钮一般都是用此定位方式。
+- sticky：粘性定位，特性近似于relative和fixed的合体，其在实际应用中的近似效果就是IOS通讯录滚动的时候的『顶屁股』。
+
+## 层叠山下文与层叠顺序
+
+### 层叠上下文
+
+层叠上下文是HTML元素的三维概念，这些HTML元素在一条假想的相对于面向（电脑屏幕的）视窗或者网页的用户的z轴上延伸，HTML元素依据其自身属性按照优先级顺序占用层叠上下文的空间。
+
+#### 产生条件
+
+- 根元素 (HTML),
+- z-index 值不为 "auto"的 绝对/相对定位，
+- 一个 z-index 值不为 "auto"的 flex 项目 (flex item)，即：父- 元素 display: flex|inline-flex，
+- opacity 属性值小于 1 的元素（参考 the specification for - opacity），
+- transform 属性值不为 "none"的元素，
+- mix-blend-mode 属性值不为 "normal"的元素，
+- filter值不为“none”的元素，
+- perspective值不为“none”的元素，
+- isolation 属性被设置为 "isolate"的元素，
+- position: fixed
+- 在 will-change 中指定了任意 CSS 属性，即便你没有直接指定这些属性的值（参考 这篇文章）
+- -webkit-overflow-scrolling 属性被设置 "touch"的元素
+
+### 层叠顺序
+
+![层叠顺序](../.vuepress/public/images/css_z-index.png)
+
+- 诸如border/background一般为装饰属性
+- 浮动和块状元素一般用作布局，
+- 内联元素是内容
+
+#### 层叠顺序准则
+
+1. 谁大谁上：当具有明显的层叠水平标示的时候，如识别的z-indx值，在同一个层叠上下文领域，层叠水平值大的那一个覆盖小的那一个。通俗讲就是官大的压死官小的。
+2. 后来居上：当元素的层叠水平一致、层叠顺序相同的时候，在DOM流中处于后面的元素会覆盖前面的元素。
+
+### 参考文献
+
+- 深入理解CSS中的层叠上下文和层叠顺序：[https://www.zhangxinxu.com/wordpress/2016/01/understand-css-stacking-context-order-z-index/](https://www.zhangxinxu.com/wordpress/2016/01/understand-css-stacking-context-order-z-index/)
+
+## 盒模型
+
+当对一个文档进行布局（lay out）的时候，浏览器的渲染引擎会根据标准之一的 CSS 基础框盒模型（CSS basic box model），将所有元素表示为一个个矩形的盒子（box）。CSS 决定这些盒子的大小、位置以及属性（例如颜色、背景、边框尺寸…）。
+
+盒模型由content（内容）、padding（内边距）、border（边框）、margin（外边距）组成。
+
+### 标准盒模型和怪异盒模型
+
+在W3C标准下，我们定义元素的width值即为盒模型中的content的宽度值，height值即为盒模型中的content的高度值
+
+而IE怪异盒模型（IE8以下）width的宽度并不是content的宽度，而是border-left + padding-left + content的宽度值 + padding-right + border-right之和，height同理。
+
+### box-sizing
+
+```css
+box-sizing: content-box // 标准盒模型
+box-sizing: border-box // 怪异盒模型
+box-sizing: padding-box // 火狐的私有模型，没人用
+```
