@@ -76,6 +76,8 @@ v16.3版本之前的生命周期
 
 ![react生命周期](../.vuepress/public/images/react-old-lifecycle.png)
 
+![react生命周期](../.vuepress/public/images/react-old-lifecycle2.png)
+
 在v16.3中，React对生命周期有了新的`变动建议`
 
 ![react生命周期](../.vuepress/public/images/react-new-lifecycle.png)
@@ -83,6 +85,10 @@ v16.3版本之前的生命周期
 - 使用`getDerivedStateFromProps`替换`componentWillMount`
 - 使用`getSnapshotBeforeUpdate`替换`componentWillUpdate`
 - 避免使用`componentWillReceiveProps`
+
+在v16.4中，修正了getDerivedStateFromProps
+
+![react生命周期](../.vuepress/public/images/react-new-lifecycle-16.4.png)
 
 其实该变动的原因，正是由于上述提到的 Fiber。首先，从上面我们知道 React 可以分成 reconciliation 与 commit 两个阶段，对应的生命周期如下:
 
@@ -175,3 +181,34 @@ React 中用于修改状态，更新视图。它具有以下特点:
 ## diff
 
 ![diff](../.vuepress/public/images/react_diff.jpg)
+
+## Render Props
+
+The Render Props是一种在不重复代码的情况下共享组件间功能的方法。
+
+```js
+<DataProvider render={data => (
+  <h1>Hello {data.target}</h1>
+)}/>
+```
+
+通过使用prop来定义呈现的内容，组件只是注入功能，而不需要知道它如何应用于UI。render prop 模式意味着用户通过定义单独组件来传递prop方法，来指示共享组件应该返回的内容。
+
+Render Props 的核心思想是，通过一个函数将class组件的state作为props传递给纯函数组件
+
+```js
+import React from 'react';
+
+const SharedComponent extends React.Component {
+  state = {...}
+  render() {
+    return (
+      <div>
+        {this.props.render(this.state)}
+      </div>
+    );
+  }
+}
+
+export default SharedComponent;
+```

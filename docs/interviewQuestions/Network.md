@@ -68,8 +68,6 @@ server由于收不到确认，就知道client并没有要求建立连接。
 
 ## 浏览器缓存
 
-[原文](https://www.cnblogs.com/lyzg/p/5125934.html?from=cnblogs)
-
 1. 浏览器在加载资源时，先根据这个资源的一些http header判断它是否命中强缓存，强缓存如果命中，浏览器直接从自己的缓存中读取资源，不会发请求到服务器。比如某个css文件，如果浏览器在加载它所在的网页时，这个css文件的缓存配置命中了强缓存，浏览器就直接从缓存中加载这个css，连请求都不会发送到网页所在服务器；
 2. 当强缓存没有命中的时候，浏览器一定会发送一个请求到服务器，通过服务器端依据资源的另外一些http header验证这个资源是否命中协商缓存，如果协商缓存命中，服务器会将这个请求返回，但是不会返回这个资源的数据，而是告诉客户端可以直接从缓存中加载这个资源，于是浏览器就又会从自己的缓存中去加载这个资源；
 3. 强缓存与协商缓存的共同点是：如果命中，都是从客户端缓存中加载资源，而不是从服务器加载资源数据；区别是：强缓存不发请求到服务器，协商缓存会发请求到服务器。
@@ -89,6 +87,13 @@ server由于收不到确认，就知道client并没有要求建立连接。
 
 这两个header可以只启用一个，也可以同时启用，当response header中，`Expires`和`Cache-Control`同时存在时，`Cache-Control`优先级高于`Expires`
 
+目前主流的做法使用Cache-Control控制缓存，除了max-age控制过期时间外，还有一些不得不提
+
+- Cache-Control: public可以被所有用户缓存，包括终端和CDN等中间代理服务器
+- Cache-Control: private只能被终端浏览器缓存，不允许中继缓存服务器进行缓存
+- Cache-Control: no-cache,先缓存本地，但是在命中缓存之后必须与服务器验证缓存的新鲜度才能使用
+- Cache-Control: no-store，不会产生任何缓存
+
 ### 协商缓存
 
 当浏览器对某个资源的请求没有命中强缓存，就会发一个请求到服务器，验证协商缓存是否命中，如果协商缓存命中，
@@ -100,6 +105,23 @@ server由于收不到确认，就知道client并没有要求建立连接。
 |---|---|
 |`If-None-Match`表示资源上一次返回的`Etag`|`Etag`根据资源生成的唯一标识|
 |`If-Modified`表示资源上一次返回的`LastModified`|`LastModified`资源最后修改时间|
+
+#### Last-Modified/If-Modified-Since
+
+客户端首次请求资源时，服务器会把资源的最新修改时间Last-Modified:Thu, 19 Feb 2019 08:20:55 GMT通过响应部首发送给客户端，当再次发送请求是，客户端将服务器返回的修改时间放在请求头If-Modified-Since:Thu, 19 Feb 2019 08:20:55 GMT发送给服务器，服务器再跟服务器上的对应资源进行比对，如果服务器的资源更新，那么返回最新的资源，此时状态码200，当服务器资源跟客户端的请求的部首时间一致，证明客户端的资源是最新的，返回304状态码，表示客户端直接用缓存即可。
+
+##### ETag/If-None-Match
+
+ETag的流程跟Last-Modified是类似的，区别就在于ETag是根据资源内容进行hash，生成一个信息摘要，只要资源内容有变化，这个摘要就会发生巨变，通过这个摘要信息比对，即可确定客户端的缓存资源是否为最新，这比Last-Modified的精确度要更高
+
+### 图示
+
+![http_cache](../.vuepress/public/images/http_cache.png)
+
+### 参考文献
+
+- 浏览器缓存知识小结及应用：[https://www.cnblogs.com/lyzg/p/5125934.html?from=cnblogs](https://www.cnblogs.com/lyzg/p/5125934.html?from=cnblogs)
+- HTTP的缓存的过程是怎样的？：[https://www.cxymsg.com/guide/http.html#http%E7%9A%84%E7%BC%93%E5%AD%98%E7%9A%84%E8%BF%87%E7%A8%8B%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84%EF%BC%9F](https://www.cxymsg.com/guide/http.html#http%E7%9A%84%E7%BC%93%E5%AD%98%E7%9A%84%E8%BF%87%E7%A8%8B%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84%EF%BC%9F)
 
 ### 刷新
 
@@ -426,7 +448,7 @@ WebSocket protocol是HTML5一种新的协议。它实现了浏览器与服务器
 
 ### 参考文献
 
-- J前端常见跨域解决方案（全）：[https://segmentfault.com/a/1190000011145364](https://segmentfault.com/a/1190000011145364)
+- 前端常见跨域解决方案（全）：[https://segmentfault.com/a/1190000011145364](https://segmentfault.com/a/1190000011145364)
 - 跨域资源共享 CORS 详解：[https://www.ruanyifeng.com/blog/2016/04/cors.html](https://www.ruanyifeng.com/blog/2016/04/cors.html)
 - HTTP访问控制（CORS）：[https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS)
 
@@ -486,7 +508,41 @@ PS：因为CSRF和XSS攻击相比，CSRF攻击往往不大流行（因此对其�
 
 DoS 攻击就是通过大量恶意流量占用带宽和计算资源以达到瘫痪对方网络的目的。
 
-## 状态码 301/302/303/307/308
+## HTTP状态码常用状态码
+
+2XX 成功
+
+- 200 OK，表示从客户端发来的请求在服务器端被正确处理
+- 201 Created 请求已经被实现，而且有一个新的资源已经依据请求的需要而建立
+- 202 Accepted 请求已接受，但是还没执行，不保证完成请求
+- 204 No content，表示请求成功，但响应报文不含实体的主体部分
+- 206 Partial Content，进行范围请求
+
+3XX 重定向
+
+- 301 moved permanently，永久性重定向，表示资源已被分配了新的 - URL
+- 302 found，临时性重定向，表示资源临时被分配了新的 URL
+- 303 see other，表示资源存在着另一个 URL，应使用 GET 方法丁香- 获取资源
+- 304 not modified，表示服务器允许访问资源，但因发生请求未满足- 条件的情况
+- 307 temporary redirect，临时重定向，和302含义相同
+
+4XX 客户端错误
+
+- 400 bad request，请求报文存在语法错误
+- 401 unauthorized，表示发送的请求需要有通过 HTTP 认证的认证信- 息
+- 403 forbidden，表示对请求资源的访问被服务器拒绝
+- 404 not found，表示在服务器上没有找到请求的资源
+- 408 Request timeout, 客户端请求超时
+- 409 Confict, 请求的资源可能引起冲突
+
+5XX 服务器错误
+
+- 500 internal sever error，表示服务器端在执行请求时发生了错误
+- 501 Not Implemented 请求超出服务器能力范围，例如服务器不支持当前请求所需要的某个功能，或者请求是服务器不支持的某个方法
+- 503 service unavailable，表明服务器暂时处于超负载或正在停机维护，无法处理请求
+- 505 http version not supported 服务器不支持，或者拒绝支持在请求中使用的 HTTP 版本
+
+## HTTP状态码 301/302/303/307/308
 
 ### 301 Moved Permanently
 
@@ -517,3 +573,25 @@ DoS 攻击就是通过大量恶意流量占用带宽和计算资源以达到瘫�
 ### 308 Permanent Redirect 的定义
 
 308 的定义实际上和 301 是一致的，唯一的区别在于，308 状态码不允许浏览器将原本为 POST 的请求重定向到 GET 请求上。
+
+## OSI七层模型
+
+![osi](../.vuepress/public/images/osi.png)
+
+## HTTP请求方法
+
+- HTTP1.0定义了三种请求方法： GET, POST 和 HEAD方法
+  - GET: 通常用于请求服务器发送某些资源
+  - HEAD: 请求资源的头部信息, 并且这些头部与 HTTP GET 方法请求时返回的一致. 该请求方法的一个使用场景是在下载一个大文件前先获取其大小再决定是否要下载, 以此可以节约带宽资源
+  - POST: 发送数据给服务器
+- HTTP1.1新增了五种请求方法：OPTIONS, PUT, DELETE, TRACE 和 CONNECT
+  - OPTIONS: 用于获取目的资源所支持的通信选项
+  - PUT: 用于新增资源或者使用请求中的有效负载替换目标资源的表现形式
+  - DELETE: 用于删除指定的资源
+  - PATCH: 用于对资源进行部分修改
+  -CONNECT: HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器
+  - TRACE: 回显服务器收到的请求，主要用于测试或诊断
+
+## HTTP请求/响应报文
+
+![请求/响应](../.vuepress/public/images/http_req_res.png)
