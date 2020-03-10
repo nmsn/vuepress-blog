@@ -783,3 +783,39 @@ Mark-Sweep，是标记清除的意思。它主要分为标记和清除两个阶�
 ### 参考文献
 
 - JavaScript内存管理：[https://www.cxymsg.com/guide/memory.html#%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6](https://www.cxymsg.com/guide/memory.html#%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6)
+
+## 前端路由的实现
+
+### H5 History API
+
+```js
+class Routers {
+  constructor() {
+    this.routes = {};
+    // 在初始化时监听popstate事件
+    this._bindPopState();
+  }
+  // 初始化路由
+  init(path) {
+    history.replaceState({path: path}, null, path);
+    this.routes[path] && this.routes[path]();
+  }
+  // 将路径和对应回调函数加入hashMap储存
+  route(path, callback) {
+    this.routes[path] = callback || function() {};
+  }
+
+  // 触发路由对应回调
+  go(path) {
+    history.pushState({path: path}, null, path);
+    this.routes[path] && this.routes[path]();
+  }
+  // 监听popstate事件
+  _bindPopState() {
+    window.addEventListener('popstate', e => {
+      const path = e.state && e.state.path;
+      this.routes[path] && this.routes[path]();
+    });
+  }
+}
+```

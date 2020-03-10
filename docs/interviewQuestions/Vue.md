@@ -19,53 +19,59 @@ Vue中用Observer类来管理上述响应式化Object.defineProperty的过程
 这个方法主要用 data 作为参数去实例化一个 Observer 对象实例，Observer 是一个 Class，用于依赖收集和 notify 更新，Observer 的构造函数使用 defineReactive 方法给对象的键响应式化，给对象的属性递归添加 getter/setter ，当data被取值的时候触发 getter 并搜集依赖，当被修改值的时候先触发 getter 再触发 setter 并派发更新
 
 ```js
+// 监听者,监听对象属性值的变化
 class Observer {
-    constructor() {
-      // 响应式绑定数据通过方法
-      observe(this.data);
-    }
+  constructor(value) {
+    this.value = value;
+    this.walk(value);
+  }
+  // 遍历属性值并监听
+  walk(value) {
+    Object.keys(value).forEach(key => this.convert(key, value[key]));
+  }
+  // 执行监听的具体方法
+  convert(key, val) {
+    defineReactive(this.value, key, val);
+  }
 }
 
-export function observe (data) {
-    const keys = Object.keys(data);
-    for (let i = 0; i < keys.length; i++) {
-       // 将data中我们定义的每个属性进行响应式绑定
-       defineReactive(obj, keys[i]);
-    }
+function observe(value) {
+  // 当值不存在，或者不是复杂数据类型时，不再需要继续深入监听
+  if (!value || typeof value !== 'object') {
+    return;
+  }
+  return new Observer(value);
 }
 ```
 
 defineReactive
 
 ```js
-export function defineReactive ( obj: Object, key: string, val: any, customSetter?: ?Function, shallow?: boolean) {
-  const dep = new Dep()         // 在每个响应式键值的闭包中定义一个dep对象
-
-  // 如果之前该对象已经预设了getter/setter则将其缓存，新定义的getter/setter中会将其执行
-  const getter = property && property.get
-  const setter = property && property.set
-
-  let childOb = !shallow && observe(val)
+function defineReactive(obj, key, val) {
+  const dep = new Dep();
+  // 给当前属性的值添加监听
+  let chlidOb = observe(val);
   Object.defineProperty(obj, key, {
     enumerable: true,
     configurable: true,
-    get: function reactiveGetter () {
-      const value = getter ? getter.call(obj) : val         // 如果原本对象拥有getter方法则执行
-      if (Dep.target) {                    // 如果当前有watcher在读取当前值, Dep.target为全局target属性，暂存watcher
-        dep.depend()                       // 那么进行依赖收集，dep.addSub
+    get: () => {
+      // 如果Dep类存在target属性，将其添加到dep实例的subs数组中
+      // target指向一个Watcher实例，每个Watcher都是一个订阅者
+      // Watcher实例在实例化过程中，会读取data中的某个属性，从而触发当前get方法
+      if (Dep.target) {
+        dep.depend();
       }
-      return value
+      return val;
     },
-    set: function reactiveSetter (newVal) {
-      const value = getter ? getter.call(obj) : val    // 先getter
-      if (newVal === value || (newVal !== newVal && value !== value)) {   // 如果跟原来值一样则不管
-        return
-      }
-      if (setter) { setter.call(obj, newVal) }         // 如果原本对象拥有setter方法则执行
-      else { val = newVal }
-      dep.notify()                                     // 如果发生变更，则通知更新，调用watcher.update()
-    }
-  })
+    set: newVal => {
+      if (val === newVal) return;
+      val = newVal;
+      // 对新值进行监听
+      chlidOb = observe(newVal);
+      // 通知所有订阅者，数值被改变了
+      dep.notify();
+    },
+  });
 }
 ```
 
@@ -73,28 +79,29 @@ export function defineReactive ( obj: Object, key: string, val: any, customSette
 
 ```js
 let uid = 0;
+// 用于储存订阅者并发布消息
 class Dep {
-    static target = null;  // 巧妙的设计！
-    constructor() {
-        this.id = uid++;
-        this.subs = [];
-    }
-    addSub(sub) {
-        this.subs.push(sub);
-    }
-    removeSub(sub) {
-        this.subs.$remove(sub);
-    }
-    depend() {
-        Dep.target.addDep(this);
-    }
-    notify() {
-        const subs = this.subs.slice();
-        for (let i = 0, l = subs.length; i < l; i++) {
-            subs[i].update();
-        }
-    }
+  constructor() {
+    // 设置id,用于区分新Watcher和只改变属性值后新产生的Watcher
+    this.id = uid++;
+    // 储存订阅者的数组
+    this.subs = [];
+  }
+  // 触发target上的Watcher中的addDep方法,参数为dep的实例本身
+  depend() {
+    Dep.target.addDep(this);
+  }
+  // 添加订阅者
+  addSub(sub) {
+    this.subs.push(sub);
+  }
+  notify() {
+    // 通知所有的订阅者(Watcher)，触发订阅者的相应逻辑处理
+    this.subs.forEach(sub => sub.update());
+  }
 }
+// 为Dep类设置一个静态属性,默认为null,工作时指向当前的Watcher
+Dep.target = null;
 ```
 
 由于JavaScript是单线程模型，所以虽然有多个观察者函数，但是一个时刻内，就只会有一个观察者函数在执行，那么此刻正在执行的那个观察者函数，所对应的Watcher实例，便会被赋给Dep.target这一类变量，从而只要访问Dep.target就能知道当前的观察者是谁。 在后续的依赖收集工作里，getter里会调用dep.depend()，而setter里则会调用dep.notify()
@@ -108,49 +115,42 @@ Watcher订阅者作为Observer和Compile之间通信的桥梁，主要做的事�
 
 ```js
 class Watcher {
-  constrcutor(vm, exp, cb) {
-    this.cb = cb;
-    this.vm = vm;
-    this.exp = exp;
-    // 此处为了触发属性的getter，从而在dep添加自己，结合Observer更易理解
-    this.value = this.get();
+  constructor(vm, expOrFn, cb) {
+    this.depIds = {}; // hash储存订阅者的id,避免重复的订阅者
+    this.vm = vm; // 被订阅的数据一定来自于当前Vue实例
+    this.cb = cb; // 当数据更新时想要做的事情
+    this.expOrFn = expOrFn; // 被订阅的数据
+    this.val = this.get(); // 维护更新之前的数据
+  }
+  // 对外暴露的接口，用于在订阅的数据被更新时，由订阅者管理员(Dep)调用
+  update() {
+    this.run();
+  }
+  addDep(dep) {
+    // 如果在depIds的hash中没有当前的id,可以判断是新Watcher,因此可以添加到dep的数组中储存
+    // 此判断是避免同id的Watcher被多次储存
+    if (!this.depIds.hasOwnProperty(dep.id)) {
+      dep.addSub(this);
+      this.depIds[dep.id] = dep;
+    }
+  }
+  run() {
+    const val = this.get();
+    console.log(val);
+    if (val !== this.val) {
+      this.val = val;
+      this.cb.call(this.vm, val);
+    }
+  }
+  get() {
+    // 当前订阅者(Watcher)读取被订阅数据的最新更新后的值时，通知订阅者管理员收集当前订阅者
+    Dep.target = this;
+    const val = this.vm._data[this.expOrFn];
+    // 置空，用于下一个Watcher使用
+    Dep.target = null;
+    return val;
   }
 }
-Watcher.prototype = {
-    update: function() {
-        this.run();    // 属性值变化收到通知
-    },
-    run: function() {
-        var value = this.get(); // 取到最新值
-        var oldVal = this.value;
-        if (value !== oldVal) {
-            this.value = value;
-            this.cb.call(this.vm, value, oldVal); // 执行Compile中绑定的回调，更新视图
-        }
-    },
-    get: function() {
-        Dep.target = this;    // 将当前订阅者指向自己
-        var value = this.vm[exp];    // 触发getter，添加自己到属性订阅器中
-        Dep.target = null;    // 添加完毕，重置
-        return value;
-    }
-};
-// 这里再次列出Observer和Dep，方便理解
-Object.defineProperty(data, key, {
-    get: function() {
-        // 由于需要在闭包内添加watcher，所以可以在Dep定义一个全局target属性，暂存watcher, 添加完移除
-        Dep.target && dep.addDep(Dep.target);
-        return val;
-    }
-    // ... 省略
-});
-Dep.prototype = {
-    notify: function() {
-        this.subs.forEach(function(sub) {
-            sub.update(); // 调用订阅者的update方法，通知变化
-        });
-    }
-};
 ```
 
 ### initState顺序
@@ -208,6 +208,33 @@ Object.defineProperty的优势如下:
 
 - 兼容性好,支持IE9
 
+### Proxy实现双向绑定
+
+```js
+const input = document.getElementById('input');
+const p = document.getElementById('p');
+const obj = {};
+
+const newObj = new Proxy(obj, {
+  get: function(target, key, receiver) {
+    console.log(`getting ${key}!`);
+    return Reflect.get(target, key, receiver);
+  },
+  set: function(target, key, value, receiver) {
+    console.log(target, key, value, receiver);
+    if (key === 'text') {
+      input.value = value;
+      p.innerHTML = value;
+    }
+    return Reflect.set(target, key, value, receiver);
+  },
+});
+
+input.addEventListener('keyup', function(e) {
+  newObj.text = e.target.value;
+});
+```
+
 ## 既然Vue通过数据劫持可以精准探测数据变化,为什么还需要虚拟DOM进行diff检测差异
 
 现代前端框架有两种方式侦测变化,一种是pull一种是push
@@ -215,6 +242,8 @@ Object.defineProperty的优势如下:
 pull: 其代表为React,我们可以回忆一下React是如何侦测到变化的,我们通常会用setStateAPI显式更新,然后React会进行一层层的Virtual Dom Diff操作找出差异,然后Patch到DOM上,React从一开始就不知道到底是哪发生了变化,只是知道「有变化了」,然后再进行比较暴力的Diff操作查找「哪发生变化了」，另外一个代表就是Angular的脏检查操作。
 
 push: Vue的响应式系统则是push的代表,当Vue程序初始化的时候就会对数据data进行依赖的收集,一但数据发生变化,响应式系统就会立刻得知,因此Vue是一开始就知道是「在哪发生变化了」,但是这又会产生一个问题,如果你熟悉Vue的响应式系统就知道,通常一个绑定一个数据就需要一个Watcher,一但我们的绑定细粒度过高就会产生大量的Watcher,这会带来内存以及依赖追踪的开销,而细粒度过低会无法精准侦测变化,因此Vue的设计是选择中等细粒度的方案,在组件级别进行push侦测的方式,也就是那套响应式系统,通常我们会第一时间侦测到发生变化的组件,然后在组件内部进行Virtual Dom Diff获取更加具体的差异,而Virtual Dom Diff则是pull操作,Vue是push+pull结合的方式进行变化侦测的。
+
+所谓Push-based就是说，改动数据之后，数据本身会把这个改动推送出去，告知渲染系统自动进行渲染。在React里面，它是一个Pull的形式，用户要给系统一个明确的信号(setState)说明现在需要重新渲染了，这个系统才会重新渲染。两者并没有绝对的优劣之分，更多的也是思维模式和开发习惯的不同。
 
 ### 参考文献
 
