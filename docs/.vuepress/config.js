@@ -36,7 +36,8 @@ module.exports = {
             'RegEx',
             'Github',
             'JS继承',
-            // 'MongoDB',
+            '前端性能优化之雅虎35条军规',
+            '算法',
           ]
         },
       ],
@@ -61,11 +62,13 @@ module.exports = {
         collapsable: false,
         children: [
           // '',
+          'HTML',
           'CSS',
           'JS',
           'Network',
           '浏览器',
           'React',
+          'Vue',
           'Webpack',
           '设计模式',
         ]
