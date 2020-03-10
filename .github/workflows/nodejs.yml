@@ -33,6 +33,7 @@ jobs:
         EXTERNAL_REPOSITORY: nmsn/nmsn.github.io #可以新建一个mybells.github.io仓库发布到master
         PUBLISH_BRANCH: master
         PUBLISH_DIR: docs/.vuepress/dist
+        CNAME: blog.nmsn.site
       with:
           emptyCommits: false
 
