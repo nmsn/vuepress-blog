@@ -38,9 +38,29 @@
 
 ## TCP建立连接为何是三次握手
 
-[原文](https://www.zhihu.com/question/24853633/answer/63668444)
+![tcp](../.vuepress/public/images/tcp_3.png)
 
-![tcp](../.vuepress/public/images/tcp.jpg)
+SYN/ACK：标志位，只为1或者0
+
+- SYN：1 表示发起连接
+- ACK：1 表示确认收到
+- seq：一个随机序号的数据包
+- ack：确认号，表示对这次数据包的确认，以及对下次收到数据包的期待
+
+需要注意的是：
+
+- 不要将确认号ack与标志位中的ACK搞混了
+- 确认方ack=发起方seq+1，两端配对
+
+大致过程：
+
+客户端SYN=1发起连接，并发送一个seq=x的数据包（TCP规定SYN=1时必须发送一个序号包）
+
+服务端ACK=1确认收到，ack=x+1表示我方到x为止的数据包已收到，期待客户端下次发我一个seq为x+1的数据包，SYN=1发起连接，并发送一个seq=y的数据包
+
+客户端ACK=1确认收到。ack=y+1表示我方到y为止的数据包已收到，并发送一个seq=x+1的数据包
+
+### 三次握手原因
 
 在谢希仁著《计算机网络》第四版中讲“三次握手”的目的是“为了防止已失效的连接请求报文段突然又传送到了服务端，因而产生错误”。
 
@@ -57,6 +77,11 @@
 由于现在client并没有发出建立连接的请求，因此不会理睬server的确认，也不会向server发送数据。但server却以为新的运输连接已经建立，并一直等待client发来数据。这样，server的很多资源就白白浪费掉了。采用“三次握手”的办法可以防止上述现象发生。
 例如刚才那种情况，client不会向server的确认发出确认。
 server由于收不到确认，就知道client并没有要求建立连接。
+
+### 参考文献
+
+- TCP 为什么是三次握手，而不是两次或四次？：[https://www.zhihu.com/question/24853633/answer/63668444](https://www.zhihu.com/question/24853633/answer/63668444)
+- 前端该了解的HTTP和HTTPS：[https://juejin.im/post/5e6851f96fb9a07ca24f63a7](https://juejin.im/post/5e6851f96fb9a07ca24f63a7)
 
 ## GET与POST的区别
 
