@@ -213,7 +213,164 @@ const SharedComponent extends React.Component {
 export default SharedComponent;
 ```
 
-## mixin、hoc、render props、react-hooks的优劣如何
+## HOC
+
+> A higher-order component is a function that takes a component and returns a new component.
+
+实现高阶组件的方式有以下两种:
+
+- 属性代理(Props Proxy)
+- 反向继承(Inheritance Inversion)
+
+### 属性代理
+
+#### 操作props
+
+```js
+const HOC = (WrappedComponent) =>
+  class WrapperComponent extends Component {
+      render() {
+          const newProps = {
+              name: 'HOC'
+          }
+          return <WrappedComponent
+              {...this.props}
+          />;
+      }
+  }
+```
+
+在上面的例子中，我们为被包裹组件(WrappedComponent)新增加了固定的name属性，因此WrappedComponent组件中就会多一个name的属性。
+
+#### 获得refs的引用
+
+我们在属性代理中，可以轻松的拿到被包裹的组件的实例引用(ref)，例如:
+
+```js
+import React, { Component } from 'React';
+
+const HOC = (WrappedComponent) =>
+    class wrapperComponent extends Component {
+        storeRef(ref) {
+            this.ref = ref;
+        }
+        render() {
+            return <WrappedComponent
+                {...this.props}
+                ref = {::this.storeRef}
+            />;
+        }
+    }
+```
+
+面的例子中，wrapperComponent渲染接受后，我们就可以拿到WrappedComponent组件的实例，进而实现调用实例方法的操作(当然这样会在一定程度上是反模式的，不是非常的推荐)。
+
+#### 抽象state
+
+属性代理的情况下，我们可以将被包裹组件(WrappedComponent)中的状态提到包裹组件中，一个常见的例子就是实现不受控组件到受控的组件的转变
+
+```js
+class WrappedComponent extends Component {
+    render() {
+        return <input name="name" {...this.props.name} />;
+    }
+}
+
+const HOC = (WrappedComponent) =>
+    class extends Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                name: '',
+            };
+
+            this.onNameChange = this.onNameChange.bind(this);
+        }
+
+        onNameChange(event) {
+            this.setState({
+                name: event.target.value,
+            })
+        }
+
+        render() {
+            const newProps = {
+                    value: this.state.name,
+                    onChange: this.onNameChange
+            }
+            return <WrappedComponent {...this.props} {...newProps} />;
+        }
+    }
+```
+
+上面的例子中通过高阶组件，我们将不受控组件(WrappedComponent)成功的转变为受控组件
+
+### 反向继承
+
+反向继承是指返回的组件去继承之前的组件(这里都用WrappedComponent代指)
+
+```js
+const HOC = (WrappedComponent) =>
+  class extends WrappedComponent {
+    render() {
+      return super.render();
+    }
+  }
+```
+
+我们可以看见返回的组件确实都继承自WrappedComponent,那么所有的调用将是反向调用的(例如:super.render())，这也就是为什么叫做反向继承。
+
+#### 渲染劫持
+
+渲染劫持是指我们可以有意识地控制WrappedComponent的渲染过程，从而控制渲染控制的结果。例如我们可以根据部分参数去决定是否渲染组件:
+
+```js
+const HOC = (WrappedComponent) =>
+  class extends WrappedComponent {
+    render() {
+      if (this.props.isRender) {
+        return super.render();
+      } else {
+        return null;
+      }
+    }
+  }
+```
+
+甚至我们可以修改修改render的结果:
+
+```js
+//例子来源于《深入React技术栈》
+
+const HOC = (WrappedComponent) =>
+    class extends WrappedComponent {
+        render() {
+            const elementsTree = super.render();
+            let newProps = {};
+            if (elementsTree && elementsTree.type === 'input') {
+                newProps = {value: 'may the force be with you'};
+            }
+            const props = Object.assign({}, elementsTree.props, newProps);
+            const newElementsTree = React.cloneElement(elementsTree, props, elementsTree.props.children);
+            return newElementsTree;
+    }
+}
+class WrappedComponent extends Component{
+    render(){
+        return(
+            <input value={'Hello World'} />
+        )
+    }
+}
+export default HOC(WrappedComponent)
+//实际显示的效果是input的值为"may the force be with you"
+```
+
+### 参考文献
+
+- React 高阶组件(HOC)入门指南：[https://github.com/MrErHu/blog/issues/4](https://github.com/MrErHu/blog/issues/4)
+
+## mixin、HOC、render props、react-hooks的优劣如何
 
 ### Mixin的缺陷
 
