@@ -14,7 +14,7 @@ module.exports = {
   },
   themeConfig: {
     nav: [
-      { text: '主页', link: '/' },
+      // { text: '主页', link: '/' },
       { text: '快查总结', link: '/tech/' },
       { text: '摘录', link: '/excerpt/' },
       { text: '面试题', link: '/interviewQuestions/' },
@@ -38,6 +38,7 @@ module.exports = {
             'JS继承',
             '前端性能优化之雅虎35条军规',
             '排序算法',
+            '代码实现',
           ]
         },
       ],

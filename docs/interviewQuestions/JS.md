@@ -2,6 +2,8 @@
 
 ## 原型与原型链
 
+> JavaScript 常被描述为一种基于原型的语言 (prototype-based language)——每个对象拥有一个原型对象，对象以其原型为模板、从原型继承方法和属性。原型对象也可能拥有原型，并从中继承方法和属性，一层一层、以此类推。这种关系常被称为原型链 (prototype chain)，它解释了为何一个对象会拥有定义在其他对象中的属性和方法。
+
 ### 原型对象
 
 绝大部分的函数(少数内建函数除外)都有一个prototype属性,这个属性是原型对象用来创建新对象实例,而所有被创建的对象都会共享原型对象,因此这些对象便可以访问原型对象的属性。
@@ -289,36 +291,6 @@ bar要取得a的值，就要到创建bar这个函数的作用域中取值（这�
 当查找变量的时候，会先从当前上下文的变量对象中查找，如果没有找到，就会从父级(词法层面上的父级)执行上下文的变量对象中查找，一直找到全局上下文的变量对象，也就是全局对象。这样由多个执行上下文的变量对象构成的链表就叫做作用域链。
 
 其本质是JavaScript在执行过程中会创造可执行上下文，可执行上下文中的词法环境中含有外部词法环境的引用，我们可以通过这个引用获取外部词法环境的变量、声明等，这些引用串联起来一直指向全局的词法环境，因此形成了作用域链。
-
-## new操作符的工作原理
-
-1. 新建一个对象
-2. 设置原型链
-3. 让F中的this指向instance，执行F的函数体
-4. 判断F的返回值类型
-   - 如果是值类型，返回instance
-   - 如果是引用类型，就返回这个引用类型的对象，替换掉instance
-
-```js
-function create () {
-   // 创建一个空对象
-  let obj = new Object();
-  // 获取构造函数
-  let Constructor = [].shift.call(arguments);
-  // 链接到原型
-  obj.__proto__ =  Constructor.prototype;
-  // 绑定this值
-  let result = Constructor.apply(obj, arguments);
-  //. 返回新对象
-  return typeof result === "object" ? result : obj
-}
-
-function Person(name) {
-  this.name = name;
-}
-
-var a = create(Person, 'xiaoming')
-```
 
 ## 防抖与节流
 
