@@ -10,10 +10,10 @@
 
 只要元素满足下面任一条件即可触发 BFC 特性:
 
-- 根元素(`<html>`)
-- 浮动元素（元素的 float 不是 none）
-- 绝对定位元素（元素的 position 为 absolute 或 fixed）
-- overflow 值不为 visible 的块元素(hidden、auto、scroll)
+- **根元素(`<html>`)**
+- **浮动元素（元素的 float 不是 none）**
+- **绝对定位元素（元素的 position 为 absolute 或 fixed）**
+- **overflow 值不为 visible 的块元素(hidden、auto、scroll)**
 - contain 值为 layout、content或 paint 的元素
 - 弹性元素（display为 flex 或 inline-flex元素的直接子元素）
 - 网格元素（display为 grid 或 inline-grid 元素的直接子元素）
