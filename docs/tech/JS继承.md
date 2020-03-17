@@ -30,8 +30,8 @@ console.log(child2.names); // ["kevin", "daisy", "yayu"]
 缺点
 
 1. 引用类型的属性被所有实例共享，多个实例对引用类型的操作会被篡改
-
 2. 在创建Child的实例时，不能向Parent传参
+3. 子类型原型上的 constructor 属性被重写了，执行Child.prototype = new Parent()后原型被覆盖，Child.prototype 上丢失了 constructor 属性， Child.prototype 指向了 Parent.prototype，而 Parent.prototype.constructor 指向了 Parent，所以 Child.prototype.constructor 指向了 Parent。
 
 ## 2.借用构造函数继承（经典继承）
 

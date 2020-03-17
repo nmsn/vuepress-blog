@@ -683,28 +683,6 @@ const a = {
 }
 ```
 
-## new的实现原理
-
-原文: [这儿有20道大厂面试题等你查收](https://juejin.im/post/5d124a12f265da1b9163a28d?tdsourcetag=s_pcqq_aiomsg)
-
-1. 创建一个空对象，构造函数中的this指向这个空对象
-2. 这个新对象被执行[[原型]]连接
-3. 执行构造函数方法，属性和方法被添加到this引用的对象中
-4. 如果构造函数中没有返回其它对象，那么返回this，即创造的这个的新对象，否则，返回构造函数中返回的对象
-
-```js
-function _new() {
-  let target = {}; // 创造的新对象
-  let [constructor, ...args] = [...arguments]; // 第一个参数是构造函数
-  target.___proto__ = constructor.prototype; // 执行[[原型]]连接；target是constructor的实例
-  let result = constructor.apply(target, args); // 执行构造函数，将属性或方法添加到创建的空对象上
-  if (result && (typeof (result) == 'object' || typeof (result) == 'function')) {
-    return result; // 如果构造函数执行的结构返回的是一个对象，那么返回这个对象
-  }
-  return target; // 如果构造函数返回的不是一个对象，返回创建的新对象
-}
-```
-
 ## 为什么div里嵌套了img底部会有白块
 
 因为img默认是按基线(baseline)对齐的。对比一下图片和右边的p, q, y等字母，你会发现这三个字母的“小尾巴”和图片下方的空白一样高。下面这张图中的黑线就是那条基线

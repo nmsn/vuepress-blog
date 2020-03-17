@@ -10,10 +10,10 @@
 
 只要元素满足下面任一条件即可触发 BFC 特性:
 
-- 根元素(`<html>`)
-- 浮动元素（元素的 float 不是 none）
-- 绝对定位元素（元素的 position 为 absolute 或 fixed）
-- overflow 值不为 visible 的块元素(hidden、auto、scroll)
+- **根元素(`<html>`)**
+- **浮动元素（元素的 float 不是 none）**
+- **绝对定位元素（元素的 position 为 absolute 或 fixed）**
+- **overflow 值不为 visible 的块元素(hidden、auto、scroll)**
 - contain 值为 layout、content或 paint 的元素
 - 弹性元素（display为 flex 或 inline-flex元素的直接子元素）
 - 网格元素（display为 grid 或 inline-grid 元素的直接子元素）
@@ -92,16 +92,49 @@
 
 在浏览器绘制屏幕时，所有需要浏览器进行操作或计算的属性相对而言都需要花费更大的代价。当页面发生重绘时，它们会降低浏览器的渲染性能。所以在编写CSS时，我们应该尽量减少使用昂贵属性，如`box-shadow`/`border-radius`/`filter`/`透明度`/`:nth-child`等
 
-### 7. 优化重排(reflow)和重绘(repaint)
+### 7. 优化重排/回流(reflow)和重绘(repaint)
 
-导致重绘的操作:
+#### 导致重排/回流的操作
 
-1. 改变`font-size`和`font-family`
-2. 改变元素的内外边距
-3. 通过js改变css类
-4. 通过js获取DOM元素的位置相关属性
-5. css伪类激活
-6. 滚动滚动条或者改变窗口大小
+1. 调整窗口大小
+2. 改变字体大小
+3. 样式表变动
+4. 元素内容变化，尤其是输入控件
+5. CSS伪类激活
+6. DOM操作
+7. offsetWidth, width, clientWidth, scrollTop/scrollHeight的计算， 会使浏览器将渐进回流队列Flush，立即执行回流。
+
+#### 一些常用且会导致回流的属性和方法
+
+- clientWidth、clientHeight、clientTop、clientLeft
+- offsetWidth、offsetHeight、offsetTop、offsetLeft
+- scrollWidth、scrollHeight、scrollTop、scrollLeft
+- scrollIntoView()、scrollIntoViewIfNeeded()
+- getComputedStyle()
+- getBoundingClientRect()
+- scrollTo()
+
+#### 导致重绘的操作
+
+当页面中元素样式的改变并不影响它在文档流中的位置时（例如：color、background-color、visibility等）
+
+#### 避免频繁触发重排/回流的方法
+
+CSS
+
+- 避免使用table布局。
+- 尽可能在DOM树的最末端改变class。
+- 避免设置多层内联样式。
+- 将动画效果应用到position属性为absolute或fixed的元素上。
+- 避免使用CSS表达式（例如：calc()）
+
+JS
+
+- 避免频繁操作样式，最好一次性重写style属性，或者将样式列表定义为class并一次性更改class属性。
+- 避免频繁操作DOM，创建一个documentFragment，在它上面应用所有DOM操作，最后再把它添加到文档中。
+- 也可以先为元素设置display: none，操作结束后再把它显示出来。因为在display属性为none的元素上进行的DOM操作不会引发回流和重绘。
+- 避免频繁读取会引发回流/重绘的属性，如果确实需要多次使用，就用一个变量缓存起来。
+- 对具有复杂动画的元素使用绝对定位，使它脱离文档流，否则会引起父元素及后续元素频繁回流。
 
 ### 4. 不要使用@import
 

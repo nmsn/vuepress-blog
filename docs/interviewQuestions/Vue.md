@@ -208,6 +208,47 @@ Object.defineProperty的优势如下:
 
 - 兼容性好,支持IE9
 
+### Object.defineProperty不能监听数组吗
+
+在一些技术博客上，我看到过这样一种说法，认为 Object.defineProperty 有一个缺陷是无法监听数组变化：
+
+> 无法监控到数组下标的变化，导致直接通过数组的下标给数组设置值，不能实时响应。所以 Vue 才设置了 7 个变异数组（push、pop、shift、unshift、splice、sort、reverse）的 hack 方法来解决问题。
+> Object.defineProperty的第一个缺陷, 无法监听数组变化。 然而 Vue 的文档提到了 Vue 是可以检测到数组变化的，但是只有以下八种方法,vm.items[indexOfItem] = newValue 这种是无法检测的。
+
+```js
+function defineReactive(data, key, value) {
+  Object.defineProperty(data, key, {
+    enumerable: true,
+    configurable: true,
+     get: function defineGet() {
+      console.log(`get key: ${key} value: ${value}`)
+      return value
+    },
+     set: function defineSet(newVal) {
+      console.log(`set key: ${key} value: ${newVal}`)
+      value = newVal
+    }
+  })
+}
+function observe(data) {
+  Object.keys(data).forEach(function(key) {
+    defineReactive(data, key, data[key])
+  })
+}
+let arr = [1, 2, 3]
+observe(arr);
+```
+
+Object.defineProperty 在数组中的表现和在对象中的表现是一致的，数组的索引就可以看做是对象中的 key。
+
+1. 通过索引访问或设置对应元素的值时，可以触发 getter 和 setter 方法。
+2. 通过 push 或 unshift 会增加索引，对于新增加的属性，需要再手动初始化才能被 observe。
+3. 通过 pop 或 shift 删除元素，会删除并更新索引，也会触发 setter 和 getter 方法。
+
+所以，Object.defineProperty是有监控数组下标变化的能力的，只是 Vue2.x 放弃了这个特性。
+
+这种说法是有问题的，事实上，Object.defineProperty 本身是可以监控到数组下标的变化的，只是在 Vue 的实现中，从性能 / 体验的性价比考虑，放弃了这个特性。
+
 ### Proxy实现双向绑定
 
 ```js
@@ -247,7 +288,7 @@ push: Vue的响应式系统则是push的代表,当Vue程序初始化的时候就
 
 ### 参考文献
 
-- 既然Vue通过数据劫持可以精准探测数据变化,为什么还需要虚拟DOM进行diff检测差异：[https://www.cxymsg.com/guide/vue.html#vue%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B2%A1%E6%9C%89%E7%B1%BB%E4%BC%BC%E4%BA%8Ereact%E4%B8%ADshouldcomponentupdate%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9F](https://www.cxymsg.com/guide/vue.html#vue%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B2%A1%E6%9C%89%E7%B1%BB%E4%BC%BC%E4%BA%8Ereact%E4%B8%ADshouldcomponentupdate%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9F)
+- 既然Vue通过数据劫持可以精准探测数据变化,为什么还需要虚拟DOM进行diff检测差异：[https://www.cxymsg.com/guide/vue.html#vue](https://www.cxymsg.com/guide/vue.html#vue)
 
 ## Vue为什么没有类似于React中shouldComponentUpdate的生命周期
 
