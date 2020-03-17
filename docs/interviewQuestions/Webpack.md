@@ -144,8 +144,12 @@ webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
 - 压缩代码:删除多余的代码、注释、简化代码的写法等等方式。可以利用webpack的UglifyJsPlugin和ParallelUglifyPlugin来压缩JS文件， 利用cssnano（css-loader?minimize）来压缩css
 - 利用CDN加速: 在构建过程中，将引用的静态资源路径修改为CDN上对应的路径。可以利用webpack对于output参数和各loader的publicPath参数来修改资源路径
 - Tree Shaking: 将代码中永远不会走到的片段删除掉。可以通过在启动webpack时追加参数--optimize-minimize来实现
-- Code Splitting: 将代码按路由维度或者组件分块(chunk),这样做到按需加载,同时可以充分利用浏览器缓存
+- Code Splitting: 将代码按路由维度或者组件分块(chunk),这样做到按需加载,同时可以充分利用浏览器缓存，如
+  - 使用 import() 动态加载模块
+  - 使用 React.lazy() 动态加载组件
+  - 使用 lodable-component 动态加载路由，组件或者模块
 - 提取公共第三方库:  SplitChunksPlugin插件来进行公共模块抽取,利用浏览器缓存可以长期缓存这些无需频繁变动的公共代码
+- 选择替换的体积更小的模块，如使用`day.js`替换`moment.js`
 
 ## 如何提高webpack的打包速度
 

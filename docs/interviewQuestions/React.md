@@ -495,3 +495,136 @@ export default HOC(WrappedComponent)
 其次,现代前端框架的一个基本要求就是无须手动操作DOM,一方面是因为**手动操作DOM无法保证程序性能**,多人协作的项目中如果review不严格,可能会有开发者写出性能较低的代码,另一方面更重要的是**省略手动DOM操作可以大大提高开发效率**.
 
 最后,也是Virtual DOM最初的目的,就是更好的**跨平台**,比如Node.js就没有DOM,如果想实现SSR(服务端渲染),那么一个方式就是借助Virtual DOM,因为Virtual DOM本身是JavaScript对象
+
+## React Hooks
+
+React Hooks是 React 16.7.0版本推出的新特性
+
+React Hooks 要解决的问题是**状态共享**，是继 render-props 和 higher-order components 之后的第三种状态共享方案，不会产生 JSX **嵌套地狱**问题。
+
+简单来说，Hook解决的就是“嵌套地狱”的问题，正如async解决“回调地狱”一样。它们都做到了将原来不同“维度”的代码封装到了同一维度，以达到更直观、透明的将“计算结果”传递下去的目的。
+
+而class不得不借助高阶组件等等概念，解决代码复用等问题，但是由于引入额外的概念（函数）反而使得代码更加复杂，现在的class难以解决这个问题，所以他就被抛弃了。
+
+使用useState可以将class组件中的state部分解耦出来，作为一个函数单独在多个组件之间公用，而在class组件中就需要封装高阶组件然后以props的形式传给子组件
+
+```js
+function useCount() {
+  const [count, setCount] = useState(0);
+  return [count, setCount];
+}
+```
+
+对于useEffect来说，可以用来实现class组件的生命周期
+
+class实现
+
+```js
+function useFriendStatus(WrappedComponent) {
+  return class extends React.Component {
+    componentDidMount() {
+        ChatAPI.subscribeToFriendStatus(
+          this.props.friend.id,
+          this.handleStatusChange
+        );
+    }
+
+    componentDidUpdate(prevProps) {
+        ChatAPI.unsubscribeFromFriendStatus(
+          prevProps.friend.id,
+          this.handleStatusChange
+        );
+        ChatAPI.subscribeToFriendStatus(
+          this.props.friend.id,
+          this.handleStatusChange
+        );
+      }
+
+    componentWillUnmount() {
+        ChatAPI.unsubscribeFromFriendStatus(
+          this.props.friend.id,
+          this.handleStatusChange
+        );
+    }
+
+    render() {
+      return <WrappedComponent isOnline={isOnline} />;
+    }
+  }
+}
+```
+
+react hooks实现
+
+```js
+import React, { useState, useEffect } from 'react';
+
+function FriendStatus(props) {
+  const [isOnline, setIsOnline] = useState(null);
+
+  useEffect(() => {
+    function handleStatusChange(status) {
+      setIsOnline(status.isOnline);
+    }
+
+    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
+    // Specify how to clean up after this effect:
+    return function cleanup() {
+      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
+    };
+  });
+
+  if (isOnline === null) {
+    return 'Loading...';
+  }
+  return isOnline ? 'Online' : 'Offline';
+}
+
+// FriendStatus获取好友状态
+function FriendStatus(props) {
+  const isOnline = useFriendStatus(props.friend.id);
+
+  if (isOnline === null) {
+    return 'Loading...';
+  }
+  return isOnline ? 'Online' : 'Offline';
+}
+
+// FriendListItem获取好友状态
+function FriendListItem(props) {
+  const isOnline = useFriendStatus(props.friend.id);
+
+  return (
+    <li style={{ color: isOnline ? 'green' : 'black' }}>
+      {props.friend.name}
+    </li>
+  );
+};
+
+```
+
+上面例子中，使用useEffect能够将高阶组件的父组件生命周期中的含有副作用的功能解耦出去，避免了多一层的组件嵌套
+
+useState结合useEffect使用
+
+```js
+function useRepos (id) {
+  const [ repos, setRepos ] = React.useState([])
+  const [ loading, setLoading ] = React.useState(true)
+
+  React.useEffect(() => {
+    setLoading(true)
+
+    fetchRepos(id)
+      .then((repos) => {
+        setRepos(repos)
+        setLoading(false)
+      })
+  }, [id])
+
+  return [ loading, repos ]
+}
+```
+
+- Talking about hooks：[https://juejin.im/post/5d0ae589518825122925c2de](https://juejin.im/post/5d0ae589518825122925c2de)
+- 为什么会出现React Hooks?：[https://juejin.im/post/5d478b2d518825673a6ae1b9](https://juejin.im/post/5d478b2d518825673a6ae1b9)
