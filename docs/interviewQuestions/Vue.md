@@ -298,7 +298,7 @@ Vue是pull+push的方式侦测变化的,在一开始就知道那个组件发生�
 
 ### 参考文献
 
-- Vue为什么没有类似于React中shouldComponentUpdate的生命周期：[https://www.cxymsg.com/guide/vue.html#vue%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B2%A1%E6%9C%89%E7%B1%BB%E4%BC%BC%E4%BA%8Ereact%E4%B8%ADshouldcomponentupdate%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9F](https://www.cxymsg.com/guide/vue.html#vue%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B2%A1%E6%9C%89%E7%B1%BB%E4%BC%BC%E4%BA%8Ereact%E4%B8%ADshouldcomponentupdate%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9F)
+- Vue为什么没有类似于React中shouldComponentUpdate的生命周期：[https://www.cxymsg.com/guide/vue.html](https://www.cxymsg.com/guide/vue.html)
 
 ## Vue中的key到底有什么用
 
