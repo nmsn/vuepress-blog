@@ -90,6 +90,7 @@ module.exports = {
           '移动端适配',
           'bug解决方案',
           'sass和less',
+          '公祭日灰色效果',
         ]
       },
       ],
