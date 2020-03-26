@@ -300,7 +300,7 @@ bar要取得a的值，就要到创建bar这个函数的作用域中取值（这�
 // 防抖函数
 const debounce = (fn, delay) => {
   let timer = null;
-  return (...args) => {
+  return function(...args) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
       fn.apply(this, args);
@@ -317,17 +317,17 @@ const debounce = (fn, delay) => {
 ### 节流（throttle）
 
 ```js
-const throttle = (fn, delay = 500) => {
-  let flag = true;
-  return (...args) => {
-    if (!flag) return;
-    flag = false;
-    setTimeout(() => {
-      fn.apply(this, args);
-      flag = true;
-    }, delay);
-  };
-};
+const throttle = (func, delay) => {
+    let prev = Date.now();
+    return function(...args) {
+        const context = this;
+        const now = Date.now();
+        if (now - prev >= delay) {
+            func.apply(context, args);
+            prev = Date.now();
+        }
+    }
+}
 ```
 
 使用场景
