@@ -348,3 +348,78 @@ box-sizing: content-box // 标准盒模型
 box-sizing: border-box // 怪异盒模型
 box-sizing: padding-box // 火狐的私有模型，没人用
 ```
+
+## 去除inline-block元素间间距的N种方法
+
+> 真正意义上的inline-block水平呈现的元素间，换行显示或空格分隔的情况下会有间距
+
+### 移除空格
+
+元素间留白间距出现的原因就是标签段之间的空格，因此，去掉HTML中的空格，自然间距就木有了。考虑到代码可读性，显然连成一行的写法是不可取的，我们可以：
+
+```html
+<div class="space">
+    <a href="##">
+    惆怅</a><a href="##">
+    淡定</a><a href="##">
+    热血</a>
+</div>
+```
+
+### 使用margin负值
+
+```css
+.space a {
+    display: inline-block;
+    margin-right: -3px;
+}
+```
+
+### 使用font-size:0
+
+```css
+.space {
+    font-size: 0;
+}
+.space a {
+    font-size: 12px;
+}
+```
+
+### 使用letter-spacing
+
+```css
+.space {
+    letter-spacing: -3px;
+}
+.space a {
+    letter-spacing: 0;
+}
+```
+
+### 使用word-spacing
+
+```css
+.space {
+    word-spacing: -6px;
+}
+.space a {
+    word-spacing: 0;
+}
+```
+
+## <img>元素底部为何有空白
+
+要理解这个问题，首先要弄明白CSS对于 display: inline 元素的 vertical-align 各个值的含义。vertical-align 的默认值是 baseline
+
+![img_bsaeline](../.vuepress/public/images/css_img_baseline.png)
+
+可以看到，baseline 和 bottom 之间有一定的距离。实际上，inline 的图片下面那一道空白正是 baseline 和 bottom 之间的这段距离。即使只有图片没有文字，只要是 inline 的图片这段空白都会存在。
+
+到这里就比较明显了，要去掉这段空白，最直接的办法是将图片的 vertical-align 设置为其他值。如果在同一行里有文字混排的话，那应该是用 bottom 或是 middle 比较好。
+
+另外，top 和 bottom 之间的值即为 line-height。假如把 line-height 设置为0，那么 baseline 与 bottom 之间的距离也变为0，那道空白也就不见了。如果没有设置 line-height，line-height 的默认值是基于 font-size 的，视渲染引擎有所不同，但一般是乘以一个系数（比如1.2）。因此，在没有设置 line-height 的情况下把 font-size 设为0也可以达到同样的效果。当然，这样做的后果就是不能图文混排了。
+
+### 参考文献
+
+- <img>元素底部为何有空白？：[https://www.zhihu.com/question/21558138](https://www.zhihu.com/question/21558138)
