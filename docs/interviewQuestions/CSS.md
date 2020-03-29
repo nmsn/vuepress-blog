@@ -65,6 +65,8 @@
 
 2. 将link元素的media属性设置为用户浏览器不匹配的媒体类型（或媒体查询），如media="print"，甚至可以是完全不存在的类型media="noexist"。对浏览器来说，如果样式表不适用于当前媒体类型，其优先级会被放低，会在不阻塞页面渲染的情况下再进行下载
 
+    在css文件中使用`@media`也可以达到异步加载的效果，例如`background-image`根据媒体查询加载不同的图片
+
 3. `rel="preload"`这一Web标准指出了如何异步加载资源，包括CSS类资源
 
     `<link>` 元素的 rel 属性的属性值preload能够让你在你的HTML页面中 `<head>`元素内部书写一些声明式的资源获取请求，可以指明哪些资源是在页面加载完成后即刻需要的。对于这种即刻需要的资源，你可能希望在页面加载的生命周期的早期阶段就开始获取，在浏览器的主渲染机制介入前就进行预加载。这一机制使得资源可以更早的得到加载并可用，且更不易阻塞页面的初步渲染，进而提升性能
@@ -179,7 +181,7 @@ JS
 2. 类选择器（例如：`.class`），属性选择器（例如：`[type="radio"]`）和伪类（例如：`:hover`）
 3. ID选择器（例如：`#id`）
 
-通配符选择器（*）关系选恶气（+，>，~,' ',||）和否定伪类（例如：`:not()`）对优先级没有影响（但是在`:not()`内部声明的选择器会影响优先级）
+通配符选择器（*）关系选择器（+，>，~,' ',||）和否定伪类（例如：`:not()`）对优先级没有影响（但是在`:not()`内部声明的选择器会影响优先级）
 
 给元素添加内联样式（例如：`style="font-weight: blod"`）总会覆盖外部样式表的任何样式，因此可看作具有最高的优先级
 
@@ -348,3 +350,78 @@ box-sizing: content-box // 标准盒模型
 box-sizing: border-box // 怪异盒模型
 box-sizing: padding-box // 火狐的私有模型，没人用
 ```
+
+## 去除inline-block元素间间距的N种方法
+
+> 真正意义上的inline-block水平呈现的元素间，换行显示或空格分隔的情况下会有间距
+
+### 移除空格
+
+元素间留白间距出现的原因就是标签段之间的空格，因此，去掉HTML中的空格，自然间距就木有了。考虑到代码可读性，显然连成一行的写法是不可取的，我们可以：
+
+```html
+<div class="space">
+    <a href="##">
+    惆怅</a><a href="##">
+    淡定</a><a href="##">
+    热血</a>
+</div>
+```
+
+### 使用margin负值
+
+```css
+.space a {
+    display: inline-block;
+    margin-right: -3px;
+}
+```
+
+### 使用font-size:0
+
+```css
+.space {
+    font-size: 0;
+}
+.space a {
+    font-size: 12px;
+}
+```
+
+### 使用letter-spacing
+
+```css
+.space {
+    letter-spacing: -3px;
+}
+.space a {
+    letter-spacing: 0;
+}
+```
+
+### 使用word-spacing
+
+```css
+.space {
+    word-spacing: -6px;
+}
+.space a {
+    word-spacing: 0;
+}
+```
+
+## <img>元素底部为何有空白
+
+要理解这个问题，首先要弄明白CSS对于 display: inline 元素的 vertical-align 各个值的含义。vertical-align 的默认值是 baseline
+
+![img_bsaeline](../.vuepress/public/images/css_img_baseline.png)
+
+可以看到，baseline 和 bottom 之间有一定的距离。实际上，inline 的图片下面那一道空白正是 baseline 和 bottom 之间的这段距离。即使只有图片没有文字，只要是 inline 的图片这段空白都会存在。
+
+到这里就比较明显了，要去掉这段空白，最直接的办法是将图片的 vertical-align 设置为其他值。如果在同一行里有文字混排的话，那应该是用 bottom 或是 middle 比较好。
+
+另外，top 和 bottom 之间的值即为 line-height。假如把 line-height 设置为0，那么 baseline 与 bottom 之间的距离也变为0，那道空白也就不见了。如果没有设置 line-height，line-height 的默认值是基于 font-size 的，视渲染引擎有所不同，但一般是乘以一个系数（比如1.2）。因此，在没有设置 line-height 的情况下把 font-size 设为0也可以达到同样的效果。当然，这样做的后果就是不能图文混排了。
+
+### 参考文献
+
+- <img>元素底部为何有空白？：[https://www.zhihu.com/question/21558138](https://www.zhihu.com/question/21558138)
