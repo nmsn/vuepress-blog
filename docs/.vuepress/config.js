@@ -71,6 +71,7 @@ module.exports = {
           '浏览器',
           'React',
           'Vue',
+          'TypeScript',
           'Webpack',
           '设计模式',
         ]
