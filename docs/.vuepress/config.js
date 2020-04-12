@@ -40,6 +40,7 @@ module.exports = {
             '排序算法',
             '代码实现',
             'ES6',
+            'TypeScript',
           ]
         },
       ],
