@@ -40,6 +40,7 @@ module.exports = {
             '排序算法',
             '代码实现',
             'ES6',
+            'TypeScript',
           ]
         },
       ],
@@ -71,6 +72,7 @@ module.exports = {
           '浏览器',
           'React',
           'Vue',
+          'TypeScript',
           'Webpack',
           '设计模式',
         ]
