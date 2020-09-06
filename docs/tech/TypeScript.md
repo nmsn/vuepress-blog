@@ -13,16 +13,39 @@ const obj = { a: '1' };
 type Foo = typeof obj; // { a: string }
 ```
 
-#### keyof
-
-`keyof`可以用来取得一个对象接口的所有`key`值
+eg:
 
 ```ts
 interface Person {
   name: string;
-  age: number
+  age: number;
 }
-type T = keyof Person // -> "name" | "age"
+
+const sem: Person = { name: 'semlinker', age: 30 };
+type Sem= typeof sem; // -> Person
+
+function toArray(x: number): Array<number> {
+  return [x];
+}
+
+type Func = typeof toArray; // -> (x: number) => number[]
+```
+
+#### keyof
+
+`keyof`可以用来取得一个对象接口的所有`key`值
+
+eg:
+
+```ts
+interface Person {
+    name: string;
+    age: number;
+}
+
+type K1 = keyof Person; // "name" | "age"
+type K2 = keyof Person[]; // "length" | "toString" | "pop" | "push" | "concat" | "join" 
+type K3 = keyof { [x: string]: Person };  // string | number
 ```
 
 #### in
@@ -37,6 +60,32 @@ type Obj =  {
 ```
 
 上面 `in` 遍历 `Keys`，并为每个值赋予 `any` 类型。
+
+eg:
+
+```ts
+interface Admin {
+  name: string;
+  privileges: string[];
+}
+
+interface Employee {
+  name: string;
+  startDate: Date;
+}
+
+type UnknownEmployee = Employee | Admin;
+
+function printEmployeeInformation(emp: UnknownEmployee) {
+  console.log("Name: " + emp.name);
+  if ("privileges" in emp) {
+    console.log("Privileges: " + emp.privileges);
+  }
+  if ("startDate" in emp) {
+    console.log("Start Date: " + emp.startDate);
+  }
+}
+```
 
 #### infer
 
@@ -329,3 +378,56 @@ type Deferred<T> = {
 
 - TS 中的内置类型简述：[https://github.com/whxaxes/blog/issues/14](https://github.com/whxaxes/blog/issues/14)
 - TypeScript 强大的类型别名[https://juejin.im/post/5c2f87ce5188252593122c98](https://juejin.im/post/5c2f87ce5188252593122c98)
+
+
+## 装饰器
+
+### 类装饰器
+
+```ts
+declare type ClassDecorator = <TFunction extends Function>(
+  target: TFunction
+) => TFunction | void;
+```
+
+eg1: 
+
+```ts
+function Greeter(target: Function): void {
+  target.prototype.greet = function (): void {
+    console.log("Hello Semlinker!");
+  };
+}
+
+@Greeter
+class Greeting {
+  constructor() {
+    // 内部实现
+  }
+}
+
+let myGreeting = new Greeting();
+myGreeting.greet(); // console output: 'Hello Semlinker!';
+```
+
+eg2:
+
+```ts
+function Greeter(greeting: string) {
+  return function (target: Function) {
+    target.prototype.greet = function (): void {
+      console.log(greeting);
+    };
+  };
+}
+
+@Greeter("Hello TS!")
+class Greeting {
+  constructor() {
+    // 内部实现
+  }
+}
+
+let myGreeting = new Greeting();
+myGreeting.greet(); // console output: 'Hello TS!';
+```
