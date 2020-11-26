@@ -276,7 +276,7 @@ if (window.devicePixelRatio == 3) {
 
 ||display:none|visibility:hidden|opacity:0|
 |---|---|---|---|
-|是否占据页面控件|x|√|√|
+|是否占据页面空间|x|√|√|
 |对子元素影响|√|x|√|
 |自身绑定的事件能否继续触发|x|x|√|
 |是否影响其他元素触发事件（例如被遮挡的元素）|x|x|√|

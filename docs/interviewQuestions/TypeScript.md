@@ -74,6 +74,39 @@ interface Name2 {
 type User2 = Name2 & { age: number  };
 ```
 
+类可以以相同的方式实现接口或类型别名，但类不能实现使用类型别名定义的联合类型
+
+```ts
+interface Point {
+  x: number;
+  y: number;
+}
+
+class SomePoint implements Point {
+  x = 1;
+  y = 2;
+}
+
+type Point2 = {
+  x: number;
+  y: number;
+};
+
+class SomePoint2 implements Point2 {
+  x = 1;
+  y = 2;
+}
+
+type PartialPoint = { x: number; } | { y: number; };
+
+// A class can only implement an object type or 
+// intersection of object types with statically known members.
+class SomePartialPoint implements PartialPoint { // Error
+  x = 1;
+  y = 2;
+}
+```
+
 ### 不同点
 
 #### type 可以声明基本类型别名，联合类型，元组等类型
