@@ -8,7 +8,7 @@
 
 ### 2.4.1 TCP/IP 与 OSI 参考模型
 
-![tcp:ip1](/Users/nmsn/文档/tcp:ip1.png)
+![tcpip1](/Users/nmsn/文档/tcpip1.png)
 
 ### 2.4.2 硬件（物理层）
 
