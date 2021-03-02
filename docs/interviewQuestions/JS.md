@@ -933,3 +933,10 @@ Number.isNaN() 方法确定传递的值是否为 NaN，并且检查其类型是�
 在 JavaScript 中，NaN 最特殊的地方就是，我们不能使用相等运算符（== 和 ===）来判断一个值是否是 NaN，因为 NaN == NaN 和 NaN === NaN 都会返回 false。因此，必须要有一个判断值是否是 NaN 的方法。
 
 和全局函数 isNaN() 相比，Number.isNaN() 不会自行将参数转换成数字，只有在参数是值为 NaN 的数字时，才会返回 true。
+
+### === 和 Object.is
+
+Object.is 与 === 行为基本一致，不同点在于
+
+- +0 不等于 -0
+- NaN 等于自身

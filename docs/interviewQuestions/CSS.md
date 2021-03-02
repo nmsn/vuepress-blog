@@ -425,3 +425,25 @@ box-sizing: padding-box // 火狐的私有模型，没人用
 ### 参考文献
 
 - <img>元素底部为何有空白？：[https://www.zhihu.com/question/21558138](https://www.zhihu.com/question/21558138)
+
+## 可替换元素
+
+> 在 CSS 中，可替换元素（replaced element）的展现效果不是由 CSS 来控制的。这些元素是一种外部对象，它们外观的渲染，是独立于 CSS 的。
+
+典型的可替换元素有：
+
+- `<iframe>`
+- `<video>`
+- `<embed>`
+- `<img>` *
+
+有些元素仅在特定情况下被作为可替换元素处理，例如：
+
+- `<option>`
+- `<audio>`
+- `<canvas>`
+- `<object>`
+- `<applet>`
+
+HTML 规范也说了 `<input>` 元素可替换，因为 "image" 类型的 `<input>` 元素就像 `<img>` 一样被替换。但是其他形式的控制元素，包括其他类型的 `<input>` 元素，被明确地列为非可替换元素（non-replaced elements）。该规范用术语小挂件（Widgets）来描述它们默认的限定平台的渲染行为。
+
