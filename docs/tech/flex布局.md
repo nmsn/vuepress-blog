@@ -1,4 +1,4 @@
-# FLex
+# Flex
 
 Flex 是 Flexible Box 的缩写，意为“弹性布局”，用来为盒装模型提供最大的灵活性
 
@@ -162,3 +162,7 @@ flex 属性是 flex-grow,flex-shrink 和 flex-basis 的简写，默认值为 `0 
 ### align-self 属性
 
 align-self 属性允许单个项目有与其他项目不一样的对齐方式，可覆盖 align-items 属性。默认值为 auto，表示继承父元素的 align-items 属性，如果没有父元素，则等同于 stretch
+
+## 参考资料
+
+- [Flex 布局教程：实例篇](http://www.ruanyifeng.com/blog/2015/07/flex-examples.html)
