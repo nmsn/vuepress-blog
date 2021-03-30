@@ -8,7 +8,7 @@
 
 ### 2.4.1 TCP/IP 与 OSI 参考模型
 
-![tcpip1](/Users/nmsn/文档/tcpip1.png)
+![tcpip1](../.vuepress/public/images/tcpip1.png)
 
 ### 2.4.2 硬件（物理层）
 
@@ -99,7 +99,7 @@ IP 地址（IPv4地址）由32位正整数来表示。TCP/IP 通信要求将这�
 
 由此 ，可以通过设置网络地址和主机地址，在相互连接的整个网路中保证每台主机的 IP 地址都不会相互重复。 即 IP 地址具有了唯一性。
 
-![ip](/Users/nmsn/文档/ip.png)
+![ip](../.vuepress/public/images/ip.png)
 
 
 
@@ -121,7 +121,7 @@ C 类 IP地址是前两位为 110 的地址。从第 1 位到第 24 位是它的
 
 C 类 IP地址是前两位为 1110 的地址。从第 1 位到第 32 位是它的网络标识。用十进制表示的话，224.0.0.0~239.255.255.255 是 D 类的网络地址。 D 类地址没有主机标识。常用于多播。
 
-![ip2](/Users/nmsn/文档/ip2.png)
+![ip2](../.vuepress/public/images/ip2.png)
 
 #### 关于分配 IP 主机地址的注意事项
 
@@ -135,11 +135,11 @@ C 类 IP地址是前两位为 1110 的地址。从第 1 位到第 32 位是它�
 
 对于子网掩码，目前有两种标识方式。以 172.20.100.52 的前 26 位是网络地址的情况为例，以下是其中一种表示方式，它将 IP 地址与子网掩码的地址分别用两行来表示
 
-![ip3](/Users/nmsn/文档/ip3.png)
+![ip3](../.vuepress/public/images/ip3.png)
 
 另外一种表示方式如下所示。它将每个 IP 地址后面追加网路地址的位数用 "/" 隔开
 
-![ip4](/Users/nmsn/文档/ip4.png)
+![ip4](../.vuepress/public/images/ip4.png)
 
 
 
@@ -157,7 +157,7 @@ C 类 IP地址是前两位为 1110 的地址。从第 1 位到第 32 位是它�
 
 于是出现了私有网络的 IP地址。它的范围地址如下所示：
 
-![ip5](/Users/nmsn/文档/ip5.png)
+![ip5](../.vuepress/public/images/ip5.png)
 
 包含在这个范围内的 IP 地址都属于私有 IP，而在此之外的 IP 地址称为全局 IP。
 
@@ -192,13 +192,13 @@ IPv6 的 IP 地址长度为 128 位。它所能表示的数字高达 38 位数 �
 
 除了知名端口号之外，还有一些端口号也被正式注册。它们分布在 1024 到 49151 的数字之间。不过，这些端口号可用于任何通信用途。
 
-![tcp](/Users/nmsn/文档/tcp.png)
+![tcp](../.vuepress/public/images/tcp.png)
 
-![tcp2](/Users/nmsn/文档/tcp2.png)
+![tcp2](../.vuepress/public/images/tcp2.png)
 
-![udp1](/Users/nmsn/文档/udp1.png)
+![udp1](../.vuepress/public/images/udp1.png)
 
-![udp2](/Users/nmsn/文档/udp2.png)
+![udp2](../.vuepress/public/images/udp2.png)
 
 #### 时序分配法
 
@@ -240,7 +240,7 @@ TCP 以 1 段为单位，每发放一个段进行一次确认应答的处理。�
 
 收到确认应答的情况下，将窗口滑动到确认应答中的序列号的位置。这样可以顺序地将多个段同时发送提高通信性能。这种机制也被称为滑动窗口控制。
 
-![窗口1](/Users/nmsn/文档/窗口1.png)
+![窗口1](../.vuepress/public/images/窗口1.png)
 
 ### 8.2.1 TELNET
 
@@ -272,6 +272,6 @@ SSH 是加密的远程登录系统。 TELNET 中登录无需输入密码就可�
 
 Web 中可以通过 TLS/SSL 对 HTTP 通信进行加密。使用 TLS/SSL 的 HTTP 通信叫做 HTTPS 通信。HTTPS 中采用对称加密方式。而在发送其公共密钥时采用的则是公钥加密方式（非对称加密）。
 
-![https1](/Users/nmsn/文档/https1.png)
+![https1](../.vuepress/public/images/https1.png)
 
 确认公钥是否正确主要使用认证中心 CA 签发的证书，而主要的认证中心的信息已经嵌入到浏览器的出厂设置中。如果 Web 浏览器中尚未加入某个认证中心，那么会在页面上提示一个警告信息。此时，判断认证中心合法与否就要由用户自己决定了。
