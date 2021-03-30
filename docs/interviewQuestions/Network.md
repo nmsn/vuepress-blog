@@ -123,8 +123,8 @@ server 由于收不到确认，就知道 client 并没有要求建立连接。
 目前主流的做法使用 Cache-Control 控制缓存，除了 max-age 控制过期时间外，还有一些不得不提
 
 - Cache-Control: public 可以被所有用户缓存，包括终端和 CDN 等中间代理服务器
-- Cache-Control: private 只能被终端浏览器缓存，不允许中继缓存服务器进行缓存
-- Cache-Control: no-cache,先缓存本地，但是在命中缓存之后必须与服务器验证缓存的新鲜度才能使用
+- Cache-Control: private 只能被终端浏览器缓存，中间的代理服务器不能缓存
+- Cache-Control: no-cache，先缓存本地，但是在命中缓存之后必须与服务器验证缓存的新鲜度才能使用。跳过当前的强缓存，发送 HTTP 请求，即直接进入协商缓存阶段。
 - Cache-Control: no-store，不会产生任何缓存
 
 ### 协商缓存
