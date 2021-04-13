@@ -13,8 +13,10 @@ function Parent () {
 
 function Child () {}
 
-// 核心代码，创建Parent的实例，并将该实例赋值给Child.prototype
+// 核心代码，创建 Parent 的实例，并将该实例赋值给 Child.prototype
 Child.prototype = new Parent();
+
+---
 
 var child1 = new Child();
 
@@ -43,9 +45,11 @@ function Parent () {
 }
 
 function Child () {
-  // 核心代码，创建子类实例时调用Parent构造函数，Child每个实例都会将Parent中的属性复制一份
+  // 核心代码，创建子类实例时调用 Parent 构造函数，Child 每个实例都会将Parent 中的属性复制一份
   Parent.call(this);
 }
+
+---
 
 var child1 = new Child();
 
@@ -61,7 +65,7 @@ console.log(child2.names); // ["kevin", "daisy"]
 优点
 
 1. 避免了引用类型的属性被所有实例共享
-2. 可以在Child中向Parent传参
+2. 可以在 Child 中向 Parent 传参
 
 ```js
 function Parent (name) {
@@ -71,6 +75,8 @@ function Parent (name) {
 function Child (name) {
   Parent.call(this, name);
 }
+
+---
 
 var child1 = new Child('kevin');
 
@@ -107,6 +113,8 @@ function Child (name, age) {
 
 Child.prototype = new Parent();
 Child.prototype.constructor = Child;
+
+---
 
 var child1 = new Child('kevin', '18');
 
@@ -193,6 +201,7 @@ F.prototype = Parent.prototype;
 
 Child.prototype = new F();
 
+---
 
 var child1 = new Child('kevin', '18');
 
