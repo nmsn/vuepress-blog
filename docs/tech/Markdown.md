@@ -254,6 +254,13 @@ const unique = (arr)=>{
 
 ### 折叠
 
+```md
+<details>
+<summary>展开查看规范</summary>
+这是展开后的内容1
+</details>
+```
+
 <details>
 <summary>展开查看规范</summary>
 这是展开后的内容1
