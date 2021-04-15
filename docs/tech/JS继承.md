@@ -29,72 +29,55 @@ var child2 = new Child();
 console.log(child2.names); // ["kevin", "daisy", "yayu"]
 ```
 
-缺点
+#### 缺点
 
 1. 引用类型的属性被所有实例共享，多个实例对引用类型的操作会被篡改
-2. 在创建Child的实例时，不能向Parent传参
-3. 子类型原型上的 constructor 属性被重写了，执行Child.prototype = new Parent()后原型被覆盖，Child.prototype 上丢失了 constructor 属性， Child.prototype 指向了 Parent.prototype，而 Parent.prototype.constructor 指向了 Parent，所以 Child.prototype.constructor 指向了 Parent。
+2. 在创建 Child 的实例时，不能向 Parent 传参
+3. 子类型原型上的 constructor 属性被重写了，执行 Child.prototype = new Parent() 后原型被覆盖，Child.prototype 上丢失了 constructor 属性， Child.prototype 指向了 Parent.prototype，而 Parent.prototype.constructor 指向了 Parent，所以 Child.prototype.constructor 指向了 Parent。
 
 ### 2.借用构造函数继承（经典继承）
 
 使用父类的构造函数来增强子类实例，等同于复制父类的实例给子类（不使用原型）
 
 ```js
-function Parent () {
+function Parent (age) {
   this.names = ['kevin', 'daisy'];
+  this.age = age;
 }
 
-function Child () {
+function Child (age) {
   // 核心代码，创建子类实例时调用 Parent 构造函数，Child 每个实例都会将Parent 中的属性复制一份
-  Parent.call(this);
+  Parent.call(this, age);
 }
 
 ---
 
-var child1 = new Child();
+var child1 = new Child(10);
 
 child1.names.push('yayu');
 
 console.log(child1.names); // ["kevin", "daisy", "yayu"]
+console.log(child1.name); // 10
 
-var child2 = new Child();
+var child2 = new Child(18);
 
 console.log(child2.names); // ["kevin", "daisy"]
+console.log(child1.name); // 18
 ```
 
-优点
+#### 优点
 
 1. 避免了引用类型的属性被所有实例共享
 2. 可以在 Child 中向 Parent 传参
 
-```js
-function Parent (name) {
-  this.name = name;
-}
-
-function Child (name) {
-  Parent.call(this, name);
-}
-
----
-
-var child1 = new Child('kevin');
-
-console.log(child1.name); // kevin
-
-var child2 = new Child('daisy');
-
-console.log(child2.name); // daisy
-```
-
-缺点
+#### 缺点
 
 1. 方法都在构造函数中定义，每次创建实例都会创建一遍方法，无法复用，且影响性能
 2. 只能继承父类的实例属性和方法，不能继承原型属性和方法
 
 ### 3. 组合继承
 
-组合上述两种方法就是组合继承。用原型链实现对原型属性和方法的继承，用借用构造函数技术来实现实例属性的继承。
+组合上述两种方法就是组合继承。用**原型链**实现对原型属性和方法的继承，用**借用构造函数**技术来实现实例属性的继承。
 
 ```js
 function Parent (name) {
@@ -107,11 +90,13 @@ Parent.prototype.getName = function () {
 }
 
 function Child (name, age) {
-  Parent.call(this, name);
+  Parent.call(this, name);  // 第一次调用父构造函数
   this.age = age;
 }
 
-Child.prototype = new Parent();
+Child.prototype = new Parent(); // 第二次调用父构造函数
+
+// Child.prototype = new Parent() 导致原型被覆盖，需要重新修改
 Child.prototype.constructor = Child;
 
 ---
@@ -131,11 +116,11 @@ console.log(child2.age); // 20
 console.log(child2.colors); // ["red", "blue", "green"]
 ```
 
-优点
+#### 优点
 
 融合原型链继承和构造函数的优点，是js中最常见的继承模式
 
-缺点
+#### 缺点
 
 会调用两次父构造函数
 
@@ -145,13 +130,13 @@ console.log(child2.colors); // ["red", "blue", "green"]
 
 ```js
 function createObj(o) {
-    function F(){}
-    F.prototype = o;
-    return new F();
+  function F(){}
+  F.prototype = o;
+  return new F();
 }
 ```
 
-缺点
+#### 缺点
 
 1. 包含引用类型的属性始终都会共享相应的值，这点跟原型链继承一样
 2. 无法传递参数
@@ -160,17 +145,20 @@ function createObj(o) {
 
 创建一个仅用于封装继承工程的函数，该函数在内部以某种形式来做增强对象，最后返回对象
 
+> 与组合继承相比，寄生式继承不用实例化父类，直接实例化一个临时副本实现了相同的原型链继承。后面的寄生组合继承用寄生继承修复了组合继承的小问题，让 js 完美实现了继承
+
 ```js
 function createObj (o) {
-    var clone = Object.create(o);
-    clone.sayName = function () {
-        console.log('hi');
-    }
-    return clone;
+  // Object.create() 的 polyfill 的实现是 原型式继承
+  var clone = Object.create(o);
+  clone.sayName = function () {
+      console.log('hi');
+  }
+  return clone;
 }
 ```
 
-缺点（同原型式继承）
+#### 缺点（同原型式继承）
 
 1. 包含引用类型的属性始终都会共享相应的值，这点跟原型链继承一样
 2. 无法传递参数
@@ -196,9 +184,7 @@ function Child (name, age) {
 
 // 关键的三步
 var F = function () {};
-
 F.prototype = Parent.prototype;
-
 Child.prototype = new F();
 
 ---
@@ -208,11 +194,30 @@ var child1 = new Child('kevin', '18');
 console.log(child1);
 ```
 
+### 总结
+
+- 原型链
+
+  即子类的原型指向父类的实例从而实现原型共享
+  - 优点：实现所有属性、方法共享
+  - 缺点： 无法做到属性、方法独享，不可传参数
+
+- 构造函数
+
+   即通过js的apply、call实现子类调用父类的属性、方法
+   - 优点：实现所有属性、方法独享，可传参数
+   - 缺点：无法做到属性、方法共享
+
+组合继承将以上两种继承方法一起使用，把共享的属性、方法用原型链继承实现，独享的属性、方法用借用构造函数实现，唯一的问题就是实现的时候调用了两次父类构造函数
+
+- 原型（寄生）
+
+  直接实例化一个临时副本实现了相同的原型链继承
+  
+寄生继承就是不用实例化父类了，直接实例化一个临时副本实现了相同的原型链继承，用以解决组合继承两次调用父构造函数的问题
+
+
 ## ES6
-
-> ES5 的继承，实质是先创造子类的实例对象this，然后再将父类的方法添加到this上面（Parent.apply(this)）。ES6 的继承机制完全不同，实质是先将父类实例对象的属性和方法，加到this上面（所以必须先调用super方法），然后再用子类的构造函数修改this。
-
-### 使用 ES5 模拟实现 ES6 的 class
 
 ES6类的实现
 
@@ -230,6 +235,10 @@ class Person {
     }
 }
 ```
+
+> ES5 的继承，实质是先创造子类的实例对象this，然后再将父类的方法添加到this上面（Parent.apply(this)）。ES6 的继承机制完全不同，实质是先将父类实例对象的属性和方法，加到this上面（所以必须先调用super方法），然后再用子类的构造函数修改this。
+
+### 使用 ES5 模拟实现 ES6 的 class
 
 通过 babel 转换成 es5 的语法
 
@@ -337,49 +346,6 @@ class B extends A {
 
 转化后
 
-> Object.getPrototypeOf() 方法可以用来从子类上获取父类
-
-> 大多数浏览器的 ES5 实现之中，每一个对象都有__proto__属性，指向对应的构造函数的prototype属性。Class 作为构造函数的语法糖，同时有prototype属性和__proto__属性，因此同时存在两条继承链。
->- （1）子类的__proto__属性，表示构造函数的继承，总是指向父类。
->- （2）子类prototype属性的__proto__属性，表示方法的继承，总是指向父类的prototype属性。
->
-> ```js
-> class A {}
-> 
-> class B extends A {}
-> 
-> B.__proto__ === A // true
-> B.prototype.__proto__ === A.prototype // true
-> ```
-> 
-> 这样的结果是因为，类的继承是按照下面的模式实现的。
-> 
-> ```js
-> class A {
-> }
-> 
-> class B {
-> }
->
-> // B 的实例继承 A 的实例
-> Object.setPrototypeOf(B.prototype, A.prototype);
->
-> // B 继承 A 的静态属性
-> Object.setPrototypeOf(B, A);
->
-> const b = new B();
-> ```
-> 子类实例的__proto__属性的__proto__属性，指向父类实例的__proto__属性。也就是说，子类的原型的原型，是父类的原型。
-> ```js
-> var p1 = new Point(2, 3);
-> var p2 = new ColorPoint(2, 3, 'red');
->
-> p2.__proto__ === p1.__proto__ // false
-> p2.__proto__.__proto__ === p1.__proto__ // true
-> ```
-
-
-
 ```js
 ("use strict");
 
@@ -439,7 +405,9 @@ var _createClass = (function() {
 })();
 
 
-/** */
+/** 
+ * 实现子类继承父类
+*/
 function _inherits(subClass, superClass) {
   // 判断父创造函数是否存在
   if (typeof superClass !== "function" && superClass !== null) {
@@ -522,6 +490,48 @@ var B = (function(_A) {
 
 ```
 
+Object.getPrototypeOf() 方法可以用来从子类上获取父类
+
+大多数浏览器的 ES5 实现之中，每一个对象都有__proto__属性，指向对应的构造函数的prototype属性。Class 作为构造函数的语法糖，同时有prototype属性和__proto__属性，因此同时存在两条继承链。
+1. 子类的__proto__属性，表示构造函数的继承，总是指向父类。
+2. 子类prototype属性的__proto__属性，表示方法的继承，总是指向父类的prototype属性。
+
+```js
+class A {}
+
+class B extends A {}
+
+B.__proto__ === A // true
+B.prototype.__proto__ === A.prototype // true
+```
+
+这样的结果是因为，类的继承是按照下面的模式实现的。
+
+```js
+class A {}
+
+class B {}
+
+// B 的实例继承 A 的实例
+Object.setPrototypeOf(B.prototype, A.prototype);
+
+// B 继承 A 的静态属性
+Object.setPrototypeOf(B, A);
+
+const b = new B();
+```
+
+> Object.setPrototypeOf()定义： [https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf)
+
+子类实例的__proto__属性的__proto__属性，指向父类实例的__proto__属性。也就是说，子类的原型的原型，是父类的原型。
+```js
+var p1 = new Point(2, 3);
+var p2 = new ColorPoint(2, 3, 'red');
+
+p2.__proto__ === p1.__proto__ // false
+p2.__proto__.__proto__ === p1.__proto__ // true
+```
+
 Object.create 的 polyfill
 
 ```js
@@ -556,3 +566,4 @@ if (typeof Object.create !== "function") {
 - JavaScript常用八种继承方案：[https://juejin.im/post/5bcb2e295188255c55472db0](https://juejin.im/post/5bcb2e295188255c55472db0)
 - ES6 中的 class 在 ES5 中的实现：[https://www.cnblogs.com/slongs/p/11238574.html](https://www.cnblogs.com/slongs/p/11238574.html)
 - Class 的继承：[https://es6.ruanyifeng.com/#docs/class-extends](https://es6.ruanyifeng.com/#docs/class-extends)
+- Object.create()：[https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/create](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/create)
