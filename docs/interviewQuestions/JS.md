@@ -765,3 +765,12 @@ Object.is 与 === 行为基本一致，不同点在于
 
 - +0 不等于 -0
 - NaN 等于自身
+
+### encodeURI 与 encodeURIComponent 的区别
+
+- 相同点：都可以对url进行一个编码
+- 区别：encodeURI()不会对本身属于URI的特殊字符进行编码，例如冒号、正斜杠、问号和井字号；而encodeURIComponent()则会对它发现的任何非标准字符进行编码
+
+- encodeURI：适用于url跳转时
+- encodeURIComponent：适用于url作为参数传递时
+- 注意：当url作为参数传递时如果没有用encodeURIComponent进行编码，往往会造成传递时url中的特殊字符丢失
