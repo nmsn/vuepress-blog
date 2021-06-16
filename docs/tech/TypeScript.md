@@ -633,3 +633,147 @@ class Greeter {
 }
 ```
 
+## 实践
+### React 中的属性类型
+
+```ts
+export declare interface AppBetterProps {
+  children: React.ReactNode // 一般情况下推荐使用，支持所有类型 Great
+  functionChildren: (name: string) => React.ReactNode
+  style?: React.CSSProperties // 传递style对象
+  onChange?: React.FormEventHandler<HTMLInputElement>
+}
+
+export declare interface AppProps {
+  children1: JSX.Element // 差, 不支持数组
+  children2: JSX.Element | JSX.Element[] // 一般, 不支持字符串
+  children3: React.ReactChildren // 忽略命名，不是一个合适的类型，工具类类型
+  children4: React.ReactChild[] // 很好
+  children: React.ReactNode // 最佳，支持所有类型 推荐使用
+  functionChildren: (name: string) => React.ReactNode // recommended function as a child render prop type
+  style?: React.CSSProperties // 传递style对象
+  onChange?: React.FormEventHandler<HTMLInputElement> // 表单事件, 泛型参数是event.target的类型
+}
+```
+
+
+### Forms and Events
+
+#### onChange
+
+change 事件，有两个定义参数类型的方法。
+
+第一种方法使用推断的方法签名（例如：React.FormEvent <HTMLInputElement> ：void）
+
+```ts
+import * as React from 'react'
+
+type changeFn = (e: React.FormEvent<HTMLInputElement>) => void
+const App: React.FC = () => {
+  const [state, setState] = React.useState('')
+  const onChange: changeFn = e => {
+    setState(e.currentTarget.value)
+  }
+  return (
+    <div>
+      <input type="text" value={state} onChange={onChange} />
+    </div>
+  )
+}
+```
+第二种方法强制使用 @types / react 提供的委托类型，两种方法均可。
+```ts
+import * as React from 'react'
+const App: React.FC = () => {
+  const [state, setState] = React.useState('')
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+    setState(e.currentTarget.value)
+  }
+  return (
+    <div>
+      <input type="text" value={state} onChange={onChange} />
+    </div>
+  )
+}
+```
+#### onSubmit
+
+如果不太关心事件的类型，可以直接使用 React.SyntheticEvent，如果目标表单有想要访问的自定义命名输入，可以使用类型扩展
+
+```ts
+import * as React from 'react'
+
+const App: React.FC = () => {
+  const onSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault()
+    const target = e.target as typeof e.target & {
+      password: { value: string }
+    } // 类型扩展
+    const password = target.password.value
+  }
+  return (
+    <form onSubmit={onSubmit}>
+      <div>
+        <label>
+          Password:
+          <input type="password" name="password" />
+        </label>
+      </div>
+      <div>
+        <input type="submit" value="Log in" />
+      </div>
+    </form>
+  )
+}
+```
+
+### Tips
+
+#### 使用查找类型访问组件属性类型
+
+通过查找类型减少 type 的非必要导出，如果需要提供复杂的 type，应当提取到作为公共 API 导出的文件中。
+
+现在我们有一个 Counter 组件，需要 name 这个必传参数：
+
+```ts
+// counter.tsx
+import * as React from 'react'
+export type Props = {
+  name: string
+}
+const Counter: React.FC<Props> = props => {
+  return <></>
+}
+export default Counter
+```
+
+在其他引用它的组件中我们有两种方式获取到 Counter 的参数类型
+
+第一种是通过 typeof 操作符（推荐）
+
+```ts
+// Great
+import Counter from './d-tips1'
+type PropsNew = React.ComponentProps<typeof Counter> & {
+  age: number
+}
+const App: React.FC<PropsNew> = props => {
+  return <Counter {...props} />
+}
+export default App
+```
+第二种是通过在原组件进行导出
+```ts
+import Counter, { Props } from './d-tips1'
+type PropsNew = Props & {
+  age: number
+}
+const App: React.FC<PropsNew> = props => {
+  return (
+    <>
+      <Counter {...props} />
+    </>
+  )
+}
+export default App
+```
