@@ -777,3 +777,126 @@ const App: React.FC<PropsNew> = props => {
 }
 export default App
 ```
+
+#### 不要在 type 或 interface 中使用函数声明
+
+保持一致性，类型/接口的所有成员都通过相同的语法定义。
+
+**--strictFunctionTypes** 在比较函数类型时强制执行更严格的类型检查，但第一种声明方式下严格检查不生效。
+
+
+```ts
+✅
+
+interface ICounter {
+
+  start: (value: number) => string
+
+}
+
+
+
+❌
+
+interface ICounter1 {
+
+  start(value: number): string
+
+}
+
+
+
+ 
+
+interface Animal {}
+
+interface Dog extends Animal {
+
+  wow: () => void
+
+}
+
+interface Comparer<T> {
+
+  compare: (a: T, b: T) => number
+
+}
+
+declare let animalComparer: Comparer<Animal>
+
+declare let dogComparer: Comparer<Dog>
+
+animalComparer = dogComparer // Error
+
+dogComparer = animalComparer // Ok
+
+
+
+interface Comparer1<T> {
+
+  compare(a: T, b: T): number
+
+}
+
+declare let animalComparer1: Comparer1<Animal>
+
+declare let dogComparer1: Comparer1<Dog>
+
+animalComparer1 = dogComparer // Ok
+
+dogComparer1 = animalComparer // Ok
+```
+
+
+#### Event 事件对象类型
+```ts
+ClipboardEvent<T = Element> // 剪切板事件对象
+DragEvent<T =Element> // 拖拽事件对象
+ChangeEvent<T = Element> // Change 事件对象
+KeyboardEvent<T = Element> // 键盘事件对象
+MouseEvent<T = Element> // 鼠标事件对象
+TouchEvent<T = Element> // 触摸事件对象
+WheelEvent<T = Element> // 滚轮时间对象
+AnimationEvent<T = Element> // 动画事件对象
+TransitionEvent<T = Element> // 过渡事件对象
+```
+
+#### 事件处理函数类型
+
+当我们定义事件处理函数时有没有更方便定义其函数类型的方式呢？答案是使用 React 声明文件所提供的 EventHandler 类型别名，通过不同事件的 EventHandler 的类型别名来定义事件处理函数的类型
+
+```ts
+type EventHandler<E extends React.SyntheticEvent<any>> = {
+  bivarianceHack(event: E): void
+}['bivarianceHack']
+
+type ReactEventHandler<T = Element> = EventHandler<React.SyntheticEvent<T>>
+
+type ClipboardEventHandler<T = Element> = EventHandler<React.ClipboardEvent<T>>
+
+type DragEventHandler<T = Element> = EventHandler<React.DragEvent<T>>
+
+type FocusEventHandler<T = Element> = EventHandler<React.FocusEvent<T>>
+
+type FormEventHandler<T = Element> = EventHandler<React.FormEvent<T>>
+
+type ChangeEventHandler<T = Element> = EventHandler<React.ChangeEvent<T>>
+
+type KeyboardEventHandler<T = Element> = EventHandler<React.KeyboardEvent<T>>
+
+type MouseEventHandler<T = Element> = EventHandler<React.MouseEvent<T>>
+
+type TouchEventHandler<T = Element> = EventHandler<React.TouchEvent<T>>
+
+type PointerEventHandler<T = Element> = EventHandler<React.PointerEvent<T>>
+
+type UIEventHandler<T = Element> = EventHandler<React.UIEvent<T>>
+
+type WheelEventHandler<T = Element> = EventHandler<React.WheelEvent<T>>
+
+type AnimationEventHandler<T = Element> = EventHandler<React.AnimationEvent<T>>
+
+type TransitionEventHandler<T = Element> = EventHandler<React.TransitionEvent<T>>
+```
+
+bivarianceHack 为事件处理函数的类型定义，函数接收一个 event 对象，并且其类型为接收到的泛型变量 E 的类型, 返回值为 void
