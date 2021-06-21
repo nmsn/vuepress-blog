@@ -6,29 +6,53 @@
 
 #### typeof
 
-`typeof`可以获取值的类型
-
-```ts
-const obj = { a: '1' };
-type Foo = typeof obj; // { a: string }
-```
+`typeof` 可以获取值的类型（基础类型）
 
 eg:
 
 ```ts
-interface Person {
-  name: string;
-  age: number;
+function reverse(target: string | number) {
+  if (typeof target === 'string') {
+    target.toFixed(2) // Error，在这个代码块中，target 是 string 类型，没有 toFixed 方法
+    return target.split('').reverse().join('')
+  }
+  if (typeof target === 'number') { 
+    //通过 typeof 关键字，将这个代码块中变量 target 的类型限定为 number 类型
+    target.toFixed(2) // OK
+    return +[...target.toString()].reverse().join('')
+  }
+
+  target.forEach(element => {}) // Error，在这个代码块中，target 是 string 或 number 类型，没有 forEach 方法
+}
+```
+
+
+#### instanceof 
+
+`instanceof` 可以获取值的类型（对象）
+
+instanceof 与 typeof 类似，区别在于 typeof 判断基础类型，instanceof 判断是否为某个对象的实例
+
+```ts
+class User {
+  public nickname: string | undefined
+  public group: number | undefined
 }
 
-const sem: Person = { name: 'semlinker', age: 30 };
-type Sem= typeof sem; // -> Person
-
-function toArray(x: number): Array<number> {
-  return [x];
+class Log {
+  public count: number = 10
+  public keyword: string | undefined
 }
 
-type Func = typeof toArray; // -> (x: number) => number[]
+function typeGuard(arg: User | Log) {
+  if (arg instanceof User) {
+    arg.count = 15 // Error, arg 限定为User类型，无此属性
+  }
+
+  if (arg instanceof Log) {
+    arg.count = 15 // OK,arg 限定为Log类型
+  }
+}
 ```
 
 #### keyof
@@ -102,6 +126,33 @@ type ReturnType<T> = T extends (
 ```
 
 其实这里的 `infer R` 就是声明一个变量来承载传入函数签名的返回值类型, 简单说就是用它取到函数返回值的类型方便之后使用。
+
+
+#### is
+
+eg:
+```ts
+function isString(s: unknown): boolean {
+  return typeof s === 'string'
+}
+function toUpperCase(x: unknown) {
+  if(isString(x)) {
+    //一个 unknown 类型的对象不能进行 toUpperCase()
+    x.toUpperCase() // Error, Property 'toUpperCase' does not exist on type 'unknown'
+  }
+}
+
+//用 is 关键字
+const isString = (val: unknown): val is string => typeof val === 'string'
+function toUpperCase(x: unknown) {
+  if(isString(x)) {
+    return x.toUpperCase()
+  }
+}
+console.log(toUpperCase('aa')) //AA
+```
+
+is 关键字一般用于函数返回类型中，判断参数是否属于某一类型，并根据结果返回对应的布尔类型
 
 ### 工具泛型
 
