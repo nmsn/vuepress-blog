@@ -125,8 +125,48 @@ type ReturnType<T> = T extends (
   : any;
 ```
 
+如果传入的类型 T 能够赋值给 (...args: any) => R 则返回类型 R。
+
+但是这里类型 R 从何而来？讲道理，泛型中的变量需要外部指定，即 ReturnType<T,R>，但我们不是要得到 R 么，所以不能声明在这其中。这里 infer 便解决了这个问题。表达式右边的类型中，加上 infer 前缀我们便得到了反解出的类型变量 R，配合 extends 条件类型，可得到这个反解出的类型 R。这里 R 即为函数 (...args: any) => R 的返回类型。
+
 其实这里的 `infer R` 就是声明一个变量来承载传入函数签名的返回值类型, 简单说就是用它取到函数返回值的类型方便之后使用。
 
+
+eg:
+
+```ts
+type ParamType<T> = T extends (param: infer P) => any ? P : T;
+
+interface User {
+  name: string;
+  age: number;
+}
+
+type Func = (user: User) => void
+
+type Param = ParamType<Func>;   // Param = User
+type AA = ParamType<string>;    // string
+
+---
+
+// 获取参数类型
+type ConstructorParameters<T extends new (...args: any[]) => any> = T extends new (...args: infer P) => any ? P : never;
+
+// 获取实例类型
+type InstanceType<T extends new (...args: any[]) => any> = T extends new (...args: any[]) => infer R ? R : any;
+
+class TestClass {
+
+  constructor(
+    public name: string,
+    public string: number
+  ) {}
+}
+
+type Params = ConstructorParameters<typeof TestClass>;  // [string, numbder]
+
+type Instance = InstanceType<typeof TestClass>;         // TestClass
+```
 
 #### is
 
@@ -137,13 +177,14 @@ function isString(s: unknown): boolean {
 }
 function toUpperCase(x: unknown) {
   if(isString(x)) {
-    //一个 unknown 类型的对象不能进行 toUpperCase()
+    // 一个 unknown 类型的对象不能进行 toUpperCase()，toUpperCase 并没有起到缩小类型范围的作用， 这时候就该使用 is 关键字了
     x.toUpperCase() // Error, Property 'toUpperCase' does not exist on type 'unknown'
   }
 }
 
 //用 is 关键字
 const isString = (val: unknown): val is string => typeof val === 'string'
+
 function toUpperCase(x: unknown) {
   if(isString(x)) {
     return x.toUpperCase()
@@ -153,6 +194,31 @@ console.log(toUpperCase('aa')) //AA
 ```
 
 is 关键字一般用于函数返回类型中，判断参数是否属于某一类型，并根据结果返回对应的布尔类型
+
+
+### 泛型约束
+
+```ts
+function loggingIdentity<T>(arg: T): T {
+    console.log(arg.length);  // Error: T doesn't have .length
+    return arg;
+}
+```
+
+相比于操作 any 所有类型，我们想要限制函数去处理任意带有 .length 属性的所有类型。 只要传入的类型有这个属性，我们就允许，就是说至少包含这一属性。 为此，我们需要列出对于T的约束要求。
+
+为此，我们定义一个接口来描述约束条件。 创建一个包含 .length 属性的接口，使用这个接口和 **extends** 关键字来实现约束：
+
+```ts
+interface Lengthwise {
+    length: number;
+}
+
+function loggingIdentity<T extends Lengthwise>(arg: T): T {
+    console.log(arg.length);  // Now we know it has a .length property, so no more error
+    return arg;
+}
+```
 
 ### 工具泛型
 
@@ -189,6 +255,14 @@ interface NewPerson {
 
 但是 Partial 有个局限性，就是只支持处理第一层的属性
 
+递归实现多层次的 Partial
+
+```ts
+export type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+};
+```
+
 #### Required
 
 Required 的作用是将传入的属性变为必选项, 源码如下
@@ -200,6 +274,14 @@ type Required<T> = { [P in keyof T]-?: T[P] };
 其中 `-?` 是代表移除 `?` 这个 `modifier` 的标识。
 与之对应的还有个 `+?` , 这个含义自然与 `-?` 之前相反, 它是用来把属性变成可选项的，`+` 可省略，见 `Partial`。
 再拓展一下，除了可以应用于 `?` 这个 `modifiers` ，还有应用在 `readonly` ，比如 `Readonly`.
+
+递归 Required
+
+```ts
+export type DeepRequired<T> = {
+  [P in keyof T]-?: T[P] extends object | undefined ? DeepRequired<T[P]> : T[P];
+};
+```
 
 #### Readonly
 
