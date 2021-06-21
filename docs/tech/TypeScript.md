@@ -283,6 +283,8 @@ export type DeepRequired<T> = {
 };
 ```
 
+注意: 条件类型判断的是 T[P] extends object | undefined，因为嵌套的对象类型可能是可选的（undefined），如果仅使用object，可能会导致错误的结果。
+
 #### Readonly
 
 将传入的属性变为只读选项，源码如下
@@ -292,6 +294,15 @@ type Readonly<T> = { readonly [P in keyof T]: T[P] };
 ```
 
 给子属性添加 `readonly` 的标识，如果将上面的 `readonly` 改成 `-readonly`， 就是移除子属性的 `readonly` 标识。
+
+递归实现
+
+```ts
+// 即DeepReadonly
+export type DeepImmutable<T> = {
+  +readonly [P in keyof T]: T[P] extends object ? DeepImmutable<T[P]> : T[P];
+};
+```
 
 #### Record
 
@@ -483,6 +494,15 @@ type Mutable<T> = {
   -readonly [P in keyof T]: T[P]
 }
 ```
+
+递归实现
+
+```ts
+export type DeepMutable<T> = {
+  -readonly [P in keyof T]: T[P] extends object ? DeepMutable<T[P]> : T[P];
+};
+```
+
 
 #### PowerPartial
 
