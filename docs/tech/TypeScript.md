@@ -224,6 +224,8 @@ function loggingIdentity<T extends Lengthwise>(arg: T): T {
 
 内置的泛型在 typescript 包下的 lib/lib.es5.d.ts 文件中
 
+-- 操作接口类型 --
+
 #### Partial
 
 Partial 作用是将传入的属性变为可选项
@@ -304,6 +306,49 @@ export type DeepImmutable<T> = {
 };
 ```
 
+#### Pick
+
+这个类型则可以将某个类型中的子属性挑出来，变成包含这个类型部分属性的子类型。
+
+
+从 `T` 中取出 一系列 `K` 的属性, 源码试下如下
+
+```ts
+type Pick<T, K extends keyof T> = { [P in K]: T[P] };
+```
+
+从源码可以看到 `K` 必须是 `T` 的 key，然后用 `in` 进行遍历, 将值赋给 `P`, 最后 `T[P]` 取得相应属性的值
+
+#### Omit
+
+有时候我们想要继承某个接口，但是又需要在新接口中将某个属性给 overwrite 掉，这时候通过 Pick 和 Exclude 就可以组合出来 Omit，用来忽略对象某些属性功能：
+
+```ts
+type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
+
+// 使用
+type Foo = Omit<{name: string, age: number}, 'name'> // -> { age: number }
+```
+
+#### Mutable
+
+将 `T` 的所有属性的 `readonly` 移除：
+
+```ts
+type Mutable<T> = {
+  -readonly [P in keyof T]: T[P]
+}
+```
+
+递归实现
+
+```ts
+export type DeepMutable<T> = {
+  -readonly [P in keyof T]: T[P] extends object ? DeepMutable<T[P]> : T[P];
+};
+```
+-- 联合类型 --
+
 #### Record
 
 将 `K` 中所有的属性的值转化为 `T` 类型，源码如下
@@ -318,18 +363,6 @@ type Record<K extends keyof any, T> = { [P in K]: T };
 type T11 = Record<'a' | 'b' | 'c', Person>; // -> { a: Person; b: Person; c: Person; }
 ```
 
-#### Pick
-
-这个类型则可以将某个类型中的子属性挑出来，变成包含这个类型部分属性的子类型。
-
-
-从 `T` 中取出 一系列 `K` 的属性, 源码试下如下
-
-```ts
-type Pick<T, K extends keyof T> = { [P in K]: T[P] };
-```
-
-从源码可以看到 `K` 必须是 `T` 的 key，然后用 `in` 进行遍历, 将值赋给 `P`, 最后 `T[P]` 取得相应属性的值
 
 #### Exclude
 
@@ -363,6 +396,21 @@ type T01 = Extract<'a' | 'b' | 'c' | 'd', 'a' | 'c' | 'f'>;  // -> 'a' | 'c'
 ```
 
 可以看到 `T` 是 `'a' | 'b' | 'c' | 'd'` ，然后 `U` 是 `'a' | 'c' | 'f'` ，返回的新类型就可以将 `T` 和 `U` 中共有的属性提取出来，也就是 `'a' | 'c'` 了。
+
+#### NonNullable
+
+这个类型可以用来过滤类型中的 null 及 undefined 类型
+
+```ts
+type NonNullable<T> = T extends null | undefined ? never : T;
+```
+
+```ts
+type T22 = string | number | null;
+type T23 = NonNullable<T22>; // -> string | number;
+```
+
+-- 函数类型 --
 
 #### ReturnType
 
@@ -419,19 +467,6 @@ const obj = {
 type InstanceType<T extends new (...args: any[]) => any> = T extends new (...args: any[]) => infer R ? R : any;
 ```
 
-#### NonNullable
-
-这个类型可以用来过滤类型中的 null 及 undefined 类型
-
-```ts
-type NonNullable<T> = T extends null | undefined ? never : T;
-```
-
-```ts
-type T22 = string | number | null;
-type T23 = NonNullable<T22>; // -> string | number;
-```
-
 #### Parameters
 
 该类型可以获得函数的参数类型组成的元组类型。
@@ -474,58 +509,6 @@ type P = ConstructorParameters<typeof Person>; // -> [string, string]
 
 此时 `P` 就是 `Person` 中 `constructor` 的参数 `firstName` 和 `lastName` 的类型所组成的元组类型 `[string, string]`。
 
-#### Omit
-
-有时候我们想要继承某个接口，但是又需要在新接口中将某个属性给 overwrite 掉，这时候通过 Pick 和 Exclude 就可以组合出来 Omit，用来忽略对象某些属性功能：
-
-```ts
-type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
-
-// 使用
-type Foo = Omit<{name: string, age: number}, 'name'> // -> { age: number }
-```
-
-#### Mutable
-
-将 `T` 的所有属性的 `readonly` 移除：
-
-```ts
-type Mutable<T> = {
-  -readonly [P in keyof T]: T[P]
-}
-```
-
-递归实现
-
-```ts
-export type DeepMutable<T> = {
-  -readonly [P in keyof T]: T[P] extends object ? DeepMutable<T[P]> : T[P];
-};
-```
-
-
-#### PowerPartial
-
-内置的 Partial 有个局限性，就是只支持处理第一层的属性，如果是嵌套多层的就没有效果了，不过可以如下自定义：
-
-```ts
-type PowerPartial<T> = {
-    // 如果是 object，则递归类型
-    [U in keyof T]?: T[U] extends object
-      ? PowerPartial<T[U]>
-      : T[U]
-};
-```
-
-#### Deferred
-
-相同的属性名称，但使值是一个 Promise，而不是一个具体的值：
-
-```ts
-type Deferred<T> = {
-    [P in keyof T]: Promise<T[P]>;
-};
-```
 
 ### 参考文献
 
