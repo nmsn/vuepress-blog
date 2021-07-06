@@ -150,6 +150,20 @@ User 接口为 {
 */
 ```
 
+#### 映射类型定义属性
+
+接口类型定义中由于使用了非字面量或者非唯一 symbol 类型作为属性，会造成 TS1169 错误，但是，在 type 关键字声明的类型别名中，我们却可以使用映射类型定义属性
+
+```ts
+interface Obj {
+  [key in 'id' | 'name']: any; // TS1169: A computed property name in an interface must refer to an expression whose type is a literal type or a 'unique symbol' type.
+};
+
+type Obj = {
+  [key in 'id' | 'name']: any;
+};
+```
+
 ### 参考文献
 
 - Typescript 中的 interface 和 type 到底有什么区别：[https://juejin.im/post/5c2723635188252d1d34dc7d](https://juejin.im/post/5c2723635188252d1d34dc7d)
