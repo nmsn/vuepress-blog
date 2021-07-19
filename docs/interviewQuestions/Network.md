@@ -46,6 +46,26 @@
 
 - 一次 dns 缓存引发的惨案：[https://zhuanlan.zhihu.com/p/25152493](https://zhuanlan.zhihu.com/p/25152493)
 
+## DNS 常用记录类型
+
+### A
+
+A 记录代表着这是一条用于解析 IPv4 地址的记录。
+
+### CNAME
+
+CNAME（Canonical Name Record）用于定义域名的别名
+### AAAA
+
+AAAA 记录是域名和 IPv6 地址的映射关系
+
+### MX
+
+MX（Mail Exchanger Record） 记录是邮件记录，用来描述邮件服务器的域名
+
+### NS
+
+NS（Name Server）记录是描述 DNS 服务器网址。从 DNS 的存储结构上说，Name Server 中含有权威 DNS 服务的目录。也就是说，NS 记录指定哪台 Server 是回答 DNS 查询的权威域名服务器。
 ## TCP 建立连接为何是三次握手
 
 ![tcp](../.vuepress/public/images/tcp_3.png)
