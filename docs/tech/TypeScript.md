@@ -1036,3 +1036,54 @@ type TransitionEventHandler<T = Element> = EventHandler<React.TransitionEvent<T>
 ```
 
 bivarianceHack 为事件处理函数的类型定义，函数接收一个 event 对象，并且其类型为接收到的泛型变量 E 的类型, 返回值为 void
+
+
+## 函数重载的方式
+
+```ts
+// 重载
+function padding(all: number);
+function padding(topAndBottom: number, leftAndRight: number);
+function padding(top: number, right: number, bottom: number, left: number);
+// Actual implementation that is a true representation of all the cases the function body needs to handle
+function padding(a: number, b?: number, c?: number, d?: number) {
+  if (b === undefined && c === undefined && d === undefined) {
+    b = c = d = a;
+  } else if (c === undefined && d === undefined) {
+    c = a;
+    d = b;
+  }
+  return {
+    top: a,
+    right: b,
+    bottom: c,
+    left: d
+  };
+}
+
+padding(1); // Okay: all
+padding(1, 1); // Okay: topAndBottom, leftAndRight
+padding(1, 1, 1, 1); // Okay: top, right, bottom, left
+padding(1, 1, 1); // Error: Not a part of the available overloads
+```
+
+### 函数声明
+
+在没有提供函数实现的情况下，有两种声明函数类型的方式:
+
+```ts
+type LongHand = {
+  (a: number): number;
+};
+
+type ShortHand = (a: number) => number;
+```
+
+上面代码中的两个例子完全相同。但是，当你想使用函数重载时，只能用第一种方式:
+
+```ts
+type LongHandAllowsOverloadDeclarations = {
+  (a: number): number;
+  (a: string): string;
+};
+```
