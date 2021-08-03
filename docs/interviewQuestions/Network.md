@@ -46,6 +46,26 @@
 
 - 一次 dns 缓存引发的惨案：[https://zhuanlan.zhihu.com/p/25152493](https://zhuanlan.zhihu.com/p/25152493)
 
+## DNS 常用记录类型
+
+### A
+
+A 记录代表着这是一条用于解析 IPv4 地址的记录。
+
+### CNAME
+
+CNAME（Canonical Name Record）用于定义域名的别名
+### AAAA
+
+AAAA 记录是域名和 IPv6 地址的映射关系
+
+### MX
+
+MX（Mail Exchanger Record） 记录是邮件记录，用来描述邮件服务器的域名
+
+### NS
+
+NS（Name Server）记录是描述 DNS 服务器网址。从 DNS 的存储结构上说，Name Server 中含有权威 DNS 服务的目录。也就是说，NS 记录指定哪台 Server 是回答 DNS 查询的权威域名服务器。
 ## TCP 建立连接为何是三次握手
 
 ![tcp](../.vuepress/public/images/tcp_3.png)
@@ -87,6 +107,14 @@ SYN/ACK：标志位，只为 1 或者 0
 由于现在 client 并没有发出建立连接的请求，因此不会理睬 server 的确认，也不会向 server 发送数据。但 server 却以为新的运输连接已经建立，并一直等待 client 发来数据。这样，server 的很多资源就白白浪费掉了。采用“三次握手”的办法可以防止上述现象发生。
 例如刚才那种情况，client 不会向 server 的确认发出确认。
 server 由于收不到确认，就知道 client 并没有要求建立连接。
+
+通俗来说
+
+TCP 是一个双工协议，为了让双方都保证，建立连接的时候，连接双方都需要向对方发送 SYC（同步请求）和 ACK（响应）。
+
+握手阶段双方都没有烦琐的工作，因此一方向另一方发起同步（SYN）之后，另一方可以将自己的 ACK 和 SYN 打包作为一条消息回复，因此是 3 次握手——需要 3 次数据传输。
+
+到了挥手阶段，双方都可能有未完成的工作。收到挥手请求的一方，必须马上响应（ACK），表示接收到了挥手请求。
 
 ### 参考文献
 

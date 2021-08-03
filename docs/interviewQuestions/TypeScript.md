@@ -167,3 +167,9 @@ type Obj = {
 ### 参考文献
 
 - Typescript 中的 interface 和 type 到底有什么区别：[https://juejin.im/post/5c2723635188252d1d34dc7d](https://juejin.im/post/5c2723635188252d1d34dc7d)
+
+## never 与 void 的差异
+
+void 表示没有任何类型，never 表示永远不存在的值的类型。
+
+当一个函数返回空值时，它的返回值为 void 类型，但是，当一个函数永不返回时（或者总是抛出错误），它的返回值为 never 类型。void 类型可以被赋值（在 strictNulChecking 为 false 时），但是除了 never 本身以外，其他任何类型不能赋值给 never。
