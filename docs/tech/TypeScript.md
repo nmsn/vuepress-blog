@@ -163,7 +163,7 @@ class TestClass {
   ) {}
 }
 
-type Params = ConstructorParameters<typeof TestClass>;  // [string, numbder]
+type Params = ConstructorParameters<typeof TestClass>;  // [string, number]
 
 type Instance = InstanceType<typeof TestClass>;         // TestClass
 ```
