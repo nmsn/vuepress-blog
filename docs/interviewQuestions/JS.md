@@ -431,7 +431,7 @@ const clone = parent => {
 ## 实现订阅发布模式
 
 ```js
-class EventEmeitter {
+class EventEmitter {
   constructor() {
     this._events = this._events || new Map(); // 储存事件/回调键值对
     this._maxListeners = this._maxListeners || 10; // 设立监听上限
@@ -439,7 +439,7 @@ class EventEmeitter {
 }
 
 // 触发名为type的事件
-EventEmeitter.prototype.emit = function(type, ...args) {
+EventEmitter.prototype.emit = function(type, ...args) {
   let handler;
   handler = this._events.get(type);
   if (Array.isArray(handler)) {
@@ -464,7 +464,7 @@ EventEmeitter.prototype.emit = function(type, ...args) {
 };
 
 // 监听名为type的事件
-EventEmeitter.prototype.addListener = function(type, fn) {
+EventEmitter.prototype.addListener = function(type, fn) {
   const handler = this._events.get(type); // 获取对应事件名称的函数清单
   if (!handler) {
     this._events.set(type, fn);
@@ -476,26 +476,26 @@ EventEmeitter.prototype.addListener = function(type, fn) {
   }
 };
 
-EventEmeitter.prototype.removeListener = function(type, fn) {
+EventEmitter.prototype.removeListener = function(type, fn) {
   const handler = this._events.get(type); // 获取对应事件名称的函数清单
 
   // 如果是函数,说明只被监听了一次
   if (handler && typeof handler === "function") {
     this._events.delete(type, fn);
   } else {
-    let postion;
+    let position;
     // 如果handler是数组,说明被监听多次要找到对应的函数
     for (let i = 0; i < handler.length; i++) {
       if (handler[i] === fn) {
-        postion = i;
+        position = i;
       } else {
-        postion = -1;
+        position = -1;
       }
     }
     // 如果找到匹配的函数,从数组中清除
-    if (postion !== -1) {
+    if (position !== -1) {
       // 找到数组对应的位置,直接清除此回调
-      handler.splice(postion, 1);
+      handler.splice(position, 1);
       // 如果清除后只有一个函数,那么取消数组,以函数形式保存
       if (handler.length === 1) {
         this._events.set(type, handler[0]);
@@ -509,182 +509,7 @@ EventEmeitter.prototype.removeListener = function(type, fn) {
 
 ## 实现Promise
 
-```js
-var PromisePolyfill = (function () {
-  // 和reject不同的是resolve需要尝试展开thenable对象
-  function tryToResolve (value) {
-    if (this === value) {
-    // 主要是防止下面这种情况
-    // let y = new Promise(res => setTimeout(res(y)))
-      throw TypeError('Chaining cycle detected for promise!')
-    }
-
-    // 根据规范2.32以及2.33 对对象或者函数尝试展开
-    // 保证S6之前的 polyfill 也能和ES6的原生promise混用
-    if (value !== null &&
-      (typeof value === 'object' || typeof value === 'function')) {
-      try {
-      // 这里记录这次then的值同时要被try包裹
-      // 主要原因是 then 可能是一个getter, 也也就是说
-      //   1. value.then可能报错
-      //   2. value.then可能产生副作用(例如多次执行可能结果不同)
-        var then = value.then
-
-        // 另一方面, 由于无法保证 then 确实会像预期的那样只调用一个onFullfilled / onRejected
-        // 所以增加了一个flag来防止resolveOrReject被多次调用
-        var thenAlreadyCalledOrThrow = false
-        if (typeof then === 'function') {
-        // 是thenable 那么尝试展开
-        // 并且在该thenable状态改变之前this对象的状态不变
-          then.bind(value)(
-          // onFullfilled
-            function (value2) {
-              if (thenAlreadyCalledOrThrow) return
-              thenAlreadyCalledOrThrow = true
-              tryToResolve.bind(this, value2)()
-            }.bind(this),
-
-            // onRejected
-            function (reason2) {
-              if (thenAlreadyCalledOrThrow) return
-              thenAlreadyCalledOrThrow = true
-              resolveOrReject.bind(this, 'rejected', reason2)()
-            }.bind(this)
-          )
-        } else {
-        // 拥有then 但是then不是一个函数 所以也不是thenable
-          resolveOrReject.bind(this, 'resolved', value)()
-        }
-      } catch (e) {
-        if (thenAlreadyCalledOrThrow) return
-        thenAlreadyCalledOrThrow = true
-        resolveOrReject.bind(this, 'rejected', e)()
-      }
-    } else {
-    // 基本类型 直接返回
-      resolveOrReject.bind(this, 'resolved', value)()
-    }
-  }
-
-  function resolveOrReject (status, data) {
-    if (this.status !== 'pending') return
-    this.status = status
-    this.data = data
-    if (status === 'resolved') {
-      for (var i = 0; i < this.resolveList.length; ++i) {
-        this.resolveList[i]()
-      }
-    } else {
-      for (i = 0; i < this.rejectList.length; ++i) {
-        this.rejectList[i]()
-      }
-    }
-  }
-
-  function Promise (executor) {
-    if (!(this instanceof Promise)) {
-      throw Error('Promise can not be called without new !')
-    }
-
-    if (typeof executor !== 'function') {
-    // 非标准 但与Chrome谷歌保持一致
-      throw TypeError('Promise resolver ' + executor + ' is not a function')
-    }
-
-    this.status = 'pending'
-    this.resolveList = []
-    this.rejectList = []
-
-    try {
-      executor(tryToResolve.bind(this), resolveOrReject.bind(this, 'rejected'))
-    } catch (e) {
-      resolveOrReject.bind(this, 'rejected', e)()
-    }
-  }
-
-  Promise.prototype.then = function (onFullfilled, onRejected) {
-  // 返回值穿透以及错误穿透, 注意错误穿透用的是throw而不是return，否则的话
-  // 这个then返回的promise状态将变成resolved即接下来的then中的onFullfilled
-  // 会被调用, 然而我们想要调用的是onRejected
-    if (typeof onFullfilled !== 'function') {
-      onFullfilled = function (data) {
-        return data
-      }
-    }
-    if (typeof onRejected !== 'function') {
-      onRejected = function (reason) {
-        throw reason
-      }
-    }
-
-    var executor = function (resolve, reject) {
-      setTimeout(function () {
-        try {
-        // 拿到对应的handle函数处理this.data
-        // 并以此为依据解析这个新的Promise
-          var value = this.status === 'resolved'
-            ? onFullfilled(this.data)
-            : onRejected(this.data)
-          resolve(value)
-        } catch (e) {
-          reject(e)
-        }
-      }.bind(this))
-    }
-
-    // then 接受两个函数返回一个新的Promise
-    // then 自身的执行永远异步与onFullfilled/onRejected的执行
-    if (this.status !== 'pending') {
-      return new Promise(executor.bind(this))
-    } else {
-    // pending
-      return new Promise(function (resolve, reject) {
-        this.resolveList.push(executor.bind(this, resolve, reject))
-        this.rejectList.push(executor.bind(this, resolve, reject))
-      }.bind(this))
-    }
-  }
-
-  // for prmise A+ test
-  Promise.deferred = Promise.defer = function () {
-    var dfd = {}
-    dfd.promise = new Promise(function (resolve, reject) {
-      dfd.resolve = resolve
-      dfd.reject = reject
-    })
-    return dfd
-  }
-
-  // for prmise A+ test
-  if (typeof module !== 'undefined') {
-    module.exports = Promise
-  }
-
-  return Promise
-})()
-
-PromisePolyfill.all = function (promises) {
-  return new Promise((resolve, reject) => {
-    const result = []
-    let cnt = 0
-    for (let i = 0; i < promises.length; ++i) {
-      promises[i].then(value => {
-        cnt++
-        result[i] = value
-        if (cnt === promises.length) resolve(result)
-      }, reject)
-    }
-  })
-}
-
-PromisePolyfill.race = function (promises) {
-  return new Promise((resolve, reject) => {
-    for (let i = 0; i < promises.length; ++i) {
-      promises[i].then(resolve, reject)
-    }
-  })
-}
-```
+[手动实现 Promise 代码](https://github.com/nmsn/demo/blob/master/Promise.js)
 
 ## 内存管理
 
@@ -760,10 +585,104 @@ Mark-Sweep，是标记清除的意思。它主要分为标记和清除两个阶�
 
 ES6 考虑到了这一点，推出了两种新的数据结构：WeakSet 和 WeakMap。它们对于值的引用都是不计入垃圾回收机制的，所以名字里面才会有一个"Weak"，表示这是弱引用。
 
+### WeakMap 和 WeakSet
+
+#### WeakMap
+
+WeakMap 和 Map 的第一个不同点就是，WeakMap 的键必须是对象，不能是原始值：
+
+```js
+let weakMap = new WeakMap();
+
+let obj = {};
+
+weakMap.set(obj, "ok"); // 正常工作（以对象作为键）
+
+// 不能使用字符串作为键
+weakMap.set("test", "Whoops"); // Error，因为 "test" 不是一个对象
+```
+
+现在，如果我们在 weakMap 中使用一个对象作为键，并且没有其他对这个对象的引用 —— 该对象将会被从内存（和map）中自动清除。
+
+```js
+let john = { name: "John" };
+
+let weakMap = new WeakMap();
+weakMap.set(john, "...");
+
+john = null; // 覆盖引用
+
+// john 被从内存中删除了！
+```
+
+与上面常规的 Map 的例子相比，现在如果 john 仅仅是作为 WeakMap 的键而存在 —— 它将会被从 map（和内存）中自动删除。
+
+WeakMap 不支持迭代以及 keys()，values() 和 entries() 方法。所以没有办法获取 WeakMap 的所有键或值。
+
+WeakMap 只有以下的方法：
+
+- weakMap.get(key)
+- weakMap.set(key, value)
+- weakMap.delete(key)
+- weakMap.has(key)
+
+为什么会有这种限制呢？这是技术的原因。如果一个对象丢失了其它所有引用（就像上面示例中的 john），那么它就会被垃圾回收机制自动回收。但是在从技术的角度并不能准确知道 何时会被回收。
+
+这些都是由 JavaScript 引擎决定的。JavaScript 引擎可能会选择立即执行内存清理，如果现在正在发生很多删除操作，那么 JavaScript 引擎可能就会选择等一等，稍后再进行内存清理。因此，从技术上讲，WeakMap 的当前元素的数量是未知的。JavaScript 引擎可能清理了其中的垃圾，可能没清理，也可能清理了一部分。因此，暂不支持访问 WeakMap 的所有键/值的方法。
+
+#### WeakSet
+
+WeakSet 的表现类似：
+
+- 与 Set 类似，但是我们只能向 WeakSet 添加对象（而不能是原始值）。
+- 对象只有在其它某个（些）地方能被访问的时候，才能留在 set 中。
+- 跟 Set 一样，WeakSet 支持 add，has 和 delete 方法，但不支持 size 和 keys()，并且不可迭代。
+
+变“弱（weak）”的同时，它也可以作为额外的存储空间。但并非针对任意数据，而是针对“是/否”的事实。WeakSet 的元素可能代表着有关该对象的某些信息。
+
+例如，我们可以将用户添加到 WeakSet 中，以追踪访问过我们网站的用户：
+
+```js
+let visitedSet = new WeakSet();
+
+let john = { name: "John" };
+let pete = { name: "Pete" };
+let mary = { name: "Mary" };
+
+visitedSet.add(john); // John 访问了我们
+visitedSet.add(pete); // 然后是 Pete
+visitedSet.add(john); // John 再次访问
+
+// visitedSet 现在有两个用户了
+
+// 检查 John 是否来访过？
+alert(visitedSet.has(john)); // true
+
+// 检查 Mary 是否来访过？
+alert(visitedSet.has(mary)); // false
+
+john = null;
+
+// visitedSet 将被自动清理
+```
+
+WeakMap 和 WeakSet 最明显的局限性就是不能迭代，并且无法获取所有当前内容。那样可能会造成不便，但是并不会阻止 WeakMap/WeakSet 完成其主要工作 — 成为在其它地方管理/存储“额外”的对象数据。
+
+#### 总结
+
+WeakMap 是类似于 Map 的集合，它仅允许对象作为键，并且一旦通过其他方式无法访问它们，便会将它们与其关联值一同删除。
+
+WeakSet 是类似于 Set 的集合，它仅存储对象，并且一旦通过其他方式无法访问它们，便会将其删除。
+
+它们都不支持引用所有键或其计数的方法和属性。仅允许单个操作。
+
+WeakMap 和 WeakSet 被用作“主要”对象存储之外的“辅助”数据结构。一旦将对象从主存储器中删除，如果该对象仅被用作 WeakMap 或 WeakSet 的键，那么它将被自动清除。
+
 ### 参考文献
 
 - JavaScript内存管理：[https://www.cxymsg.com/guide/memory.html#%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6](https://www.cxymsg.com/guide/memory.html#%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6)
 - JavaScript 内存泄漏教程：[http://www.ruanyifeng.com/blog/2017/04/memory-leak.html](http://www.ruanyifeng.com/blog/2017/04/memory-leak.html)
+-WeakMap and WeakSet（弱映射和弱集合）: [https://zh.javascript.info/weakmap-weakset](https://zh.javascript.info/weakmap-weakset)
 
 ## 前端路由的实现
 
@@ -804,3 +723,54 @@ class Routers {
 ## offset/client/scroll
 
 ![宽高属性](../.vuepress/public/images/js_wh_tl.png)
+
+## 立即调用函数表达式（IIFE）/立即执行函数
+
+### 标准形式的立即执行函数
+
+```js
+(function*(){})(3);
+```
+
+- JavaScript解析器必须能够轻易区分函数声明和函数表达式之间的区别。
+
+  如果去掉包裹函数表达式的括号，把立即调用作为一个独立语句function() {}(3)，JavaScript开始解析时便会结束，因为这个独立语句以function开头，那么解析器就会认为它在处理一个函数声明。
+
+  每个函数声明必须有一个名字(然而这里并没有指定名字)，所以程序执行到这里会报错。为了 避免错误，函数表达式要放在括号内，为JavaScript解析器指明它正在处理一个函数表达式而不是语句。
+
+- 还有一种相对简单的替代方案(function(){}(3))也能达到相同目标(然而这种方案有些 奇怪，故不常使用)。把立即函数的定义和调用都放在括号内，同样可以为JavaScript 解析器指明它正在处理函数表达式。
+
+### 特殊形式的立即执行函数
+
+```js
++function(){}();
+-function(){}();
+!function(){}();
+~function(){}();
+```
+
+- 不同于用加括号的方式区分函数表达式和函数声明，这里我们使用一元操作符+、-、!和~。这种做法也是用于向JavaScript引擎指明它处理的是表达式，而不是语句。从计算机的角度来讲，注意应用一元操作符得到的结果没有存储到任何地方并不重要，只有调用 IIFE 才重要。
+
+### isNaN 与 Number.isNaN 的区别
+
+Number.isNaN() 方法确定传递的值是否为 NaN，并且检查其类型是否为 Number。它是原来的全局 isNaN() 的更稳妥的版本。
+
+在 JavaScript 中，NaN 最特殊的地方就是，我们不能使用相等运算符（== 和 ===）来判断一个值是否是 NaN，因为 NaN == NaN 和 NaN === NaN 都会返回 false。因此，必须要有一个判断值是否是 NaN 的方法。
+
+和全局函数 isNaN() 相比，Number.isNaN() 不会自行将参数转换成数字，只有在参数是值为 NaN 的数字时，才会返回 true。
+
+### === 和 Object.is
+
+Object.is 与 === 行为基本一致，不同点在于
+
+- +0 不等于 -0
+- NaN 等于自身
+
+### encodeURI 与 encodeURIComponent 的区别
+
+- 相同点：都可以对url进行一个编码
+- 区别：encodeURI()不会对本身属于URI的特殊字符进行编码，例如冒号、正斜杠、问号和井字号；而encodeURIComponent()则会对它发现的任何非标准字符进行编码
+
+- encodeURI：适用于url跳转时
+- encodeURIComponent：适用于url作为参数传递时
+- 注意：当url作为参数传递时如果没有用encodeURIComponent进行编码，往往会造成传递时url中的特殊字符丢失

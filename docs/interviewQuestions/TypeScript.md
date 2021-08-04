@@ -74,6 +74,39 @@ interface Name2 {
 type User2 = Name2 & { age: number  };
 ```
 
+类可以以相同的方式实现接口或类型别名，但类不能实现使用类型别名定义的联合类型
+
+```ts
+interface Point {
+  x: number;
+  y: number;
+}
+
+class SomePoint implements Point {
+  x = 1;
+  y = 2;
+}
+
+type Point2 = {
+  x: number;
+  y: number;
+};
+
+class SomePoint2 implements Point2 {
+  x = 1;
+  y = 2;
+}
+
+type PartialPoint = { x: number; } | { y: number; };
+
+// A class can only implement an object type or 
+// intersection of object types with statically known members.
+class SomePartialPoint implements PartialPoint { // Error
+  x = 1;
+  y = 2;
+}
+```
+
 ### 不同点
 
 #### type 可以声明基本类型别名，联合类型，元组等类型
@@ -117,6 +150,66 @@ User 接口为 {
 */
 ```
 
+#### 映射类型定义属性
+
+接口类型定义中由于使用了非字面量或者非唯一 symbol 类型作为属性，会造成 TS1169 错误，但是，在 type 关键字声明的类型别名中，我们却可以使用映射类型定义属性
+
+```ts
+interface Obj {
+  [key in 'id' | 'name']: any; // TS1169: A computed property name in an interface must refer to an expression whose type is a literal type or a 'unique symbol' type.
+};
+
+type Obj = {
+  [key in 'id' | 'name']: any;
+};
+```
+
 ### 参考文献
 
 - Typescript 中的 interface 和 type 到底有什么区别：[https://juejin.im/post/5c2723635188252d1d34dc7d](https://juejin.im/post/5c2723635188252d1d34dc7d)
+
+## never 与 void 的差异
+
+void 表示没有任何类型，never 表示永远不存在的值的类型。
+
+当一个函数返回空值时，它的返回值为 void 类型，但是，当一个函数永不返回时（或者总是抛出错误），它的返回值为 never 类型。void 类型可以被赋值（在 strictNulChecking 为 false 时），但是除了 never 本身以外，其他任何类型不能赋值给 never。
+
+## 类型兼容
+
+### 协变 （Covariance）
+
+```ts
+let animals: Animal[]
+let dogs: Dog[]
+
+animals = dogs // ok
+```
+
+### 逆变 （Contravariance）
+
+```ts
+let visitAnimal = (animal: Animal) => void;
+let visitDog = (dog: Dog) => void;
+
+visitAnimal = visitDog // err
+
+// eg:
+let visitAnimal = (animal: Animal) => {
+  animal.age
+}
+
+let visitDog = (dog: Dog) => {
+  dog.age
+  dog.bark()
+}
+```
+
+如例子中赋值后，visitAnimal 中不存在 bark 方法，去调用就会引发崩溃，但是反过来就成立。
+
+这就导致父子类型关系逆转了，形成了`逆变`。
+
+### ts 中的`双向协变`
+
+在 TypeScript 中，由于灵活性等权衡和为了维持结构化类型的兼容性：
+
+对于函数参数默认的处理是`双向协变`的。也就是既可以 visitAnimal = visitDog，也可以 visitDog = visitAnimal。在开启了 tsconfig 中的 strictFunctionType 后才会严格按照 `逆变` 来约束赋值关系。

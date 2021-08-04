@@ -41,6 +41,7 @@ module.exports = {
             '代码实现',
             'ES6',
             'TypeScript',
+            '字符编码',
           ]
         },
       ],
