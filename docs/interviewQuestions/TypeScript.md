@@ -173,3 +173,43 @@ type Obj = {
 void 表示没有任何类型，never 表示永远不存在的值的类型。
 
 当一个函数返回空值时，它的返回值为 void 类型，但是，当一个函数永不返回时（或者总是抛出错误），它的返回值为 never 类型。void 类型可以被赋值（在 strictNulChecking 为 false 时），但是除了 never 本身以外，其他任何类型不能赋值给 never。
+
+## 类型兼容
+
+### 协变 （Covariance）
+
+```ts
+let animals: Animal[]
+let dogs: Dog[]
+
+animals = dogs // ok
+```
+
+### 逆变 （Contravariance）
+
+```ts
+let visitAnimal = (animal: Animal) => void;
+let visitDog = (dog: Dog) => void;
+
+visitAnimal = visitDog // err
+
+// eg:
+let visitAnimal = (animal: Animal) => {
+  animal.age
+}
+
+let visitDog = (dog: Dog) => {
+  dog.age
+  dog.bark()
+}
+```
+
+如例子中赋值后，visitAnimal 中不存在 bark 方法，去调用就会引发崩溃，但是反过来就成立。
+
+这就导致父子类型关系逆转了，形成了`逆变`。
+
+### ts 中的`双向协变`
+
+在 TypeScript 中，由于灵活性等权衡和为了维持结构化类型的兼容性：
+
+对于函数参数默认的处理是`双向协变`的。也就是既可以 visitAnimal = visitDog，也可以 visitDog = visitAnimal。在开启了 tsconfig 中的 strictFunctionType 后才会严格按照 `逆变` 来约束赋值关系。
