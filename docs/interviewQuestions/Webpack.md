@@ -235,3 +235,6 @@ eval 会以 eval() 函数打包运行模块，不产生独立的 map 文件，�
 
 映射文件以 base64 格式编码，加在 bundle 文件最后，不产生独立的 map 文件。加入 map 文件后，我们可以明显的看到包体积变大了
 
+## 你的 Tree-Shaking 并没什么卵用
+
+原文链接：[https://mp.weixin.qq.com/s/E4iFf5aTbR9rXBU3gnR4Gg](https://mp.weixin.qq.com/s/E4iFf5aTbR9rXBU3gnR4Gg)
