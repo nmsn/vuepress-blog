@@ -918,3 +918,39 @@ Chrome 计划将 Lax 变为默认设置。这时，网站可以选择显式关�
 
 - 聊一聊 cookie：[https://juejin.im/post/5b18d322e51d4506cf10af7c](https://juejin.im/post/5b18d322e51d4506cf10af7c)
 - Cookie 的 SameSite 属性：[https://www.ruanyifeng.com/blog/2019/09/cookie-samesite.html](https://www.ruanyifeng.com/blog/2019/09/cookie-samesite.html)
+
+### 双向通讯方式
+
+### HTTP 短轮询 (polling)
+
+客户端每隔特定的时间（比如 1s）便向服务端发起请求，获取最新的资源信息。该方式会造成较多的资源浪费，尤其当服务端内容更新频率低于轮询间隔时，就会造成服务端资源、客户端资源的浪费。除此之外，过于频繁的请求也会给服务端造成额外的压力，当服务端负载较高的时候，甚至可能导致雪崩等情况发生。
+
+### HTTP 长轮询 (long-polling)
+
+HTTP 长轮询解决了短轮询的一些问题，长轮询实现特点主要为当客户端向服务端发起请求后，服务端保持住连接，当数据更新响应之后才断开连接。然后客户端会重新建立连接，并继续等待新数据。此技术的主要问题在于，在重新连接过程中，页面上的数据可能会过时且不准确。
+
+### XHR Streaming
+
+相比 HTTP 长轮询，XHR Streaming 可以维护客户端和服务端之间的连接。但使用 XHR Streaming 过程中，XMLHttpRequest对象的数量将不断增长，因此在使用过程中需要定期关闭连接，来清除缓冲区。
+
+### Server-Sent Events
+
+SSE（Server-Sent Events）方案思想便是 XHR Streaming，主要基于浏览器中EventSourceAPI 的封装和协议。它会对 HTTP 服务开启一个持久化的连接，以text/event-stream格式发送事件， 会一直保持开启直到被要求关闭。
+
+### Websocket
+
+最后我们来介绍 WebSocket，它实现了浏览器与服务端全双工通信。前面我们提到，HTTP 短轮询、长轮询都会带来额外的资源浪费，因此 Websocket 在实现实时通信的同时，能更好地节省服务端资源和带宽。
+
+Websocket 是如何实现全双工通信的呢？Websocket 建立在 TCP 协议之上，握手阶段采用 HTTP 协议，但这个 HTTP 协议的请求头中，有以下的标识性内容。
+
+`Connection: Upgrade`、`Upgrade: websocket`：表示这个连接将要被转换为 WebSocket 连接。
+
+`Sec-WebSocket-Key`：向服务端提供所需的信息，以确认客户端有权请求升级到 WebSocket。
+
+`Sec-WebSocket-Protocol`：指定一个或多个的 WebSocket 协议。
+
+`Sec-WebSocket-Version`：指定 WebSocket 的协议版本。
+
+如果服务端同意启动 WebSocket 连接，会在握手过程中的 HTTP 协议中返回包含 `Sec-WebSocket-Accept` 的响应消息，接下来客户端和服务端便建立 WebSocket 连接，并通过 WebSocket 协议传输数据。
+
+由于不再需要通过 HTTP 协议通信，省去请求头等内容设置，Websocket 数据格式会更加轻量，通信更加高效，性能开销也相应地降低。除此之外，不同于 HTTP 协议，Websocket 协议没有同源限制，因此客户端可以与任意服务端通信。
