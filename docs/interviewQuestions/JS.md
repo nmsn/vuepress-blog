@@ -774,3 +774,74 @@ Object.is 与 === 行为基本一致，不同点在于
 - encodeURI：适用于url跳转时
 - encodeURIComponent：适用于url作为参数传递时
 - 注意：当url作为参数传递时如果没有用encodeURIComponent进行编码，往往会造成传递时url中的特殊字符丢失
+
+## 事件循环（Event Loop）
+
+众所周知 JS 是门非阻塞单线程语言，因为在最初 JS 就是为了和浏览器交互而诞生的。如果 JS 是门多线程的语言话，我们在多个线程中处理 DOM 就可能会发生问题（一个线程中新加节点，另一个线程中删除节点），当然可以引入读写锁解决这个问题。
+
+JS 在执行的过程中会产生执行环境，这些执行环境会被顺序的加入到执行栈中。如果遇到异步的代码，会被挂起并加入到 Task（有多种 task） 队列中。一旦执行栈为空，Event Loop 就会从 Task 队列中拿出需要执行的代码并放入执行栈中执行，所以本质上来说 JS 中的异步还是同步行为。
+
+以上代码虽然 setTimeout 延时为 0，其实还是异步。这是因为 HTML5 标准规定这个函数第二个参数不得小于 4 毫秒，不足会自动增加。所以 setTimeout 还是会在 script end 之后打印。
+
+不同的任务源会被分配到不同的 Task 队列中，任务源可以分为 微任务（microtask） 和 宏任务（macrotask）。在 ES6 规范中，microtask 称为 jobs，macrotask 称为 task。
+
+宏任务包括
+
+- script
+- setTimeout
+- setInterval
+- setImmediate
+- I/O
+- UI rendering
+
+微任务包括
+
+- process.nextTick
+- promise
+- Object.observe
+- MutationObserver
+
+1. 执行同步代码，这属于宏任务
+2. **执行栈为空，查询是否有微任务需要执行**
+3. 执行所有微任务
+4. 必要的话渲染 UI
+5. 然后开始下一轮 Event loop，执行宏任务中的异步代码
+
+node 环境下，process.nextTick 的优先级高于 Promise，也就是可以简单理解为，在宏任务结束后会先执行微任务队列中的 nextTickQueue 部分，然后才会执行微任务中的 Promise 部分。
+setImmediate 则是规定：在下一次`Event loop`时触发（所以它是属于优先级较高的宏任务，排在 setTimeout 前面）
+
+注：polyfill 中的 setTimeout 是 macrotask
+
+补充：
+
+除了宏任务、微任务队列外，还包含 requestAnimationFrame 所在的 animation 队列以及 requestIdleCallback 所在的 idle 队列。
+
+requestAnimationFrame处于渲染阶段，不在微任务队列，也不在宏任务队列
+
+执行顺序
+
+- 同步代码
+- 微任务队列会在 JS 运行栈为空的时候立即执行
+- animation 队列会在页面渲染前执行
+- 宏任务队列优先级低于微任务队列，一般也会比 animation 队列优先级低，但不是绝对
+- idle 队列优先级最低，当浏览器有空闲时间的时候才会执行
+
+队列特点
+
+- 宏任务队列，每次只会执行队列内的一个任务。
+- 微任务队列，每次会执行队列里的全部任务。假设微任务队列内有 100 个 Promise，它们会一次过全部执行完。这种情况下极有可能会导致页面卡顿。如果在微任务执行过程中继续往微任务队列中添加任务，新添加的任务也会在当前事件循环中执行，很容易造成死循环, 如：
+
+  ```js
+  function loop() {
+    Promise.resolve().then(loop);
+  }
+
+  loop();
+  ```
+
+- animation 队列，跟微任务队列有点相似，每次会执行队列里的全部任务。但如果在执行过程中往队列中添加新的任务，新的任务不会在当前事件循环中执行，而是在下次事件循环中执行。
+- idle 队列，每次只会执行一个任务。任务完成后会检查是否还有空闲时间，有的话会继续执行下一个任务，没有则等到下次有空闲时间再执行。需要注意的是此队列中的任务也有可能阻塞页面，当空闲时间用完后任务不会主动退出。如果任务占用时间较长，一般会将任务拆分成多个阶段，执行完一个阶段后检查还有没有空闲时间，有则继续，无则注册一个新的 idle 队列任务，然后退出当前任务。React Fiber 就是用这个机制。但最新版的 React Fiber 已经不用 rIC 了，因为调用的频率太低，改用 rAF 了
+
+### 参考文献
+
+- Event loop：[https://yuchengkai.cn/docs/frontend/browser.html#event-loop](https://yuchengkai.cn/docs/frontend/browser.html#event-loop)
