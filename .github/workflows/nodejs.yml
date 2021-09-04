@@ -29,6 +29,7 @@ jobs:
     - name: Deploy nmsn.github.io/master
       uses: peaceiris/actions-gh-pages@v3
       with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
         external_repository: nmsn/nmsn.github.io #可以新建一个mybells.github.io仓库发布到master
         publish_branch: master
