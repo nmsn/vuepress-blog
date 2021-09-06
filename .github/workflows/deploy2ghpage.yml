@@ -13,5 +13,5 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           TARGET_REPO: nmsn/vuepress-blog
           TARGET_BRANCH: gh_pages
-          BUILD_SCRIPT: yarn && yarn build
+          BUILD_SCRIPT: yarn && yarn docs:build
           BUILD_DIR: docs/.vuepress/dist/
