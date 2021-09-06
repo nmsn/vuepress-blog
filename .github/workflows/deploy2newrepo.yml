@@ -10,7 +10,7 @@ jobs:
       - name: Build and Deploy
         uses: jenkey2011/vuepress-deploy@v1.8.1
         env:
-          ACCESS_TOKEN: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           TARGET_REPO: nmsn/nmsn.github.io
           TARGET_BRANCH: master
           BUILD_SCRIPT: yarn && yarn docs:build
