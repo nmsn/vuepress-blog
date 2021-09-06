@@ -1,4 +1,4 @@
-name: A TO A:GH_PAGES
+name: DEPLOY To GH-PAGES
 on: [push]
 jobs:
   build-and-deploy:
