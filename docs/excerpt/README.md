@@ -824,4 +824,18 @@ JWT 对象通常由三部分构成:
 }
 ```
 
+### flex 和 margin:auto 实现垂直水平居中
+
+```css
+.box {
+  display: flex;
+}
+
+.item {
+  margin: auto;
+}
+```
+
+原文：[The peculiar magic of flexbox and auto margins](https://css-tricks.com/the-peculiar-magic-of-flexbox-and-auto-margins/)
+
 <Vssue />
