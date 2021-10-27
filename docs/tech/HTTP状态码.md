@@ -36,9 +36,9 @@
 
 - 500 internal sever error，表示服务器端在执行请求时发生了错误
 - 501 Not Implemented 请求超出服务器能力范围，例如服务器不支持当前请求所需要的某个功能，或者请求是服务器不支持的某个方法
-- 502 bad gateway
+- 502 bad gateway 收到了上游响应但无法解析（一般表现为应用层服务（java/node等）挂了，网关层无法接收到响应）
 - 503 service unavailable，表明服务器暂时处于超负载或正在停机维护，无法处理请求
-- 504 gateway timeout 网关超时
+- 504 gateway timeout 网关超时（一般表现为应用层服务超时，如查询数据库时间过长，超过了 nginx 配置的超时时间）
 - 505 http version not supported 服务器不支持，或者拒绝支持在请求中使用的 HTTP 版本
 
 ## HTTP 状态码 301/302/303/307/308
