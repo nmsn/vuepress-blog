@@ -177,6 +177,24 @@ TCP 是一个双工协议，为了让双方都保证，建立连接的时候，�
 
 ETag 的流程跟 Last-Modified 是类似的，区别就在于 ETag 是根据资源内容进行 hash，生成一个信息摘要，只要资源内容有变化，这个摘要就会发生巨变，通过这个摘要信息比对，即可确定客户端的缓存资源是否为最新，这比 Last-Modified 的精确度要更高
 
+#### ETag 的生成需要满足几个条件
+
+1. 当文件改变时，ETag 值必须改变
+2. 尽量便于计算，不会特别消耗 cpu。这样子利用摘要算法生成（MD5，SHA128，SHA256）需要慎重考虑，因为他们是 cpu 密集型运算
+3. 必须横向拓展，分布式部署时多个服务器节点上生成的 ETag 值保持一致。这样子 inode 就排除了
+
+#### nginx 中的 ETag 的生成
+
+nginx 中的 ETag 由响应头的 Last-Modified 与 Content-Length 表示为十六进制组合而成
+
+Last-Modified 是由一个 unix timestamp 表示，则意味着它只能作用于秒级的改变，而 nginx 中 ETag 添加了文件大小的附加条件
+
+所以 nginx 计算 304 有一定的局限性：在 1s 内修改了文件并且保持文件大小不变。但这种情况出现的概率极低就是了，因为在正常情况下可以容忍一个不太完美但是搞笑的算法
+
+原文：[http 响应头中的 ETag 值是如何生成的](https://github.com/shfshanyue/Daily-Question/issues/112)
+
+
+
 ### 图示
 
 ![http_cache](../.vuepress/public/images/http_cache.png)
