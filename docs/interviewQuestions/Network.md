@@ -301,9 +301,20 @@ HTTP/3 在传输数据前虽然需要 QUIC 协议握手，这个握手过程只�
 #### 同源策略目的
 
 防止 CSRF（跨站请求伪造）攻击
-Cookie、LocalStorage、IndexedDB 等存储性内容
+LocalStorage、IndexedDB 等存储性内容
 DOM 节点
 AJAX 请求发送后，结果被浏览器拦截了
+
+#### Cookies 源定义的不同 
+
+Cookies 使用不同的源定义方式。一个页面可以为本域和其父域设置 cookie，只要是父域不是公共后缀（public suffix）即可。
+
+Firefox 和 Chrome 使用 Public Suffix List 检测一个域是否是公共后缀（public suffix）。
+Internet Explorer 使用其内部的方法来检测域是否是公共后缀。
+
+不管使用哪个协议（HTTP/HTTPS）或端口号，浏览器都允许给定的域以及其任何子域名(sub-domains) 访问 cookie。当你设置 cookie 时，你可以使用 Domain、Path、Secure、和 HttpOnly 标记来限定其可访问性。当你读取 cookie 时，你无法知道它是在哪里被设置的。 即使您只使用安全的 https 连接，您看到的任何 cookie 都有可能是使用不安全的连接进行设置的。
+
+原文：[跨源数据存储访问](https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy)
 
 ### 跨域解决方案
 
