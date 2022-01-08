@@ -145,3 +145,115 @@ meta 标签由 name 和 content 属性定义，**用来描述网页文档的属�
   - noindex 文件将不被检索
   - nofollow 页面上的链接不可以被查询
 
+## HTML5 有哪些更新
+
+### 语义化标签
+
+- header
+- nav
+- footer
+- article
+- section
+- aside
+
+### 媒体标签
+
+- audio 音频
+
+```html
+<audio src='' controls autoplay loop='true'></audio>
+```
+
+属性：
+
+- controls 控制面板
+- autoplay 自动播放
+- loop 循环播放
+
+- video 视频
+
+```html
+<video src='' poster='imgs/aa.jpg' controls></video>
+```
+
+属性：
+- poster：指定视频还没有完全下载完毕，或者用户还没有点击播放前显示的封面。默认显示当前视频文件的第一针画面，当然通过 poster 也可以自己指定。
+- controls 控制面板
+- width 看度
+- height 高度
+
+- source 标签
+
+因为浏览器对视频格式支持程度不一样，为了能够兼容不同的浏览器，可以通过 source 来指定视频源
+
+```html
+<video>
+    <source src='aa.flv' type='video/flv'></source>
+    <source src='aa.mp4' type='video/mp4'></source>
+</video>
+```
+
+### 表单
+
+#### 表单类型
+
+- email 验证邮箱
+- url 验证 url
+- number 只能输入数字
+- search 提供删除按钮
+- range 提供范围选择
+- color 颜色拾取器
+- time 时分秒
+- date 日期选择年月日
+- datetime 时间和日期
+- date-local 日期时间控件
+- week 周
+- month 月
+
+#### 表单属性
+
+- placeholder 提示信息
+- autofocus 自动获取焦点
+- autocomplete 自动完成
+- required 输入框不能为空
+- pattern 正则
+- multiple 选择多个文件
+- form form id
+
+#### 表单事件
+
+- oninput 当 input 输入框发生变化触发
+- oninvalid 当验证不通过时触发
+
+### 进度条 度量器
+
+- progress 标签 用来显示任务进度
+- meter 属性 用来显示剩余容量或剩余库存
+
+### DOM 查询操作
+
+document.querySelector
+document.querySelectorAll
+
+### Web 存储
+
+- localStorage
+- sessionStorage
+
+### 其他
+
+- 拖放：拖放是一种常见的特性，即抓取对象以后拖到另一个位置。设置元素可拖放：
+
+  ```html
+  <img draggable="true" />
+  ```
+
+- 画布：canvas 元素使用 JavaScript 在网页上绘制图像。画布是一个矩形区域，可以控制其每一像素。canvas 拥有多种绘制路径、矩形、圆形、字符以及添加图像的方法。
+
+  ```html
+  <canvas id="myCanvas" width="200" height="100"></canvas>
+  ```
+- svg：SVG 指可伸缩矢量图形，用于定义用于网络的基于矢量的图形，使用 XML 格式定义图形，图像在放大或改变尺寸的情况下其图形质量不会有损失，它是万维网联盟的标准
+  
+- 地理位置：Geolocation（地理定位）用于定位用户的位置。
+
