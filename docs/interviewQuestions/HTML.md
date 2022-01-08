@@ -85,3 +85,63 @@ DOM 已经准备好，因此事件处理器可以查找 DOM 节点，并初始�
 - Web SQL：2010年被W3C废弃的本地数据库数据存储方案，但是主流浏览器（火狐除外）都已经有了相关的实现，web sql类似于SQLite，是真正意义上的关系型数据库，用sql进行操作，当我们用JavaScript时要进行转换，较为繁琐。
 
 - IndexedDB： 是被正式纳入HTML5标准的数据库储存方案，它是NoSQL数据库，用键值对进行储存，可以进行快速读取操作，非常适合web场景，同时用JavaScript进行操作会非常方便。
+
+
+## 常用 meta 标签
+
+meta 标签由 name 和 content 属性定义，**用来描述网页文档的属性**，比如网页的作者，网页描述，关键词等，除了 HTTP 标准固定了一些 name 作为大家使用的共识，开发者还可以自定义 name。
+
+常用的 meta 标签
+
+1. charset 用来描述 HTML 文档的编码类型
+
+  ```html
+  <meta charset='UTF-8'>
+  ```
+  
+2. keywords 页面关键词
+
+  ```html
+  <meta name='keywords' content='关键词'>
+  ```
+  
+3. description 页面描述
+
+ ```html
+  <meta name='description' content='页面描述内容'>
+  ```
+
+4. refresh 页面重定向和刷新
+
+ ```html
+  <meta http-equiv='refresh' content='0;url='>
+  ```
+  
+5. viewport 适配移动端，可以控制适口的大小和比例
+
+ ```html
+  <meta name='viewport' content="width=device-width,initial-scale=1, maximum-scale=1">>
+  ```
+  
+  其中 content 参数有以下几种：
+  - width viewport 宽度（数值/device-width）
+  - height viewport 高度（数值/device-width）
+  - initial-scale 初始缩放比例
+  - maximum-scale 最大缩放比例
+  - minimum-scale 最小缩放比例
+  - user-scalable 是否允许用户缩放
+
+6. 搜索引擎索引方式
+
+  ```html
+   <meta name="robots" content="index,follow" />
+  ```
+
+  其中 content 参数有以下几种：
+  - all 文件将被索引，且页面商的链接可以被查询
+  - none 文件将不被检索，且页面上的链接不可以被查询
+  - index 文件将被检索
+  - follow 页面上的链接可以被查询
+  - noindex 文件将不被检索
+  - nofollow 页面上的链接不可以被查询
+
