@@ -198,7 +198,7 @@ JS
 
 - link 属于 XHTML 标签，而@import 是 CSS 提供的。
 - 页面被加载时，link 会同时被加载，而@import 引用的 CSS 会等到页面被加载完再加载。
-- import 只在 IE 5 以上才能识别，而 link 是 XHTML 标签，无兼容问题。
+- @import 只在 IE 5 以上才能识别，而 link 是 XHTML 标签，无兼容问题。
 - link 方式的样式权重高于@import 的权重。
 - 使用 dom 控制样式时的差别。当使用 javascript 控制 dom 去改变样式的时候，只能使用 link 标签，因为@import 不是 dom 可以控制的
 
@@ -251,10 +251,108 @@ JS
 - 通用选择器（*）、子选择器（>）和相邻同胞选择器（+）并不在这四个等级中，所以它们的权值都为 0 ；
 - 样式表的来源不同时，优先级顺序为：内联样式 > 内部样式 > 外部样式 > 浏览器用户自定义样式 > 浏览器默认样式。
 
+## 伪元素和伪类的区别和作用
+
+- 伪元素： 在内容元素的前后插入额外的元素或样式，但是这些元素实际上并不在文档中生成。它们只在外部显示可见，但不会在文档的源代码中找到它们，因此，称为“伪”元素。例如：
+
+```css
+p::before {content:"第一章：";}
+p::after {content:"Hot!";}
+p::first-line {background:red;}
+p::first-letter {font-size:30px;}
+```
+
+- 伪类：将特殊的效果添加到特定选择器上。它是已有元素上添加类别的，不会产生新的元素。例如：
+
+```css
+a:hover {color: #FF00FF}
+p:first-child {color: red}
+```
+
+- 总结：伪类是通过在元素选择器上加⼊伪类改变元素状态，⽽伪元素通过对元素的操作进⾏对元素的改变。
+
+
 `!important`例外规则
 
 当在一个样式声明中使用一个`!important`规则时，此声明将覆盖任何其他声明。虽然，从技术上讲，!important 与优先级无关，但它与最终的结果直接相关。
 使用`!important`是一个坏习惯，应该尽量避免，因为这破坏了样式表中的固有的级联规则 使得调试找 bug 变得更加困难了。当两条相互冲突的带有`!important`规则的声明被应用到相同的元素上时，拥有更大优先级的声明将会被采用。
+
+## display 的属性及其作用
+
+| 属性         | 作用                                                       |
+| ------------ | ---------------------------------------------------------- |
+| none         | 元素不显示，并且会从文档流中移除。｜                       |
+| block        | 块类型。默认宽度为父元素宽度，可设置宽高，换行显示。       |
+| inline       | 行内严肃类型。默认宽度为内容宽度，不可设置宽高，同行显示。 |
+| inline-block | 默认宽度为内容宽度，可以设置宽高，同行显示。               |
+| list-item    | 像块类型元素一样显示，并添加样式列表标记。                 |
+| table        | 此元素会作为块级表格来显示。                               |
+| inherit      | 规定应该从父元素继承 display 属性的值。                    |
+
+## display block inline inline-block 区别
+
+1. block 独占一行，多个元素会另起一行，可以设置 width、height、margin 和 padding
+2. inline 元素不会独占一行，设置 width、height 属性无效。但可以设置水平方向的 margin 和padding
+3. inline-block 将对象设置为 inline 对象，但对象的内容作为 block 对象呈现，之后的內联对象会被排列在同一行内
+
+## 行内元素和块级元素
+
+### 行内元素
+
+- 设置宽高无效
+- 可以设置水平方向的 margin 和 padding，不能设置垂直方向的 padding 和 margin
+- 不会自动换行
+
+### 快级元素
+
+- 可以设置宽高
+- 设置 margin 和 padding 都有效
+- 可以自动换行
+- 多个块状，默认排列从上到下
+
+## 隐藏元素方法
+
+1. display: none 渲染树不会渲染该渲染对象，因此该元素不会在页面中占据位置，也不会响应绑定的监听事件
+2. visibility: hidden 元素在页面中仍占据空间，但是不会响应绑定的监听事件
+3. opacity: 0 将元素的透明度设置为 0，以此来实现元素的隐藏。元素在页面中仍然占据空间，并且能够响应元素绑定的监听事件
+4. position: absolute 通过使用绝对定位将元素移除可视区域内，以此来实现元素的隐藏
+5. z-index: 来使其他元素遮盖住该元素，以此来实现隐藏
+6. clip/clip-path 使用元素裁剪的方法来实现元素的隐藏，这种方法下，元素仍在页面中占据位置，但是不会响应绑定的监听事件
+7. transform: scale(0,0) 将元素缩放为 0，来实现元素的隐藏。这种方法下，元素仍在页面中占据位置，但是不会响应绑定的监听事件
+
+## display:none,visibility:hidden,opacity:0 三者区别
+
+|                                              | display:none | visibility:hidden | opacity:0 |
+| -------------------------------------------- | ------------ | ----------------- | --------- |
+| 是否占据页面空间                             | x            | √                 | √         |
+| 对子元素影响                                 | √            | x                 | √         |
+| 自身绑定的事件能否继续触发                   | x            | x                 | √         |
+| 是否影响其他元素触发事件（例如被遮挡的元素） | x            | x                 | √         |
+| 是否产生回流（reflow）                       | √            | x                 | x         |
+| 是否产生重绘（repaint）                      | √            | √                 | 不一定    |
+
+元素提升为合成层后，transform 和 opacity 不会触发 repaint，如果不是合成层，则其依然会触发 repaint。在 Blink 和 WebKit 内核的浏览器中，对于应用了 transition 或者 animation 的 opacity 元素，浏览器会将渲染层提升为合成层。也可以使用 translateZ(0) 或者 translate3d(0,0,0) 来人为地强制性地创建一个合成层。
+
+display:none 是非继承属性，子孙元素会随着父节点从渲染树消失，通过修改子孙节点的属性也无法显示
+visibility:hidden 是继承属性，子孙节点消失是由于继承了 hidden，通过设置 visibility:visible 可以让子孙节点显示
+
+如果使用读屏器，设置为 display:none 的内容不会被读取，设置为 visibility:hidden 的内容会被读取
+
+## requestAnimationFrame
+
+实现动画效果的方法比较多，Javascript 中可以通过定时器 setTimeout 来实现，CSS3 中可以使用 transition 和 animation 来实现，HTML5 中的 canvas 也可以实现。除此之外，HTML5 提供一个专门用于请求动画的 API，那就是 requestAnimationFrame，顾名思义就是请求动画帧。
+
+### 语法
+
+window.requestAnimationFrame(callback); 其中，callback 是下一次重绘之前更新动画帧所调用的函数(即上面所说的回调函数)。该回调函数会被传入 DOMHighResTimeStamp 参数，它表示 requestAnimationFrame() 开始去执行回调函数的时刻。该方法属于宏任务，所以会在执行完微任务之后再去执行。
+
+使用 cancelAnimationFrame()来取消执行动画，该方法接收一个参数——requestAnimationFrame 默认返回的 id，只需要传入这个 id 就可以取消动画了。
+
+### 优势
+
+- CPU节能：使用 SetInterval 实现的动画，当页面被隐藏或最小化时，SetInterval 仍然在后台执行动画任务，由于此时页面处于不可见或不可用状态，刷新动画是没有意义的，完全是浪费 CPU 资源。而 RequestAnimationFrame 则完全不同，当页面处理未激活的状态下，该页面的屏幕刷新任务也会被系统暂停，因此跟着系统走的 RequestAnimationFrame 也会停止渲染，当页面被激活时，动画就从上次停留的地方继续执行，有效节省了 CPU 开销。
+- 函数节流：在高频率事件( resize, scroll 等)中，为了防止在一个刷新间隔内发生多次函数执行，RequestAnimationFrame 可保证每个刷新间隔内，函数只被执行一次，这样既能保证流畅性，也能更好的节省函数执行的开销，一个刷新间隔内函数执行多次时没有意义的，因为多数显示器每 16.7ms 刷新一次，多次绘制并不会在屏幕上体现出来。
+- 减少 DOM 操作：requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒 60 帧。
 
 ## 1px 解决方案
 
