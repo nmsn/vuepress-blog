@@ -368,7 +368,7 @@ window.requestAnimationFrame(callback); 其中，callback 是下一次重绘之�
 
 由于业务需求，我们需要一些方法来实现移动端上的 1px。
 
-### border-image
+### border-image（不推荐）
 
 ```css
 .border-image-1px {
@@ -398,7 +398,7 @@ window.requestAnimationFrame(callback); 其中，callback 是下一次重绘之�
 }
 ```
 
-### box-shadow
+### box-shadow（不推荐）
 
 ```css
 .box-shadow-1px {
@@ -432,9 +432,22 @@ if (window.devicePixelRatio == 3) {
       'width=device-width,initial-scale=0.333,maximum-scale=0.333,minimum-scale=0.333,user-scalable=no'
     );
 }
+</script>
 ```
 
-此方案全局更改显示方案，还是要慎重考虑
+这样解决了，但这样做的副作用也很大，整个页面被缩放了。这时 1px 已经被处理成物理像素大小，这样的大小在手机上显示边框很合适。但是，一些原本不需要被缩小的内容，比如文字、图片等，也被无差别缩小掉了。
+
+### 直接写 0.5px（兼容性不好）
+
+```
+<div id="container" data-device={{window.devicePixelRatio}}></div>
+
+#container[data-device="2"] {
+  border:0.5px solid #333
+}
+```
+
+直接把 1px 改成 1/devicePixelRatio 后的值，这是目前为止最简单的一种方法。这种方法的缺陷在于兼容性不行，IOS 系统需要 8 及以上的版本，安卓系统则直接不兼容。
 
 ## CSS 定位方式
 
@@ -594,3 +607,30 @@ box-sizing: padding-box // 火狐的私有模型，没人用
 - `<applet>`
 
 HTML 规范也说了 `<input>` 元素可替换，因为 "image" 类型的 `<input>` 元素就像 `<img>` 一样被替换。但是其他形式的控制元素，包括其他类型的 `<input>` 元素，被明确地列为非可替换元素（non-replaced elements）。该规范用术语小挂件（Widgets）来描述它们默认的限定平台的渲染行为。
+
+
+## 画 0.5px 的线
+
+- 采用 transform: scale()的方式，该方法用来定义元素的 2D 缩放转换：
+
+```
+transform: scale(0.5,0.5);
+```
+
+- 采用 meta viewport 的方式
+
+```
+<meta name="viewport" content="width=device-width, initial-scale=0.5, minimum-scale=0.5, maximum-scale=0.5"/>
+```
+
+这样就能缩放到原来的 0.5 倍，如果是 1px 那么就会变成 0.5px。viewport 只针对于移动端，只在移动端上才能看到效果
+
+## 设置小雨 12px 的字体
+
+在谷歌下 css 设置字体大小为 12px 及以下时，显示都是一样大小，都是默认 12px。
+
+### 解决办法
+
+- 使用 Webkit 的内核的-webkit-text-size-adjust 的私有 CSS 属性来解决，只要加了-webkit-text-size-adjust:none;字体大小就不受限制了。但是 chrome 更新到 27 版本之后就不可以用了。所以高版本 chrome 谷歌浏览器已经不再支持-webkit-text-size-adjust 样式，所以要使用时候慎用。
+- 使用 css3 的 transform 缩放属性-webkit-transform:scale(0.5); 注意-webkit-transform:scale(0.75);收缩的是整个元素的大小，这时候，如果是内联元素，必须要将内联元素转换成块元素，可以使用 display：block/inline-block/...；
+- 使用图片：如果是内容固定不变情况下，使用将小于 12px 文字内容切出做图片，这样不影响兼容也不影响美观。
