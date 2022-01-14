@@ -275,6 +275,39 @@ Number.isNaN(undefined) // false
   
   ![2ANzOZclVUd9JKf.png](https://s2.loli.net/2022/01/14/2ANzOZclVUd9JKf.png)
   
+## 字符串转换规则
+
+- null 和 undefined 转换为 'null' 和 'undefined'
+- boolean: true 转为 'true',false 转换为 'false'
+- number: 直接转换，极小和极大的数字会使用指数形式
+- symbol: 直接转换，但是只允许显式强制类型转换，使用隐式类型强制转换会产生错误
+- 对普通对象来说，除非自行定义 toString() 方法，否则会调用 toString()（Object.prototype.toString()）来返回内部属性 [[Class]] 的值，如"[object Object]"。如果对象有自己的 toString() 方法，字符串化时就会调用该方法并使用其返回值
+
+## 数值转换规则
+
+- undefined 类型的值转换为 NaN
+- null 类型的值转换为 0
+- boolean 类型的值，true 转换为 1，false 转换为 0
+- string 类型的值转换如同使用 Number() 函数进行转换，如果包含非数字值则转换为 NaN，空字符串为 0
+- symbol 类型的值不能转换为数字，会报错
+- 对象（包含数组）会首先被转换为相应的基本类型值，如果返回的是非数字的基本类型值，则再遵循以上规则将其强制转换为数字
+
+为了将值转换为相应的基本类型值，抽象操作 ToPrimitive 会首先（通过内部操作 DefaultValue）检查该值是否有valueOf()方法。如果有并且返回基本类型值，就使用该值进行强制类型转换。如果没有就使用 toString() 的返回值（如果存在）来进行强制类型转换
+
+如果 valueOf() 和 toString() 均不返回基本类型值，会产生 TypeError 错误
+
+## 布尔值转换规则
+
+以下都是假值:
+
+- undefined
+- null
+- false
+- +0 -0 NaN
+- ''
+
+假值的布尔强制类型转换结果为 false。从逻辑上说，假值列表以外的都应该是真值
+
 ## 原型与原型链
 
 > JavaScript 常被描述为一种基于原型的语言 (prototype-based language)——每个对象拥有一个原型对象，对象以其原型为模板、从原型继承方法和属性。原型对象也可能拥有原型，并从中继承方法和属性，一层一层、以此类推。这种关系常被称为原型链 (prototype chain)，它解释了为何一个对象会拥有定义在其他对象中的属性和方法。
