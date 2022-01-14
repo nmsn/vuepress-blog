@@ -308,6 +308,52 @@ Number.isNaN(undefined) // false
 
 假值的布尔强制类型转换结果为 false。从逻辑上说，假值列表以外的都应该是真值
 
+## ==、=== 和 Object.is
+
+- 使用双等号（==）进行相等判断时，如果两边的类型不一致，则会进行强制类型转化后再进行比较
+- 使用三等号（===）进行相等判断时，如果两边的类型不一致时，不会做强制类型准换，直接返回 false
+- Object.is 与 === 行为基本一致，不同点在于
+  - +0 不等于 -0
+  - NaN 等于自身
+
+## js 包装类型
+
+在 JavaScript 中，基本类型是没有属性和方法的，但是为了便于操作基本类型的值，在调用基本类型的属性或方法时 JavaScript 会在后台隐式地将基本类型的值转换为对象，如：
+
+```js
+const a = "abc";
+a.length; // 3
+a.toUpperCase(); // "ABC"
+```
+
+在访问 'abc'.length 时，JavaScript 将 'abc' 在后台转换成 String('abc')，然后再访问其length属性
+
+JavaScript也可以使用Object函数显式地将基本类型转换为包装类型：
+
+```js
+var a = 'abc'
+Object(a) // String {"abc"}
+```
+
+也可以使用 valueOf 方法将包装类型倒转成基本类型：
+
+```js
+var a = 'abc'
+var b = Object(a)
+var c = b.valueOf() // 'abc'
+```
+
+看看如下代码会打印出什么：
+
+```js
+var a = new Boolean( false );
+if (!a) {
+    console.log( "Oops" ); // never runs
+}
+```
+
+答案是什么都不会打印，因为虽然包裹的基本类型是false，但是false被包裹成包装类型后就成了对象，所以其非值为false，所以循环体中的内容不会运行
+
 ## 原型与原型链
 
 > JavaScript 常被描述为一种基于原型的语言 (prototype-based language)——每个对象拥有一个原型对象，对象以其原型为模板、从原型继承方法和属性。原型对象也可能拥有原型，并从中继承方法和属性，一层一层、以此类推。这种关系常被称为原型链 (prototype chain)，它解释了为何一个对象会拥有定义在其他对象中的属性和方法。
@@ -1060,21 +1106,6 @@ class Routers {
 ```
 
 - 不同于用加括号的方式区分函数表达式和函数声明，这里我们使用一元操作符+、-、!和~。这种做法也是用于向JavaScript引擎指明它处理的是表达式，而不是语句。从计算机的角度来讲，注意应用一元操作符得到的结果没有存储到任何地方并不重要，只有调用 IIFE 才重要。
-
-### isNaN 与 Number.isNaN 的区别
-
-Number.isNaN() 方法确定传递的值是否为 NaN，并且检查其类型是否为 Number。它是原来的全局 isNaN() 的更稳妥的版本。
-
-在 JavaScript 中，NaN 最特殊的地方就是，我们不能使用相等运算符（== 和 ===）来判断一个值是否是 NaN，因为 NaN == NaN 和 NaN === NaN 都会返回 false。因此，必须要有一个判断值是否是 NaN 的方法。
-
-和全局函数 isNaN() 相比，Number.isNaN() 不会自行将参数转换成数字，只有在参数是值为 NaN 的数字时，才会返回 true。
-
-### === 和 Object.is
-
-Object.is 与 === 行为基本一致，不同点在于
-
-- +0 不等于 -0
-- NaN 等于自身
 
 ### encodeURI 与 encodeURIComponent 的区别
 
