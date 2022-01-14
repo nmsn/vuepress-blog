@@ -241,6 +241,40 @@ isNaN(undefined) // true
 Number.isNaN(undefined) // false
 ```
 
+## == 操作符的强制类型转换
+
+对于 `==` `来说，如果对比双方的类型不一样，就会进行类型转换。假如对比 x 和 y 是否相同，就会进行如下判断流程
+
+1. 首先会判断两者类型是否相同，相同的话就比较两者的大小
+2. 类型不同的话，就会进行类型转换
+3. 会先判断是否在对比 null 和 undefined，是的话就会返回 true
+4. 判断两者类型是否为 string 和 number，是的话就会将字符串转换为 number
+   ```
+    1 == '1'
+    转换为
+    1 == 1
+   ```
+5. 判断其中一方是否为 boolean，是的话就会把 boolean 转为 number 再进行判断
+
+  ```
+  '1' == true
+  转换为
+  '1' == 1
+  转换为
+  1 == 1
+  ```
+6. 判断其中一方是否为 object 且另一方为 string、number、symbol，是的话会把 object 转为原始类型再进行判断
+
+  ```
+  '1' == { name: 'a' }
+  转换为
+  '1' == '[object Object]'
+  ```
+  
+  其流程图如下
+  
+  ![2ANzOZclVUd9JKf.png](https://s2.loli.net/2022/01/14/2ANzOZclVUd9JKf.png)
+  
 ## 原型与原型链
 
 > JavaScript 常被描述为一种基于原型的语言 (prototype-based language)——每个对象拥有一个原型对象，对象以其原型为模板、从原型继承方法和属性。原型对象也可能拥有原型，并从中继承方法和属性，一层一层、以此类推。这种关系常被称为原型链 (prototype chain)，它解释了为何一个对象会拥有定义在其他对象中的属性和方法。
