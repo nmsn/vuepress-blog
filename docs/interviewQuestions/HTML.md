@@ -59,7 +59,7 @@ DOM 已经准备好，因此事件处理器可以查找 DOM 节点，并初始�
 
 ## script标签defer和async属性
 
-![defer和async](../.vuepress/public/images/defer&async.png)
+![defer_async.png](https://s2.loli.net/2022/01/16/mcSQYeJEru9hqP7.jpg)
 
 1. 没有 defer 或 async，浏览器会立即加载并执行指定的脚本，“立即”指的是在渲染该 script 标签之下的文档元素之前，也就是说不等待后续载入的文档元素，读到就加载并执行。
 2. 有 defer，加载后续文档元素的过程将和 script.js 的加载并行进行（异步），但是 script.js 的执行要在所有元素解析完成之后，DOMContentLoaded 事件触发之前完成。
