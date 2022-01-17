@@ -638,6 +638,145 @@ g(3);
 
 尾调用指的是函数的最后一步调用另一个函数。代码执行是基于执行栈的，所以当在一个函数里调用另一个函数时，会保留当前的执行上下文，然后再新建另外一个执行上下文加入栈中。使用尾调用的话，因为已经是函数的最后一步，所以这时可以不必再保留当前的执行上下文，从而节省了内存，这就是尾调用优化。但是 ES6 的尾调用优化只在严格模式下开启，正常模式是无效的
 
+## ES6 模块与 CommonJS 模块有什么异同
+
+CommonJS 模块规范使用 require 语句导入模块，module.exports 导出模块，输出的是值的拷贝，模块导入的也是输出值的拷贝，也就是说，一旦输出这个值，这个值在模块内部的变化是监听不到的。
+
+ES6模块的规范是使用 import 语句导入模块，export 语句导出模块，输出的是对值的引用。ES6模块的运行机制和 CommonJS 不一样，遇到模块加载命令 import 时不去执行这个模块，只会生成一个动态的只读引用，等真的需要用到这个值时，再到模块中取值，也就是说原始值变了，那输入值也会发生变化。
+
+## 模块循环引用
+
+### Commonjs 模块加载原理
+
+CommonJS模块就是一个脚本文件，require命令第一次加载该脚本时就会执行整个脚本，然后在内存中生成该模块的一个说明对象
+
+```js
+{
+    id: '',  //模块名，唯一
+    exports: {  //模块输出的各个接口
+        ...
+    },
+    loaded: true,  //模块的脚本是否执行完毕
+    ...
+}
+```
+
+以后用到这个模块时，就会到对象的exports属性中取值。即使再次执行require命令，也不会再次执行该模块，而是到缓存中取值
+
+CommonJS模块是加载时执行，即脚本代码在require时就全部执行。一旦出现某个模块被“循环加载”，就只输出已经执行的部分，没有执行的部分不会输出
+
+
+> 官方事例：[Cycles](https://nodejs.org/api/modules.html#modules_cycles)
+> 
+> 阮一峰的网络日志：[JavaScript 模块的循环加载](https://www.ruanyifeng.com/blog/2015/11/circular-dependency.html)
+
+代码如下
+
+```js
+//a.js
+exports.done = false;
+
+var b = require('./b.js');
+console.log('在a.js中，b.done = %j', b.done);
+
+exports.done = true;
+console.log('a.js执行完毕！')
+```
+
+```js
+//b.js
+exports.done = false;
+
+var a = require('./a.js');
+console.log('在b.js中，a.done = %j', a.done);
+
+exports.done = true;
+console.log('b.js执行完毕！')
+```
+
+```js
+//main.js
+var a = require('./a.js');
+var b = require('./b.js');
+
+console.log('在main.js中，a.done = %j, b.done = %j', a.done, b.done);
+```
+
+输出结果
+
+```js
+//node环境下运行main.js
+node main.js
+
+在b.js中，a.done = false
+b.js执行完毕！
+在a.js中，b.done = true
+a.js执行完毕！
+在main.js中，a.done = true, b.done = true
+```
+
+js 代码执行顺序如下
+
+1. main.js 中先加载 a.js，a 脚本先输出 done 变量，值为 false，然后加载 b 脚本，a 的代码停止执行，等待 b 脚本执行完成后，才会继续往下执行
+2. b.js 执行到第二行会去加载 a.js，这时发生循环加载，系统会去 a.js 模块对应对象的 exports 属性取值，因为 a.js 没执行完，从 exports 属性只能取回已经执行的部分，未执行的部分不返回，所以取回的值并不是最后的值
+3. a.js 已执行的代码只有一行，exports.done = false;所以对于 b.js 来说，require a.js 只输出了一个变量 done，值为 false。往下执行 console.log('在b.js中，a.done = %j', a.done);控制台打印出：
+    ```js
+    在b.js中，a.done = false
+    ```
+4. b.js继续往下执行，done变量设置为true，console.log('b.js执行完毕！')，等到全部执行完毕，将执行权交还给a.js。此时控制台输出：
+    ```js
+    b.js执行完毕！
+    ```
+5. 执行权交给a.js后，a.js接着往下执行，执行console.log('在a.js中，b.done = %j', b.done);控制台打印出：
+    ```js
+    在a.js中，b.done = true
+    ```
+6. a.js 继续执行，变量 done 设置为 true，直到 a.js 执行完毕
+    ```js
+    a.js执行完毕！
+    ```
+7. main.js 中第二行不会再次执行 b.js，直接输出缓存结果。最后控制台输出：
+    ```js
+    在main.js中，a.done = true, b.done = true
+    ```
+
+总结
+
+1. 在 b.js 中，a.js 没有执行完毕，只执行了第一行，所有循环加载中，只输出已执行了部份
+2. main.js 第二行不会再次执行，而是输出缓存 b.js 的执行结果，`export.done = true`
+
+### ES6 模块加载原理
+
+ES6 模块的运行机制与 CommonJS 不一样，它遇到模块加载命令 import 时，不会去执行模块，而是只生成一个引用。等到真的需要用到时，再到模块里面去取值。
+
+因此，ES6 模块是动态引用，不存在缓存值的问题，而且模块里面的变量，绑定其所在的模块。请看下面的例子。
+
+```js
+// m1.js
+export var foo = 'bar';
+setTimeout(() => foo = 'baz', 500);
+
+// m2.js
+import {foo} from './m1.js';
+console.log(foo);
+setTimeout(() => console.log(foo), 500);
+```
+
+上面代码中，m1.js 的变量 foo，在刚加载时等于 bar，过了500毫秒，又变为等于 baz。
+
+让我们看看，m2.js 能否正确读取这个变化。
+
+输出结果
+
+```
+bar
+baz
+```
+
+上面代码表明，ES6 模块不会缓存运行结果，而是动态地去被加载的模块取值，以及变量总是绑定其所在的模块。
+
+这导致 ES6 处理"循环加载"与 CommonJS 有本质的不同。ES6根本不会关心是否发生了"循环加载"，只是生成一个指向被加载模块的引用，需要开发者自己保证，真正取值的时候能够取到值。
+
 ## 原型与原型链
 
 > JavaScript 常被描述为一种基于原型的语言 (prototype-based language)——每个对象拥有一个原型对象，对象以其原型为模板、从原型继承方法和属性。原型对象也可能拥有原型，并从中继承方法和属性，一层一层、以此类推。这种关系常被称为原型链 (prototype chain)，它解释了为何一个对象会拥有定义在其他对象中的属性和方法。
