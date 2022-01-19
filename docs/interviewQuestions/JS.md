@@ -1778,3 +1778,9 @@ requestAnimationFrame处于渲染阶段，不在微任务队列，也不在宏�
 ### 参考文献
 
 - Event loop：[https://yuchengkai.cn/docs/frontend/browser.html#event-loop](https://yuchengkai.cn/docs/frontend/browser.html#event-loop)
+
+## documentFragment 是什么？用它跟直接操作 DOM 的区别是什么？
+
+> MDN [DocumentFragment](https://developer.mozilla.org/zh-CN/docs/Web/API/DocumentFragment)
+
+当我们把一个 DocumentFragment 节点插入文档树时，插入的不是 DocumentFragment 自身，而是它的所有子孙节点。在频繁的DOM操作时，我们就可以将DOM元素插入DocumentFragment，之后一次性的将所有的子孙节点插入文档中。和直接操作DOM相比，将DocumentFragment 节点插入DOM树时，不会触发页面的重绘，这样就大大提高了页面的性能。
