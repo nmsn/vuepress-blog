@@ -142,6 +142,9 @@ webpack 的热更新又称热替换（Hot Module Replacement），缩写为 HMR�
 用 webpack 优化前端性能是指优化 webpack 的输出结果，让打包的最终结果在浏览器运行快速高效。
 
 - 压缩代码:删除多余的代码、注释、简化代码的写法等等方式。可以利用 webpack 的 UglifyJsPlugin 和 ParallelUglifyPlugin 来压缩 JS 文件， 利用 cssnano（css-loader?minimize）来压缩 css
+
+    在 Webpack4 中，不需要以上这些操作了，只需要将 mode 设置为 production 就可以默认开启以上功能。代码压缩也是我们必做的性能优化方案，当然我们不止可以压缩 JS 代码，还可以压缩 HTML、CSS 代码，并且在压缩 JS 代码的过程中，我们还可以通过配置实现比如删除 console.log 这类代码的功能
+
 - 利用 CDN 加速: 在构建过程中，将引用的静态资源路径修改为 CDN 上对应的路径。可以利用 webpack 对于 output 参数和各 loader 的 publicPath 参数来修改资源路径
 - Tree Shaking: 将代码中永远不会走到的片段删除掉。可以通过在启动 webpack 时追加参数--optimize-minimize 来实现
 - Code Splitting: 将代码按路由维度或者组件分块(chunk),这样做到按需加载,同时可以充分利用浏览器缓存，如
@@ -153,11 +156,171 @@ webpack 的热更新又称热替换（Hot Module Replacement），缩写为 HMR�
 
 ## 如何提高 webpack 的打包速度
 
+- 多入口情况下，使用 CommonsChunkPlugin 来提取公共代码
 - happypack: 利用进程并行编译 loader,利用缓存来使得 rebuild 更快,遗憾的是作者表示已经不会继续开发此项目,类似的替代者是 thread-loader
+
+    ```js
+    module: {
+      loaders: [
+        {
+          test: /\.js$/,
+          include: [resolve('src')],
+          exclude: /node_modules/,
+          // id 后面的内容对应下面
+          loader: 'happypack/loader?id=happybabel'
+        }
+      ]
+    },
+    plugins: [
+      new HappyPack({
+        id: 'happybabel',
+        loaders: ['babel-loader?cacheDirectory'],
+        // 开启 4 个线程
+        threads: 4
+      })
+    ]
+    ```
+
 - 外部扩展(externals): 将不怎么需要更新的第三方库脱离 webpack 打包，不被打入 bundle 中，从而减少打包时间,比如 jQuery 用 script 标签引入
 - dll: 采用 webpack 的 DllPlugin 和 DllReferencePlugin 引入 dll，让一些基本不会改动的代码先打包成静态资源,避免反复编译浪费时间
+
+    ```js
+    // 单独配置在一个文件中
+    // webpack.dll.conf.js
+    const path = require('path')
+    const webpack = require('webpack')
+    module.exports = {
+      entry: {
+        // 想统一打包的类库
+        vendor: ['react']
+      },
+      output: {
+        path: path.join(__dirname, 'dist'),
+        filename: '[name].dll.js',
+        library: '[name]-[hash]'
+      },
+      plugins: [
+        new webpack.DllPlugin({
+          // name 必须和 output.library 一致
+          name: '[name]-[hash]',
+          // 该属性需要与 DllReferencePlugin 中一致
+          context: __dirname,
+          path: path.join(__dirname, 'dist', '[name]-manifest.json')
+        })
+      ]
+    }
+    ```
+    
+    然后需要执行这个配置文件生成依赖文件，接下来需要使用 DllReferencePlugin 将依赖文件引入项目中
+    
+    ```js
+    // webpack.conf.js
+    module.exports = {
+      // ...省略其他配置
+      plugins: [
+        new webpack.DllReferencePlugin({
+          context: __dirname,
+          // manifest 就是之前打包出来的 json 文件
+          manifest: require('./dist/vendor-manifest.json'),
+        })
+      ]
+    }
+    ```
+
 - 利用缓存: webpack.cache、babel-loader.cacheDirectory、HappyPack.cache 都可以利用缓存提高 rebuild 效率
 - 缩小文件搜索范围: 比如 babel-loader 插件,如果你的文件仅存在于 src 中,那么可以 include: path.resolve(\_\_dirname, 'src'),当然绝大多数情况下这种操作的提升有限,除非不小心 build 了 node_modules 文件
+- 使⽤ Tree-shaking 和 Scope Hoisting 来剔除多余代码
+    
+    ```js
+    module.exports = {
+      module: {
+        rules: [
+          {
+            // js 文件才使用 babel
+            test: /\.js$/,
+            loader: 'babel-loader',
+            // 只在 src 文件夹下查找
+            include: [resolve('src')],
+            // 不会去查找的路径
+            exclude: /node_modules/
+          }
+        ]
+      }
+    }
+    ````
+
+## 如何减少 Webpack 打包体积
+
+1. 按需加载
+
+    在开发 SPA 项目的时候，项目中都会存在很多路由页面。如果将这些页面全部打包进一个 JS 文件的话，虽然将多个请求合并了，但是同样也加载了很多并不需要的代码，耗费了更长的时间。那么为了首页能更快地呈现给用户，希望首页能加载的文件体积越小越好，这时候就可以使用按需加载，将每个路由页面单独打包为一个文件。当然不仅仅路由可以按需加载，对于 lodash 这种大型类库同样可以使用这个功能。
+
+    按需加载的代码实现这里就不详细展开了，因为鉴于用的框架不同，实现起来都是不一样的。当然了，虽然他们的用法可能不同，但是底层的机制都是一样的。都是当使用的时候再去下载对应文件，返回一个 Promise，当 Promise 成功以后去执行回调。
+
+2. Scope Hoisting
+
+    Scope Hoisting 会分析出模块之间的依赖关系，尽可能的把打包出来的模块合并到一个函数中去。
+    
+    比如希望打包两个文件：
+    
+    ```js
+    // test.js
+    export const a = 1
+    // index.js
+    import { a } from './test.js'
+    ```
+    
+    对于这种情况，打包出来的代码会类似这样：
+    
+    ```js
+    [
+      /* 0 */
+      function (module, exports, require) {
+        //...
+      },
+      /* 1 */
+      function (module, exports, require) {
+        //...
+      }
+    ]
+    ```
+    
+    但是如果使用 Scope Hoisting ，代码就会尽可能的合并到一个函数中去，也就变成了这样的类似代码：
+    
+    ```js
+    [
+      /* 0 */
+      function (module, exports, require) {
+        //...
+      }
+    ]
+    ```
+    
+    这样的打包方式生成的代码明显比之前的少多了。如果在 Webpack4 中你希望开启这个功能，只需要启用 optimization.concatenateModules 就可以了：
+    
+    ```js
+    module.exports = {
+      optimization: {
+        concatenateModules: true
+      }
+    }
+    ```
+
+3. Tree Shaking
+    
+    Tree Shaking 可以实现删除项目中未被引用的代码，比如：
+    
+    ```js
+    // test.js
+    export const a = 1
+    export const b = 2
+    // index.js
+    import { a } from './test.js'
+    ```
+    
+    对于以上情况，test 文件中的变量 b 如果没有在项目中使用到的话，就不会被打包到文件中。
+
+    如果使用 Webpack 4 的话，开启生产环境就会自动启动这个优化功能。
 
 ## module chunk bundle 的区别
 
