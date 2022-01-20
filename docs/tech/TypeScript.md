@@ -1114,3 +1114,46 @@ interface CallMeWithNewToGetString {
 declare const Foo: CallMeWithNewToGetString;
 const bar = new Foo(); // bar 被推断为 string 类型
 ```
+
+## ts 在 React 项目中的使用总结
+
+### React 元素相关类型
+
+- ReactNode
+
+    任意类型的 React 节点，这是个联合类型，包含情况众多
+
+    > 可以是 ReactElement, ReactFragment, string ，a number 或者一个数组 ReactNodes, 或者null,或者 undefined, 或者 boolean
+
+- ReactElement/JSX.Element
+
+    从使用表现上来看，可以认为这两者是一致的，属于 ReactNode 的子集，表示“原生的DOM组件”或“自定义组件的执行结果”
+    
+使用示例如下:
+
+```ts
+const MyComp: React.FC<{ title: string; }> = ({title}) => <h2>{title}</h2>;
+
+// ReactNode
+const a: React.ReactNode =
+  null ||
+  undefined || <div>hello</div> || <MyComp title="world" /> ||
+  "abc" ||
+  123 ||
+  true;
+
+// ReactElement 和 JSX.Element
+const b: React.ReactElement = <div>hello world</div> || <MyComp title="good" />;
+
+const c: JSX.Element = <MyComp title="good" /> || <div>hello world</div>;
+```
+
+### 原生 DOM 相关
+
+原生的 DOM 相关的类型，主要有以下这么几个：Element、 HTMLElement、HTMLxxxElement
+
+简单来说： Element = HTMLElement + SVGElement
+
+SVGElement一般开发比较少用到，而HTMLElement却非常常见，它的子类型包括HTMLDivElement、HTMLInputElement、HTMLSpanElement等等
+
+因此我们可以得知，其关系为：Element > HTMLElement > HTMLxxxElement，原则上是尽量写详细
