@@ -210,9 +210,9 @@ webpack 的热更新又称热替换（Hot Module Replacement），缩写为 HMR�
       ]
     }
     ```
-    
+
     然后需要执行这个配置文件生成依赖文件，接下来需要使用 DllReferencePlugin 将依赖文件引入项目中
-    
+
     ```js
     // webpack.conf.js
     module.exports = {
@@ -230,7 +230,7 @@ webpack 的热更新又称热替换（Hot Module Replacement），缩写为 HMR�
 - 利用缓存: webpack.cache、babel-loader.cacheDirectory、HappyPack.cache 都可以利用缓存提高 rebuild 效率
 - 缩小文件搜索范围: 比如 babel-loader 插件,如果你的文件仅存在于 src 中,那么可以 include: path.resolve(\_\_dirname, 'src'),当然绝大多数情况下这种操作的提升有限,除非不小心 build 了 node_modules 文件
 - 使⽤ Tree-shaking 和 Scope Hoisting 来剔除多余代码
-    
+
     ```js
     module.exports = {
       module: {
@@ -260,9 +260,9 @@ webpack 的热更新又称热替换（Hot Module Replacement），缩写为 HMR�
 2. Scope Hoisting
 
     Scope Hoisting 会分析出模块之间的依赖关系，尽可能的把打包出来的模块合并到一个函数中去。
-    
+
     比如希望打包两个文件：
-    
+
     ```js
     // test.js
     export const a = 1
@@ -284,9 +284,9 @@ webpack 的热更新又称热替换（Hot Module Replacement），缩写为 HMR�
       }
     ]
     ```
-    
+
     但是如果使用 Scope Hoisting ，代码就会尽可能的合并到一个函数中去，也就变成了这样的类似代码：
-    
+
     ```js
     [
       /* 0 */
@@ -295,9 +295,9 @@ webpack 的热更新又称热替换（Hot Module Replacement），缩写为 HMR�
       }
     ]
     ```
-    
+
     这样的打包方式生成的代码明显比之前的少多了。如果在 Webpack4 中你希望开启这个功能，只需要启用 optimization.concatenateModules 就可以了：
-    
+
     ```js
     module.exports = {
       optimization: {
@@ -307,9 +307,9 @@ webpack 的热更新又称热替换（Hot Module Replacement），缩写为 HMR�
     ```
 
 3. Tree Shaking
-    
+
     Tree Shaking 可以实现删除项目中未被引用的代码，比如：
-    
+
     ```js
     // test.js
     export const a = 1
@@ -317,7 +317,7 @@ webpack 的热更新又称热替换（Hot Module Replacement），缩写为 HMR�
     // index.js
     import { a } from './test.js'
     ```
-    
+
     对于以上情况，test 文件中的变量 b 如果没有在项目中使用到的话，就不会被打包到文件中。
 
     如果使用 Webpack 4 的话，开启生产环境就会自动启动这个优化功能。
@@ -401,3 +401,36 @@ eval 会以 eval() 函数打包运行模块，不产生独立的 map 文件，�
 ## 你的 Tree-Shaking 并没什么卵用
 
 原文链接：[https://mp.weixin.qq.com/s/E4iFf5aTbR9rXBU3gnR4Gg](https://mp.weixin.qq.com/s/E4iFf5aTbR9rXBU3gnR4Gg)
+
+## webpack rollup 对比
+
+- webpack
+
+    webpack 适⽤于⼤型复杂的前端站点构建: webpack 有强⼤的 loader 和插件⽣态,打包后的⽂件实际上就是⼀个⽴即执⾏函数，这个⽴即执⾏函数接收⼀个参数，这个参数是模块对象，键为各个模块的路径，值为模块内容。⽴即执⾏函数内部则处理模块之间的引⽤，执⾏模块等,这种情况更适合⽂件依赖复杂的应⽤开发
+
+- rollup
+
+    rollup 适⽤于基础库的打包，如 vue、d3 等: Rollup 就是将各个模块打包进⼀个⽂件中，并且通过 Tree-shaking 来删除⽆⽤的代码,可以最⼤程度上降低代码体积,但是 rollup 没有 webpack 如此多的的如代码分割、按需加载等⾼级功能，其更聚焦于库的打包，因此更适合库的开发
+
+## 常见 loader
+
+- file-loader 把⽂件输出到⼀个⽂件夹中，在代码中通过相对 URL 去引⽤输出的⽂件
+- url-loader 和 file-loader 类似，但是能在⽂件很⼩的情况下以 base64 的⽅式把⽂件内容注⼊到代码中去
+- source-map-loader 加载额外的 Source Map ⽂件，以⽅便断点调试
+- image-loader 加载并且压缩图⽚⽂件
+- babel-loader 把 ES6 转换成 ES5
+- css-loader 加载 CSS，⽀持模块化、压缩、⽂件导⼊等特性
+- style-loader 把 CSS 代码注⼊到 JavaScript 中，通过 DOM 操作去加载 CSS。
+- eslint-loader 通过 ESLint 检查 JavaScript 代码
+
+注意：在 Webpack 中，loader 的执行顺序是从右向左执行的。因为webpack选择了 **compose** 这样的函数式编程方式，这种方式的表达式执行是从右向左的
+
+## 常见 plugin
+
+- define-plugin 定义环境变量
+- html-webpack-plugin 简化 html 文件创建
+- uglifyjs-webpack-plugin 通过 uglifyjs 压缩 es6 代码
+- webpack-parallel-uglify-plugin 多核压缩，提高压缩速度
+- webpack-bundle-analyzer 可视化 webpack 输出文件的体积
+- mini-css-extract-plugin css 提取到单独的文件中，支持按需加载
+
