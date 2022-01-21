@@ -324,9 +324,9 @@ webpack 的热更新又称热替换（Hot Module Replacement），缩写为 HMR�
 
 ## module chunk bundle 的区别
 
-1. 对于同一份代码，当我们手写下一个文件，它们无论是 ESM 还是 commonJS 或是 AMD，它们都是 module
-2. 当我们写的 module 源文件传到 webpack 进行打包时，这个 bundle 文件包含了经过加载和编译的最终源文件
-3. webpack 处理好 chunk 文件后，最终会输出 bundle 文件，这个 bundle 文件包含了经过加载和编译的最终源文件，所以它可以直接在浏览器中运行
+- module：是开发中的单个模块，在webpack的世界，⼀切皆模块，⼀个模块对应⼀个⽂件，webpack会从配置的 entry中递归开始找出所有依赖的模块
+- chunk：代码块，⼀个chunk由多个模块组合⽽成，⽤于代码的合并和分割
+- bundle：是由webpack打包出来的⽂件
 
 ## filename chunkFilename 的区别
 
