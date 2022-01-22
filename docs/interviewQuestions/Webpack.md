@@ -124,6 +124,8 @@ module.exports = {
 
 ## webpack 的热更新是如何做到的？说明其原理
 
+![SZa1gixwPTBUp2X.png](https://s2.loli.net/2022/01/22/SZa1gixwPTBUp2X.png)
+
 webpack 的热更新又称热替换（Hot Module Replacement），缩写为 HMR。 这个机制可以做到不用刷新浏览器而将新变更的模块替换掉旧的模块。
 
 首先要知道 server 端和 client 端都做了处理工作
