@@ -434,6 +434,14 @@ eval 会以 eval() 函数打包运行模块，不产生独立的 map 文件，�
 - webpack-bundle-analyzer 可视化 webpack 输出文件的体积
 - mini-css-extract-plugin css 提取到单独的文件中，支持按需加载
 
+## loader 和 plugin 思路
+
+Loader 像⼀个"翻译官"把读到的源⽂件内容转义成新的⽂件内容，并且每个 Loader 通过链式操作，将源⽂件⼀步步翻译成想要的样⼦。
+
+编写 Loader 时要遵循单⼀原则，每个 Loader 只做⼀种"转义"⼯作。 每个 Loader 的拿到的是源⽂件内容（source），可以通过返回值的⽅式将处理后的内容输出，也可以调⽤ this.callback() ⽅法，将内容返回给 webpack。 还可以通过 this.async() ⽣成⼀个 callback 函数，再⽤这个 callback 将处理后的内容输出出去。 此外 webpack 还为开发者准备了开发 loader 的⼯具函数集——loader-utils 。
+
+相对于 Loader ⽽⾔，Plugin 的编写就灵活了许多。 webpack 在运⾏的⽣命周期中会⼴播出许多事件，Plugin 可以监听这些事件，在合适的时机通过 Webpack 提供的 API 改变输出结果。
+
 ## webpack 构建流程
 
 Webpack 的运⾏流程是⼀个串⾏的过程，从启动到结束会依次执⾏以下流程：
