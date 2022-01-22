@@ -455,3 +455,13 @@ Webpack 的运⾏流程是⼀个串⾏的过程，从启动到结束会依次执
 7. 输出完成：在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统
 
 在以上过程中，Webpack 会在特定的时间点⼴播出特定的事件，插件在监听到感兴趣的事件后会执⾏特定的逻辑，并且插件可以调⽤ Webpack 提供的 API 改变 Webpack 的运⾏结果
+
+## Babel 原理
+
+![8w6T1Zif5K2QSAt.png](https://s2.loli.net/2022/01/22/8w6T1Zif5K2QSAt.png)
+
+babel 的转译过程也分为三个阶段，这三步具体是：
+
+- 解析 Parse: 将代码解析⽣成抽象语法树（AST），即词法分析与语法分析的过程
+- 转换 Transform: 对于 AST 进⾏变换⼀系列的操作，babel 接受得到 AST 并通过 babel-traverse 对其进⾏遍历，在此过程中进⾏添加、更新及移除等操作
+- ⽣成 Generate: 将变换后的 AST 再转换为 JS 代码, 使⽤到的模块是 babel-generator
