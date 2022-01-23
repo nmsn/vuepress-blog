@@ -154,6 +154,13 @@ GET的长度值 = URL（2083）- （你的Domain+Path）-2（2是get请求中?=�
     - Microsoft Internet Information Server(IIS)：能接受最大url的长度为16384个字符
 
 根据上面的数据，可以知道，get方法中的URL长度最长不超过2083个字符，这样所有的浏览器和服务器都可能正常工作
+
+## PUT 和 POST 的区别
+
+PUT 和 POST 的关键不同在于 PUT 是**幂等**的，而 POST 不是
+
+即 PUT 无论进行多少次操作，结果都是相同的
+
 ## 常见的 HTTP 请求头和响应头
 
 ### HTTP Request Header 常见的请求头
