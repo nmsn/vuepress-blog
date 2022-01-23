@@ -154,6 +154,33 @@ GET的长度值 = URL（2083）- （你的Domain+Path）-2（2是get请求中?=�
     - Microsoft Internet Information Server(IIS)：能接受最大url的长度为16384个字符
 
 根据上面的数据，可以知道，get方法中的URL长度最长不超过2083个字符，这样所有的浏览器和服务器都可能正常工作
+## 常见的 HTTP 请求头和响应头
+
+### HTTP Request Header 常见的请求头
+
+- Accept 浏览器能够处理的内容类型
+- Accept-Charset 浏览器能够显示的字符集
+- Accept-Encoding 浏览器能够处理的压缩编码
+- Accept-Language 浏览器当前设置的语言
+- Connection 浏览器与服务器之间连接的类型
+- Cookie 当前页面设置的任何 Cookie
+- Host 发出请求的页面所在的域
+- Referer 发出请求的页面的 URL
+- USer-Agent 浏览器的用户代理字符串
+
+### HTTP Response Header 常见的响应头
+
+- Date 表示消息发送的时间，时间的描述格式由 rfc822 定义
+- server 服务器名称
+- Connection 浏览器与服务器之间连接的类型
+- Cache-Control 控制 HTTP 缓存
+- Content-Type 表示后面的文档属于什么 MIME 类型
+
+    常见的 Content-Type 属性有以下 4 种
+    - application/x-www-form-urlencoded 浏览器的原生 form 表单，如果不设置 enctype 属性，那么最终就会以 application/x-www-form-urlencoded 方式提交数据。该种方式提交的数据放在 body 里面，数据按照 key1=val1&key2=val2 的方式进行编码，key 和 val 都进行了 URL转码
+    - multipart/form-data 该种方式也是一个常见的 POST 提交方式，通常表单上传文件时使用该种方式
+    - application/json 服务器消息主体是序列化后的 JSON 字符串
+    - text/xml 该种方式主要用来提交 XML 格式的数据
 ## 浏览器缓存
 
 1. 浏览器在加载资源时，先根据这个资源的一些 http header 判断它是否命中强缓存，强缓存如果命中，浏览器直接从自己的缓存中读取资源，不会发请求到服务器。比如某个 css 文件，如果浏览器在加载它所在的网页时，这个 css 文件的缓存配置命中了强缓存，浏览器就直接从缓存中加载这个 css，连请求都不会发送到网页所在服务器；
