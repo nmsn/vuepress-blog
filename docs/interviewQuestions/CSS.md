@@ -644,3 +644,21 @@ transform: scale(0.5,0.5);
 - 使用 Webkit 的内核的-webkit-text-size-adjust 的私有 CSS 属性来解决，只要加了-webkit-text-size-adjust:none;字体大小就不受限制了。但是 chrome 更新到 27 版本之后就不可以用了。所以高版本 chrome 谷歌浏览器已经不再支持-webkit-text-size-adjust 样式，所以要使用时候慎用。
 - 使用 css3 的 transform 缩放属性-webkit-transform:scale(0.5); 注意-webkit-transform:scale(0.75);收缩的是整个元素的大小，这时候，如果是内联元素，必须要将内联元素转换成块元素，可以使用 display：block/inline-block/...；
 - 使用图片：如果是内容固定不变情况下，使用将小于 12px 文字内容切出做图片，这样不影响兼容也不影响美观。
+
+## 如何重置元素的属性值到初始值
+
+> 张鑫旭：[CSS inherit是继承，那initial和unset呢](https://www.zhangxinxu.com/wordpress/2020/01/css-initial-unset/)
+>
+> MDN：[all](https://developer.mozilla.org/zh-CN/docs/Web/CSS/all)
+
+全局属性值
+
+- initial 该关键字代表改变该元素或其父元素的所有属性至初始值
+- inherit 该关键字代表改变该元素或其父元素的所有属性的值至他们的父元素属性的值
+- unset 该关键字代表如果该元素的属性的值是可继承的，则改变该元素或该元素的父元素的所有属性的值为他们父元素的属性值，反之则改变为初始值
+- revert 在许多情况下，revert 关键字的工作方式与 unset 完全相同。唯一的区别是，属性的值是由浏览器设置的，或者由用户创建的自定义样式表设置的(设置在浏览器端)
+
+
+全局设置属性 all
+
+all 属性被作为 CSS 全局关键词的其中之一. 除却 unicode-bidi 与 direction 之外的所有属性重设至其初始值，或继承值。
