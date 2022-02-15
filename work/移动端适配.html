@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>移动端适配 | NMSN</title>
+    <meta name="description" content="Somebody has to win, so why not be me?">
+    <meta name="generator" content="VuePress 1.4.0">
+    <link rel="icon" href="/favicon.ico">
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6594ba1364804631f0a8fd4452766fed";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+  <script aysnc="true" src="https://www.googletagmanager.com/gtag/js?id=UA-127895888-1"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-127895888-1');
+  </script>
+    
+    <link rel="preload" href="/assets/css/0.styles.ec7a9dc7.css" as="style"><link rel="preload" href="/assets/js/app.a3917c08.js" as="script"><link rel="preload" href="/assets/js/2.143bf0e2.js" as="script"><link rel="preload" href="/assets/js/61.2070b510.js" as="script"><link rel="prefetch" href="/assets/js/10.bfb12f17.js"><link rel="prefetch" href="/assets/js/11.95c30092.js"><link rel="prefetch" href="/assets/js/12.02d03ade.js"><link rel="prefetch" href="/assets/js/13.ed7b9bad.js"><link rel="prefetch" href="/assets/js/14.8b04c144.js"><link rel="prefetch" href="/assets/js/15.62e6c8b5.js"><link rel="prefetch" href="/assets/js/16.58442e8f.js"><link rel="prefetch" href="/assets/js/17.e5bd374d.js"><link rel="prefetch" href="/assets/js/18.aadb3349.js"><link rel="prefetch" href="/assets/js/19.8cb53d4b.js"><link rel="prefetch" href="/assets/js/20.24639fc6.js"><link rel="prefetch" href="/assets/js/21.f95ffdf3.js"><link rel="prefetch" href="/assets/js/22.2482e250.js"><link rel="prefetch" href="/assets/js/23.2e87cad5.js"><link rel="prefetch" href="/assets/js/24.ac878c31.js"><link rel="prefetch" href="/assets/js/25.5be9f82b.js"><link rel="prefetch" href="/assets/js/26.2a5b4ac3.js"><link rel="prefetch" href="/assets/js/27.935732a6.js"><link rel="prefetch" href="/assets/js/28.c12cbcea.js"><link rel="prefetch" href="/assets/js/29.5b94311f.js"><link rel="prefetch" href="/assets/js/3.13e2822a.js"><link rel="prefetch" href="/assets/js/30.f4d6df45.js"><link rel="prefetch" href="/assets/js/31.bf46b8c3.js"><link rel="prefetch" href="/assets/js/32.633ca84c.js"><link rel="prefetch" href="/assets/js/33.e267b1b5.js"><link rel="prefetch" href="/assets/js/34.83fdc5e8.js"><link rel="prefetch" href="/assets/js/35.2078f29f.js"><link rel="prefetch" href="/assets/js/36.cfbb8f18.js"><link rel="prefetch" href="/assets/js/37.c832ebab.js"><link rel="prefetch" href="/assets/js/38.665cfa69.js"><link rel="prefetch" href="/assets/js/39.e5a858e9.js"><link rel="prefetch" href="/assets/js/4.5a3029b5.js"><link rel="prefetch" href="/assets/js/40.e32b8d9a.js"><link rel="prefetch" href="/assets/js/41.b05a12ad.js"><link rel="prefetch" href="/assets/js/42.b88c39a2.js"><link rel="prefetch" href="/assets/js/43.7b60d519.js"><link rel="prefetch" href="/assets/js/44.2f2414b2.js"><link rel="prefetch" href="/assets/js/45.85718f44.js"><link rel="prefetch" href="/assets/js/46.2bc30dd4.js"><link rel="prefetch" href="/assets/js/47.d15abaed.js"><link rel="prefetch" href="/assets/js/48.1e4e667c.js"><link rel="prefetch" href="/assets/js/49.6b1a9b49.js"><link rel="prefetch" href="/assets/js/5.ed6093fe.js"><link rel="prefetch" href="/assets/js/50.d3cc69ed.js"><link rel="prefetch" href="/assets/js/51.5c6a9aaf.js"><link rel="prefetch" href="/assets/js/52.fac8e285.js"><link rel="prefetch" href="/assets/js/53.e52aa3fd.js"><link rel="prefetch" href="/assets/js/54.18b8b153.js"><link rel="prefetch" href="/assets/js/55.67f9bbbf.js"><link rel="prefetch" href="/assets/js/56.1a846f2d.js"><link rel="prefetch" href="/assets/js/57.6a72fd81.js"><link rel="prefetch" href="/assets/js/58.85b90b3e.js"><link rel="prefetch" href="/assets/js/59.f66f3400.js"><link rel="prefetch" href="/assets/js/6.6b149b80.js"><link rel="prefetch" href="/assets/js/60.7f20d436.js"><link rel="prefetch" href="/assets/js/62.dbcc46f4.js"><link rel="prefetch" href="/assets/js/7.473a6114.js"><link rel="prefetch" href="/assets/js/8.0cbdd451.js"><link rel="prefetch" href="/assets/js/9.8148293e.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ec7a9dc7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">NMSN</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/tech/" class="nav-link">
+  快查总结
+</a></div><div class="nav-item"><a href="/excerpt/" class="nav-link">
+  摘录
+</a></div><div class="nav-item"><a href="/interviewQuestions/" class="nav-link">
+  面试题
+</a></div><div class="nav-item"><a href="/readingNotes/" class="nav-link">
+  读书笔记
+</a></div><div class="nav-item"><a href="/work/" class="nav-link router-link-active">
+  工作总结
+</a></div> <a href="https://github.com/nmsn" target="_blank" rel="noopener noreferrer" class="repo-link">
+    Github
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/tech/" class="nav-link">
+  快查总结
+</a></div><div class="nav-item"><a href="/excerpt/" class="nav-link">
+  摘录
+</a></div><div class="nav-item"><a href="/interviewQuestions/" class="nav-link">
+  面试题
+</a></div><div class="nav-item"><a href="/readingNotes/" class="nav-link">
+  读书笔记
+</a></div><div class="nav-item"><a href="/work/" class="nav-link router-link-active">
+  工作总结
+</a></div> <a href="https://github.com/nmsn" target="_blank" rel="noopener noreferrer" class="repo-link">
+    Github
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>工作总结</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/work/axios取消请求.html" class="sidebar-link">axios取消请求</a></li><li><a href="/work/axios文件处理.html" class="sidebar-link">axios文件处理</a></li><li><a href="/work/fetch.html" class="sidebar-link">fetch</a></li><li><a href="/work/dsBridge.html" class="sidebar-link">dsBridge</a></li><li><a href="/work/前端水印生成方案.html" class="sidebar-link">前端水印生成方案</a></li><li><a href="/work/移动端适配.html" class="active sidebar-link">移动端适配</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/work/移动端适配.html#字体大小自动适配" class="sidebar-link">字体大小自动适配</a></li><li class="sidebar-sub-header"><a href="/work/移动端适配.html#user-agent识别设备及容器app信息" class="sidebar-link">User-Agent识别设备及容器App信息</a></li></ul></li><li><a href="/work/bug解决方案.html" class="sidebar-link">bug解决方案</a></li><li><a href="/work/sass和less.html" class="sidebar-link">sass和less</a></li><li><a href="/work/公祭日灰色效果.html" class="sidebar-link">公祭日灰色效果</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="移动端适配"><a href="#移动端适配" aria-hidden="true" class="header-anchor">#</a> 移动端适配</h1> <h2 id="字体大小自动适配"><a href="#字体大小自动适配" aria-hidden="true" class="header-anchor">#</a> 字体大小自动适配</h2> <p>移动端UI稿统一使用 375px * 667px(iphonr6/7/8)作为开发模板，打包时利用 postcss-pxtorem 插件将 px单位转化为rem，再根据设备的dpr情况，自动调节全局字号大小。</p> <h3 id="postcss-pxtorem配置"><a href="#postcss-pxtorem配置" aria-hidden="true" class="header-anchor">#</a> postcss-pxtorem配置</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// postcss配置项 postcss.config.js</span>
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  plugins<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    autoprefixer<span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token string">'postcss-pxtorem'</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      rootValue<span class="token punctuation">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      propList<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'*'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      selectorBlackList<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      minPixelValue<span class="token punctuation">:</span> <span class="token number">6</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="获取设备dpr"><a href="#获取设备dpr" aria-hidden="true" class="header-anchor">#</a> 获取设备dpr</h3> <p><code>window.devicePixelRatio</code>返回当前显示设备的物理像素分辨率与CSS像素分辨率的比值。该值也可以被解释为像素大小的比例：即一个CSS像素的大小相对于一个物理像素的大小的比值。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// 设置 dpr</span>
+<span class="token keyword">function</span> <span class="token function">setDpr</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">var</span> dpr <span class="token operator">=</span> window<span class="token punctuation">.</span>devicePixelRatio
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>dpr <span class="token operator">&lt;=</span> <span class="token number">1.1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    dpr <span class="token operator">=</span> <span class="token number">1</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>dpr <span class="token operator">&lt;=</span> <span class="token number">2.1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    dpr <span class="token operator">=</span> <span class="token number">2</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    dpr <span class="token operator">=</span> <span class="token number">3</span>
+  <span class="token punctuation">}</span>
+  window<span class="token punctuation">.</span>dpr <span class="token operator">=</span> dpr
+<span class="token punctuation">}</span>
+</code></pre></div><p>设置html根元素的字号大小，统一影响样式中rem单位的属性</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// 设置 rem 基准 1rem = 10px</span>
+<span class="token keyword">function</span> <span class="token function">setRootFontSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">var</span> docEl <span class="token operator">=</span> document<span class="token punctuation">.</span>documentElement
+  <span class="token keyword">var</span> width <span class="token operator">=</span> docEl<span class="token punctuation">.</span><span class="token function">getBoundingClientRect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>width
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>width <span class="token operator">&gt;</span> <span class="token number">500</span><span class="token punctuation">)</span> width <span class="token operator">=</span> <span class="token number">500</span>
+  docEl<span class="token punctuation">.</span>style<span class="token punctuation">.</span>fontSize <span class="token operator">=</span> width <span class="token operator">/</span> <span class="token number">37.5</span> <span class="token operator">+</span> <span class="token string">'px'</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>监听设备尺寸变化，用于在开发环境中查看各尺寸设备的效果</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// 监听窗口尺寸变动</span>
+window<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'resize'</span><span class="token punctuation">,</span> setRootFontSize<span class="token punctuation">)</span>
+</code></pre></div><h2 id="user-agent识别设备及容器app信息"><a href="#user-agent识别设备及容器app信息" aria-hidden="true" class="header-anchor">#</a> User-Agent识别设备及容器App信息</h2> <p>利用请求头中的User-Agent来判断设备及App来源</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> ua <span class="token operator">=</span> navigator<span class="token punctuation">.</span>userAgent
+
+<span class="token comment">/* ===== 容器 ===== */</span>
+<span class="token keyword">let</span> wechat <span class="token operator">=</span> <span class="token operator">!</span><span class="token operator">!</span><span class="token operator">~</span>ua<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">'MicroMessenger'</span><span class="token punctuation">)</span>
+
+<span class="token comment">/* ===== 系统信息 ===== */</span>
+<span class="token keyword">let</span> os <span class="token operator">=</span> <span class="token string">''</span>
+<span class="token keyword">let</span> osVersion <span class="token operator">=</span> <span class="token string">''</span>
+
+<span class="token comment">/* ===== 设备种类 ===== */</span>
+<span class="token keyword">let</span> iOS <span class="token operator">=</span> <span class="token boolean">false</span>
+<span class="token keyword">let</span> android <span class="token operator">=</span> <span class="token boolean">false</span>
+
+<span class="token comment">/* ===== 细分设备种类 ===== */</span>
+<span class="token keyword">let</span> iPhone <span class="token operator">=</span> <span class="token boolean">false</span>
+<span class="token keyword">let</span> iPhoneX <span class="token operator">=</span> <span class="token boolean">false</span> <span class="token comment">// 指全面屏手机</span>
+<span class="token keyword">let</span> iPad <span class="token operator">=</span> <span class="token boolean">false</span>
+
+<span class="token keyword">let</span> _android <span class="token operator">=</span> ua<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex">/(Android);?[\s/]+([\d.]+)?/</span><span class="token punctuation">)</span>
+<span class="token keyword">let</span> _iPad <span class="token operator">=</span> ua<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex">/(iPad).*OS\s([\d_]+)/</span><span class="token punctuation">)</span>
+<span class="token keyword">let</span> _iPod <span class="token operator">=</span> ua<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex">/(iPod)(.*OS\s([\d_]+))?/</span><span class="token punctuation">)</span>
+<span class="token keyword">let</span> _iPhone <span class="token operator">=</span> <span class="token operator">!</span>iPad <span class="token operator">&amp;&amp;</span> ua<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex">/(iPhone\sOS)\s([\d_]+)/</span><span class="token punctuation">)</span>
+
+<span class="token comment">// Android</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>_android<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  os <span class="token operator">=</span> <span class="token string">'android'</span>
+  osVersion <span class="token operator">=</span> _android<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>
+  android <span class="token operator">=</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// iOS</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>_iPad <span class="token operator">||</span> _iPod <span class="token operator">||</span> _iPhone<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  os <span class="token operator">=</span> <span class="token string">'ios'</span>
+  iOS <span class="token operator">=</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// iPhone</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>_iPhone <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>_iPod<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  osVersion <span class="token operator">=</span> _iPhone<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/_/g</span><span class="token punctuation">,</span> <span class="token string">'.'</span><span class="token punctuation">)</span>
+  iPhone <span class="token operator">=</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// iPhoneX</span>
+iPhoneX <span class="token operator">=</span> iOS <span class="token operator">&amp;&amp;</span> window<span class="token punctuation">.</span>devicePixelRatio <span class="token operator">===</span> <span class="token number">3</span> <span class="token operator">&amp;&amp;</span> window<span class="token punctuation">.</span>innerWidth <span class="token operator">===</span> <span class="token number">375</span>
+<span class="token comment">// iPad</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>_iPad<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  osVersion <span class="token operator">=</span> _iPad<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/_/g</span><span class="token punctuation">,</span> <span class="token string">'.'</span><span class="token punctuation">)</span>
+  iPad <span class="token operator">=</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// iPod</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>_iPod<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  osVersion <span class="token operator">=</span> _iPod<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">?</span> _iPod<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/_/g</span><span class="token punctuation">,</span> <span class="token string">'.'</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token keyword">null</span>
+  iPhone <span class="token operator">=</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/* ===== 客户端App ===== */</span>
+<span class="token keyword">let</span> xxxApp <span class="token operator">=</span> <span class="token operator">!</span><span class="token operator">!</span><span class="token operator">~</span>ua<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">'xxx'</span><span class="token punctuation">)</span>
+<span class="token keyword">let</span> xxxAndroid <span class="token operator">=</span> xxxApp <span class="token operator">&amp;&amp;</span> android
+<span class="token keyword">let</span> xxxIOS <span class="token operator">=</span> xxxApp <span class="token operator">&amp;&amp;</span> iOS
+
+<span class="token comment">// 版本号</span>
+<span class="token keyword">let</span> xxxAppVersion <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token operator">/</span><span class="token punctuation">(</span>xxx<span class="token punctuation">)</span>\<span class="token regex">/([0-9.]+)/i</span><span class="token punctuation">.</span><span class="token function">exec</span><span class="token punctuation">(</span>ua<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+  <span class="token keyword">return</span> <span class="token string">'1.0.0'</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>将设备，dpr及app信息注入到html属性中</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">/**
+ * 根据设备信息将 className 添加到 html
+ * @param deviceInfo 设备信息
+ */</span>
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token function-variable function">addDeviceInfoClassName</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">deviceInfo</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> classNames <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+  <span class="token comment">// dpr</span>
+  classNames<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`dpr-</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>window<span class="token punctuation">.</span>dpr<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span>
+
+  <span class="token comment">// 容器</span>
+  deviceInfo<span class="token punctuation">.</span>wechat <span class="token operator">&amp;&amp;</span> classNames<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">'wechat'</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// 设备种类</span>
+  classNames<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>deviceInfo<span class="token punctuation">.</span>os<span class="token punctuation">)</span>
+
+  <span class="token comment">// 细分设备种类</span>
+  deviceInfo<span class="token punctuation">.</span>iPad <span class="token operator">&amp;&amp;</span> classNames<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">'ipad'</span><span class="token punctuation">)</span>
+  deviceInfo<span class="token punctuation">.</span>iPhoneX <span class="token operator">&amp;&amp;</span> classNames<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">'ipx'</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// 系统信息</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>deviceInfo<span class="token punctuation">.</span>android <span class="token operator">&amp;&amp;</span> <span class="token function">compareVersion</span><span class="token punctuation">(</span><span class="token string">'4.4'</span><span class="token punctuation">,</span> deviceInfo<span class="token punctuation">.</span>osVersion<span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    classNames<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">'android-lt-4-4'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 客户端</span>
+  deviceInfo<span class="token punctuation">.</span>xxxAndroid <span class="token operator">&amp;&amp;</span> classNames<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">'xxx-android'</span><span class="token punctuation">)</span>
+  deviceInfo<span class="token punctuation">.</span>xxxIOS <span class="token operator">&amp;&amp;</span> classNames<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">'xxx-ios'</span><span class="token punctuation">)</span>
+  deviceInfo<span class="token punctuation">.</span>xxxApp <span class="token operator">&amp;&amp;</span> classNames<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">'xxx-app'</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// 添加到 html</span>
+  classNames<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">classname</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    classname <span class="token operator">&amp;&amp;</span> document<span class="token punctuation">.</span>documentElement<span class="token punctuation">.</span>classList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>classname<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+</code></pre></div><p>最终将设备及App信息分别注入到html中用于全局css的适配， 同时注入到window下作为全局变量或状态管理中（如redux，vue等），用于在js中获取设备及App信息用于逻辑判断。</p></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">2022/2/15 下午3:38:50</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/work/前端水印生成方案.html" class="prev">
+        前端水印生成方案
+      </a></span> <span class="next"><a href="/work/bug解决方案.html">
+        bug解决方案
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.a3917c08.js" defer></script><script src="/assets/js/2.143bf0e2.js" defer></script><script src="/assets/js/61.2070b510.js" defer></script>
+  </body>
+</html>

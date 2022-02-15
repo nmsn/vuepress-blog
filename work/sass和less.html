@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>sass和less | NMSN</title>
+    <meta name="description" content="Somebody has to win, so why not be me?">
+    <meta name="generator" content="VuePress 1.4.0">
+    <link rel="icon" href="/favicon.ico">
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6594ba1364804631f0a8fd4452766fed";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+  <script aysnc="true" src="https://www.googletagmanager.com/gtag/js?id=UA-127895888-1"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-127895888-1');
+  </script>
+    
+    <link rel="preload" href="/assets/css/0.styles.ec7a9dc7.css" as="style"><link rel="preload" href="/assets/js/app.a3917c08.js" as="script"><link rel="preload" href="/assets/js/2.143bf0e2.js" as="script"><link rel="preload" href="/assets/js/58.85b90b3e.js" as="script"><link rel="prefetch" href="/assets/js/10.bfb12f17.js"><link rel="prefetch" href="/assets/js/11.95c30092.js"><link rel="prefetch" href="/assets/js/12.02d03ade.js"><link rel="prefetch" href="/assets/js/13.ed7b9bad.js"><link rel="prefetch" href="/assets/js/14.8b04c144.js"><link rel="prefetch" href="/assets/js/15.62e6c8b5.js"><link rel="prefetch" href="/assets/js/16.58442e8f.js"><link rel="prefetch" href="/assets/js/17.e5bd374d.js"><link rel="prefetch" href="/assets/js/18.aadb3349.js"><link rel="prefetch" href="/assets/js/19.8cb53d4b.js"><link rel="prefetch" href="/assets/js/20.24639fc6.js"><link rel="prefetch" href="/assets/js/21.f95ffdf3.js"><link rel="prefetch" href="/assets/js/22.2482e250.js"><link rel="prefetch" href="/assets/js/23.2e87cad5.js"><link rel="prefetch" href="/assets/js/24.ac878c31.js"><link rel="prefetch" href="/assets/js/25.5be9f82b.js"><link rel="prefetch" href="/assets/js/26.2a5b4ac3.js"><link rel="prefetch" href="/assets/js/27.935732a6.js"><link rel="prefetch" href="/assets/js/28.c12cbcea.js"><link rel="prefetch" href="/assets/js/29.5b94311f.js"><link rel="prefetch" href="/assets/js/3.13e2822a.js"><link rel="prefetch" href="/assets/js/30.f4d6df45.js"><link rel="prefetch" href="/assets/js/31.bf46b8c3.js"><link rel="prefetch" href="/assets/js/32.633ca84c.js"><link rel="prefetch" href="/assets/js/33.e267b1b5.js"><link rel="prefetch" href="/assets/js/34.83fdc5e8.js"><link rel="prefetch" href="/assets/js/35.2078f29f.js"><link rel="prefetch" href="/assets/js/36.cfbb8f18.js"><link rel="prefetch" href="/assets/js/37.c832ebab.js"><link rel="prefetch" href="/assets/js/38.665cfa69.js"><link rel="prefetch" href="/assets/js/39.e5a858e9.js"><link rel="prefetch" href="/assets/js/4.5a3029b5.js"><link rel="prefetch" href="/assets/js/40.e32b8d9a.js"><link rel="prefetch" href="/assets/js/41.b05a12ad.js"><link rel="prefetch" href="/assets/js/42.b88c39a2.js"><link rel="prefetch" href="/assets/js/43.7b60d519.js"><link rel="prefetch" href="/assets/js/44.2f2414b2.js"><link rel="prefetch" href="/assets/js/45.85718f44.js"><link rel="prefetch" href="/assets/js/46.2bc30dd4.js"><link rel="prefetch" href="/assets/js/47.d15abaed.js"><link rel="prefetch" href="/assets/js/48.1e4e667c.js"><link rel="prefetch" href="/assets/js/49.6b1a9b49.js"><link rel="prefetch" href="/assets/js/5.ed6093fe.js"><link rel="prefetch" href="/assets/js/50.d3cc69ed.js"><link rel="prefetch" href="/assets/js/51.5c6a9aaf.js"><link rel="prefetch" href="/assets/js/52.fac8e285.js"><link rel="prefetch" href="/assets/js/53.e52aa3fd.js"><link rel="prefetch" href="/assets/js/54.18b8b153.js"><link rel="prefetch" href="/assets/js/55.67f9bbbf.js"><link rel="prefetch" href="/assets/js/56.1a846f2d.js"><link rel="prefetch" href="/assets/js/57.6a72fd81.js"><link rel="prefetch" href="/assets/js/59.f66f3400.js"><link rel="prefetch" href="/assets/js/6.6b149b80.js"><link rel="prefetch" href="/assets/js/60.7f20d436.js"><link rel="prefetch" href="/assets/js/61.2070b510.js"><link rel="prefetch" href="/assets/js/62.dbcc46f4.js"><link rel="prefetch" href="/assets/js/7.473a6114.js"><link rel="prefetch" href="/assets/js/8.0cbdd451.js"><link rel="prefetch" href="/assets/js/9.8148293e.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ec7a9dc7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">NMSN</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/tech/" class="nav-link">
+  快查总结
+</a></div><div class="nav-item"><a href="/excerpt/" class="nav-link">
+  摘录
+</a></div><div class="nav-item"><a href="/interviewQuestions/" class="nav-link">
+  面试题
+</a></div><div class="nav-item"><a href="/readingNotes/" class="nav-link">
+  读书笔记
+</a></div><div class="nav-item"><a href="/work/" class="nav-link router-link-active">
+  工作总结
+</a></div> <a href="https://github.com/nmsn" target="_blank" rel="noopener noreferrer" class="repo-link">
+    Github
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/tech/" class="nav-link">
+  快查总结
+</a></div><div class="nav-item"><a href="/excerpt/" class="nav-link">
+  摘录
+</a></div><div class="nav-item"><a href="/interviewQuestions/" class="nav-link">
+  面试题
+</a></div><div class="nav-item"><a href="/readingNotes/" class="nav-link">
+  读书笔记
+</a></div><div class="nav-item"><a href="/work/" class="nav-link router-link-active">
+  工作总结
+</a></div> <a href="https://github.com/nmsn" target="_blank" rel="noopener noreferrer" class="repo-link">
+    Github
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>工作总结</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/work/axios取消请求.html" class="sidebar-link">axios取消请求</a></li><li><a href="/work/axios文件处理.html" class="sidebar-link">axios文件处理</a></li><li><a href="/work/fetch.html" class="sidebar-link">fetch</a></li><li><a href="/work/dsBridge.html" class="sidebar-link">dsBridge</a></li><li><a href="/work/前端水印生成方案.html" class="sidebar-link">前端水印生成方案</a></li><li><a href="/work/移动端适配.html" class="sidebar-link">移动端适配</a></li><li><a href="/work/bug解决方案.html" class="sidebar-link">bug解决方案</a></li><li><a href="/work/sass和less.html" class="active sidebar-link">sass和less</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/work/sass和less.html#区别" class="sidebar-link">区别</a></li></ul></li><li><a href="/work/公祭日灰色效果.html" class="sidebar-link">公祭日灰色效果</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="sass和less"><a href="#sass和less" aria-hidden="true" class="header-anchor">#</a> sass和less</h1> <p>Sass (Syntactically Awesome Stylesheets)是一种动态样式语言，Sass语法属于缩排语法，比css比多出好些功能(如变量、嵌套、运算,混入(Mixin)、继承、颜色处理，函数等)，更容易阅读。</p> <p>Less也是一种动态样式语言. 对CSS赋予了动态语言的特性，如变量，继承，运算， 函数.  Less 既可以在客户端上运行 (支持IE 6+, Webkit, Firefox)，也可在服务端运行 (借助 Node.js)。</p> <h2 id="区别"><a href="#区别" aria-hidden="true" class="header-anchor">#</a> 区别</h2> <h3 id="安装"><a href="#安装" aria-hidden="true" class="header-anchor">#</a> 安装</h3> <p>Sass的安装需要Ruby环境，是在服务端处理的，而Less是需要引入less.js来处理Less代码输出css到浏览器，也可以在开发环节使用Less，然后编译成css文件，直接放到项目中，也有 Less.app、SimpleLess、CodeKit.app这样的工具，也有在线编译地址。</p> <p>在Webpack中使用时使用sass-loader工具进行编译， 但是需要安装node-sass（Node Sass）或sass（Dart Sass）包</p> <blockquote><p>sass-loader requires you to install either Node Sass or Dart Sass on your own (more documentation can be found below). This allows you to control the versions of all your dependencies, and to choose which Sass implementation to use.</p></blockquote> <p>LibSass的解释</p> <blockquote><p>Node-sass is a library that provides binding for Node.js to LibSass, the C version of the popular stylesheet preprocessor, Sass.
+It allows you to natively compile .scss files to css at incredible speed and automatically via a connect middleware.</p></blockquote> <p>同时node-sass包的安装经常会受到墙的影响而下载失败，因此使用npm install时需要修改源地址，或者直接使用sass包作为依赖</p> <p>less-loader就不用这么麻烦</p> <h3 id="api"><a href="#api" aria-hidden="true" class="header-anchor">#</a> api</h3> <p>变量表示方式不同</p> <ul><li>less:@</li> <li>sasss:$</li></ul> <p>作用域不同</p> <p>less</p> <div class="language-less extra-class"><pre class="language-less"><code><span class="token variable">@color<span class="token punctuation">:</span></span> #00c<span class="token punctuation">;</span><span class="token comment">/*blue*/</span>
+
+<span class="token selector">#header</span><span class="token punctuation">{</span>
+
+<span class="token variable">@color<span class="token punctuation">:</span></span>#c00<span class="token punctuation">;</span><span class="token comment">/*red*/</span>
+
+<span class="token property">border</span><span class="token punctuation">:</span>1px solid <span class="token variable">@color</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token selector">#footer</span><span class="token punctuation">{</span>
+
+<span class="token property">border</span><span class="token punctuation">:</span>1px solid <span class="token variable">@color</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Less-作用域编译后</span>
+
+<span class="token selector">#header</span><span class="token punctuation">{</span><span class="token property">border</span><span class="token punctuation">:</span>1px solid #cc0000<span class="token punctuation">;</span><span class="token punctuation">}</span>
+
+<span class="token selector">#footer</span><span class="token punctuation">{</span><span class="token property">border</span><span class="token punctuation">:</span>1px solid #0000cc<span class="token punctuation">;</span><span class="token punctuation">}</span>
+</code></pre></div><p>sass</p> <div class="language-scss extra-class"><pre class="language-scss"><code><span class="token property"><span class="token variable">$color</span></span><span class="token punctuation">:</span> #00c<span class="token punctuation">;</span><span class="token comment">/*blue*/</span>
+
+<span class="token selector">#header</span><span class="token punctuation">{</span>
+
+<span class="token property"><span class="token variable">$color</span></span><span class="token punctuation">:</span>#c00<span class="token punctuation">;</span><span class="token comment">/*red*/</span>
+
+<span class="token property">border</span><span class="token punctuation">:</span>1px solid <span class="token variable">$color</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token selector">#footer</span><span class="token punctuation">{</span>
+
+<span class="token property">border</span><span class="token punctuation">:</span>1px solid <span class="token variable">$color</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Sass-作用域编译后</span>
+
+<span class="token selector">#header</span><span class="token punctuation">{</span><span class="token property">border</span><span class="token punctuation">:</span>1px solid #c00<span class="token punctuation">}</span>
+
+<span class="token selector">#footer</span><span class="token punctuation">{</span><span class="token property">border</span><span class="token punctuation">:</span>1px solid #c00<span class="token punctuation">}</span>
+```a
+
+sass支持if else条件语句 for循环语句，less不支持
+
+sass引用的外部文件命名必须以_开头<span class="token punctuation">,</span> 如下例所示<span class="token punctuation">:</span>其中_test1.sass、_test2.scss、_test3.scss文件分别设置的h1 h2 h3。文件名如果以下划线_开头的话，Sass会认为该文件是一个引用文件，不会将其编译为css文件。
+</code></pre></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">2022/2/15 下午3:38:50</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/work/bug解决方案.html" class="prev">
+        bug解决方案
+      </a></span> <span class="next"><a href="/work/公祭日灰色效果.html">
+        公祭日灰色效果
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.a3917c08.js" defer></script><script src="/assets/js/2.143bf0e2.js" defer></script><script src="/assets/js/58.85b90b3e.js" defer></script>
+  </body>
+</html>

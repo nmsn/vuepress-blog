@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>循序渐进学Docker | NMSN</title>
+    <meta name="description" content="Somebody has to win, so why not be me?">
+    <meta name="generator" content="VuePress 1.4.0">
+    <link rel="icon" href="/favicon.ico">
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6594ba1364804631f0a8fd4452766fed";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+  <script aysnc="true" src="https://www.googletagmanager.com/gtag/js?id=UA-127895888-1"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-127895888-1');
+  </script>
+    
+    <link rel="preload" href="/assets/css/0.styles.ec7a9dc7.css" as="style"><link rel="preload" href="/assets/js/app.a3917c08.js" as="script"><link rel="preload" href="/assets/js/2.143bf0e2.js" as="script"><link rel="preload" href="/assets/js/30.f4d6df45.js" as="script"><link rel="prefetch" href="/assets/js/10.bfb12f17.js"><link rel="prefetch" href="/assets/js/11.95c30092.js"><link rel="prefetch" href="/assets/js/12.02d03ade.js"><link rel="prefetch" href="/assets/js/13.ed7b9bad.js"><link rel="prefetch" href="/assets/js/14.8b04c144.js"><link rel="prefetch" href="/assets/js/15.62e6c8b5.js"><link rel="prefetch" href="/assets/js/16.58442e8f.js"><link rel="prefetch" href="/assets/js/17.e5bd374d.js"><link rel="prefetch" href="/assets/js/18.aadb3349.js"><link rel="prefetch" href="/assets/js/19.8cb53d4b.js"><link rel="prefetch" href="/assets/js/20.24639fc6.js"><link rel="prefetch" href="/assets/js/21.f95ffdf3.js"><link rel="prefetch" href="/assets/js/22.2482e250.js"><link rel="prefetch" href="/assets/js/23.2e87cad5.js"><link rel="prefetch" href="/assets/js/24.ac878c31.js"><link rel="prefetch" href="/assets/js/25.5be9f82b.js"><link rel="prefetch" href="/assets/js/26.2a5b4ac3.js"><link rel="prefetch" href="/assets/js/27.935732a6.js"><link rel="prefetch" href="/assets/js/28.c12cbcea.js"><link rel="prefetch" href="/assets/js/29.5b94311f.js"><link rel="prefetch" href="/assets/js/3.13e2822a.js"><link rel="prefetch" href="/assets/js/31.bf46b8c3.js"><link rel="prefetch" href="/assets/js/32.633ca84c.js"><link rel="prefetch" href="/assets/js/33.e267b1b5.js"><link rel="prefetch" href="/assets/js/34.83fdc5e8.js"><link rel="prefetch" href="/assets/js/35.2078f29f.js"><link rel="prefetch" href="/assets/js/36.cfbb8f18.js"><link rel="prefetch" href="/assets/js/37.c832ebab.js"><link rel="prefetch" href="/assets/js/38.665cfa69.js"><link rel="prefetch" href="/assets/js/39.e5a858e9.js"><link rel="prefetch" href="/assets/js/4.5a3029b5.js"><link rel="prefetch" href="/assets/js/40.e32b8d9a.js"><link rel="prefetch" href="/assets/js/41.b05a12ad.js"><link rel="prefetch" href="/assets/js/42.b88c39a2.js"><link rel="prefetch" href="/assets/js/43.7b60d519.js"><link rel="prefetch" href="/assets/js/44.2f2414b2.js"><link rel="prefetch" href="/assets/js/45.85718f44.js"><link rel="prefetch" href="/assets/js/46.2bc30dd4.js"><link rel="prefetch" href="/assets/js/47.d15abaed.js"><link rel="prefetch" href="/assets/js/48.1e4e667c.js"><link rel="prefetch" href="/assets/js/49.6b1a9b49.js"><link rel="prefetch" href="/assets/js/5.ed6093fe.js"><link rel="prefetch" href="/assets/js/50.d3cc69ed.js"><link rel="prefetch" href="/assets/js/51.5c6a9aaf.js"><link rel="prefetch" href="/assets/js/52.fac8e285.js"><link rel="prefetch" href="/assets/js/53.e52aa3fd.js"><link rel="prefetch" href="/assets/js/54.18b8b153.js"><link rel="prefetch" href="/assets/js/55.67f9bbbf.js"><link rel="prefetch" href="/assets/js/56.1a846f2d.js"><link rel="prefetch" href="/assets/js/57.6a72fd81.js"><link rel="prefetch" href="/assets/js/58.85b90b3e.js"><link rel="prefetch" href="/assets/js/59.f66f3400.js"><link rel="prefetch" href="/assets/js/6.6b149b80.js"><link rel="prefetch" href="/assets/js/60.7f20d436.js"><link rel="prefetch" href="/assets/js/61.2070b510.js"><link rel="prefetch" href="/assets/js/62.dbcc46f4.js"><link rel="prefetch" href="/assets/js/7.473a6114.js"><link rel="prefetch" href="/assets/js/8.0cbdd451.js"><link rel="prefetch" href="/assets/js/9.8148293e.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ec7a9dc7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">NMSN</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/tech/" class="nav-link">
+  快查总结
+</a></div><div class="nav-item"><a href="/excerpt/" class="nav-link">
+  摘录
+</a></div><div class="nav-item"><a href="/interviewQuestions/" class="nav-link">
+  面试题
+</a></div><div class="nav-item"><a href="/readingNotes/" class="nav-link router-link-active">
+  读书笔记
+</a></div><div class="nav-item"><a href="/work/" class="nav-link">
+  工作总结
+</a></div> <a href="https://github.com/nmsn" target="_blank" rel="noopener noreferrer" class="repo-link">
+    Github
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/tech/" class="nav-link">
+  快查总结
+</a></div><div class="nav-item"><a href="/excerpt/" class="nav-link">
+  摘录
+</a></div><div class="nav-item"><a href="/interviewQuestions/" class="nav-link">
+  面试题
+</a></div><div class="nav-item"><a href="/readingNotes/" class="nav-link router-link-active">
+  读书笔记
+</a></div><div class="nav-item"><a href="/work/" class="nav-link">
+  工作总结
+</a></div> <a href="https://github.com/nmsn" target="_blank" rel="noopener noreferrer" class="repo-link">
+    Github
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>读书笔记</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/readingNotes/Linux.html" class="sidebar-link">鸟哥的Linux私房菜基础学习篇</a></li><li><a href="/readingNotes/了不起的Nodejs.html" class="sidebar-link">了不起的Node.js</a></li><li><a href="/readingNotes/深入浅出Nodejs.html" class="sidebar-link">深入浅出Nodejs</a></li><li><a href="/readingNotes/代码整洁之道.html" class="sidebar-link">代码整洁之道</a></li><li><a href="/readingNotes/HTTP权威指南.html" class="sidebar-link">HTTP权威指南</a></li><li><a href="/readingNotes/ProGit.html" class="sidebar-link">ProGit</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="循序渐进学docker"><a href="#循序渐进学docker" aria-hidden="true" class="header-anchor">#</a> 循序渐进学Docker</h1> <h2 id="_4-1-1"><a href="#_4-1-1" aria-hidden="true" class="header-anchor">#</a> 4.1.1</h2> <p>Docker三大基础组件</p> <p>仓库（Repository）</p> <p>镜像（Image）</p> <p>容器（Container）</p> <h2 id="_4-1-2"><a href="#_4-1-2" aria-hidden="true" class="header-anchor">#</a> 4.1.2</h2> <p>docker + 命令关键字（COMMAND） + 一系列参数（[arg...]）</p> <p>docker COMMAND --help 查询命令参数</p></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">2022/2/15 下午3:38:50</span></div></footer> <!----> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.a3917c08.js" defer></script><script src="/assets/js/2.143bf0e2.js" defer></script><script src="/assets/js/30.f4d6df45.js" defer></script>
+  </body>
+</html>

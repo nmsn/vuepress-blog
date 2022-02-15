@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>ES6 | NMSN</title>
+    <meta name="description" content="Somebody has to win, so why not be me?">
+    <meta name="generator" content="VuePress 1.4.0">
+    <link rel="icon" href="/favicon.ico">
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6594ba1364804631f0a8fd4452766fed";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+  <script aysnc="true" src="https://www.googletagmanager.com/gtag/js?id=UA-127895888-1"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-127895888-1');
+  </script>
+    
+    <link rel="preload" href="/assets/css/0.styles.ec7a9dc7.css" as="style"><link rel="preload" href="/assets/js/app.a3917c08.js" as="script"><link rel="preload" href="/assets/js/2.143bf0e2.js" as="script"><link rel="preload" href="/assets/js/39.e5a858e9.js" as="script"><link rel="prefetch" href="/assets/js/10.bfb12f17.js"><link rel="prefetch" href="/assets/js/11.95c30092.js"><link rel="prefetch" href="/assets/js/12.02d03ade.js"><link rel="prefetch" href="/assets/js/13.ed7b9bad.js"><link rel="prefetch" href="/assets/js/14.8b04c144.js"><link rel="prefetch" href="/assets/js/15.62e6c8b5.js"><link rel="prefetch" href="/assets/js/16.58442e8f.js"><link rel="prefetch" href="/assets/js/17.e5bd374d.js"><link rel="prefetch" href="/assets/js/18.aadb3349.js"><link rel="prefetch" href="/assets/js/19.8cb53d4b.js"><link rel="prefetch" href="/assets/js/20.24639fc6.js"><link rel="prefetch" href="/assets/js/21.f95ffdf3.js"><link rel="prefetch" href="/assets/js/22.2482e250.js"><link rel="prefetch" href="/assets/js/23.2e87cad5.js"><link rel="prefetch" href="/assets/js/24.ac878c31.js"><link rel="prefetch" href="/assets/js/25.5be9f82b.js"><link rel="prefetch" href="/assets/js/26.2a5b4ac3.js"><link rel="prefetch" href="/assets/js/27.935732a6.js"><link rel="prefetch" href="/assets/js/28.c12cbcea.js"><link rel="prefetch" href="/assets/js/29.5b94311f.js"><link rel="prefetch" href="/assets/js/3.13e2822a.js"><link rel="prefetch" href="/assets/js/30.f4d6df45.js"><link rel="prefetch" href="/assets/js/31.bf46b8c3.js"><link rel="prefetch" href="/assets/js/32.633ca84c.js"><link rel="prefetch" href="/assets/js/33.e267b1b5.js"><link rel="prefetch" href="/assets/js/34.83fdc5e8.js"><link rel="prefetch" href="/assets/js/35.2078f29f.js"><link rel="prefetch" href="/assets/js/36.cfbb8f18.js"><link rel="prefetch" href="/assets/js/37.c832ebab.js"><link rel="prefetch" href="/assets/js/38.665cfa69.js"><link rel="prefetch" href="/assets/js/4.5a3029b5.js"><link rel="prefetch" href="/assets/js/40.e32b8d9a.js"><link rel="prefetch" href="/assets/js/41.b05a12ad.js"><link rel="prefetch" href="/assets/js/42.b88c39a2.js"><link rel="prefetch" href="/assets/js/43.7b60d519.js"><link rel="prefetch" href="/assets/js/44.2f2414b2.js"><link rel="prefetch" href="/assets/js/45.85718f44.js"><link rel="prefetch" href="/assets/js/46.2bc30dd4.js"><link rel="prefetch" href="/assets/js/47.d15abaed.js"><link rel="prefetch" href="/assets/js/48.1e4e667c.js"><link rel="prefetch" href="/assets/js/49.6b1a9b49.js"><link rel="prefetch" href="/assets/js/5.ed6093fe.js"><link rel="prefetch" href="/assets/js/50.d3cc69ed.js"><link rel="prefetch" href="/assets/js/51.5c6a9aaf.js"><link rel="prefetch" href="/assets/js/52.fac8e285.js"><link rel="prefetch" href="/assets/js/53.e52aa3fd.js"><link rel="prefetch" href="/assets/js/54.18b8b153.js"><link rel="prefetch" href="/assets/js/55.67f9bbbf.js"><link rel="prefetch" href="/assets/js/56.1a846f2d.js"><link rel="prefetch" href="/assets/js/57.6a72fd81.js"><link rel="prefetch" href="/assets/js/58.85b90b3e.js"><link rel="prefetch" href="/assets/js/59.f66f3400.js"><link rel="prefetch" href="/assets/js/6.6b149b80.js"><link rel="prefetch" href="/assets/js/60.7f20d436.js"><link rel="prefetch" href="/assets/js/61.2070b510.js"><link rel="prefetch" href="/assets/js/62.dbcc46f4.js"><link rel="prefetch" href="/assets/js/7.473a6114.js"><link rel="prefetch" href="/assets/js/8.0cbdd451.js"><link rel="prefetch" href="/assets/js/9.8148293e.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ec7a9dc7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">NMSN</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/tech/" class="nav-link router-link-active">
+  快查总结
+</a></div><div class="nav-item"><a href="/excerpt/" class="nav-link">
+  摘录
+</a></div><div class="nav-item"><a href="/interviewQuestions/" class="nav-link">
+  面试题
+</a></div><div class="nav-item"><a href="/readingNotes/" class="nav-link">
+  读书笔记
+</a></div><div class="nav-item"><a href="/work/" class="nav-link">
+  工作总结
+</a></div> <a href="https://github.com/nmsn" target="_blank" rel="noopener noreferrer" class="repo-link">
+    Github
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/tech/" class="nav-link router-link-active">
+  快查总结
+</a></div><div class="nav-item"><a href="/excerpt/" class="nav-link">
+  摘录
+</a></div><div class="nav-item"><a href="/interviewQuestions/" class="nav-link">
+  面试题
+</a></div><div class="nav-item"><a href="/readingNotes/" class="nav-link">
+  读书笔记
+</a></div><div class="nav-item"><a href="/work/" class="nav-link">
+  工作总结
+</a></div> <a href="https://github.com/nmsn" target="_blank" rel="noopener noreferrer" class="repo-link">
+    Github
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>快查总结</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/tech/Markdown.html" class="sidebar-link">Markdown 常用语法</a></li><li><a href="/tech/Console.html" class="sidebar-link">Console方法详解</a></li><li><a href="/tech/Git.html" class="sidebar-link">Git相关介绍</a></li><li><a href="/tech/RegEx.html" class="sidebar-link">正则表达式</a></li><li><a href="/tech/Github.html" class="sidebar-link">Github</a></li><li><a href="/tech/JS继承.html" class="sidebar-link">JS继承</a></li><li><a href="/tech/前端性能优化之雅虎35条军规.html" class="sidebar-link">前端性能优化之雅虎35条军规</a></li><li><a href="/tech/排序算法.html" class="sidebar-link">排序算法</a></li><li><a href="/tech/代码实现.html" class="sidebar-link">代码实现</a></li><li><a href="/tech/ES6.html" class="active sidebar-link">ES6</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tech/ES6.html#let-const" class="sidebar-link">let/const</a></li><li class="sidebar-sub-header"><a href="/tech/ES6.html#箭头函数" class="sidebar-link">箭头函数</a></li><li class="sidebar-sub-header"><a href="/tech/ES6.html#iterator-迭代器" class="sidebar-link">iterator 迭代器</a></li><li class="sidebar-sub-header"><a href="/tech/ES6.html#for-of-循环" class="sidebar-link">for ... of 循环</a></li><li class="sidebar-sub-header"><a href="/tech/ES6.html#函数默认值" class="sidebar-link">函数默认值</a></li></ul></li><li><a href="/tech/TypeScript.html" class="sidebar-link">TypeScript</a></li><li><a href="/tech/字符编码.html" class="sidebar-link">字符编码</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="es6"><a href="#es6" aria-hidden="true" class="header-anchor">#</a> ES6</h1> <h2 id="let-const"><a href="#let-const" aria-hidden="true" class="header-anchor">#</a> let/const</h2> <h3 id="for-循环"><a href="#for-循环" aria-hidden="true" class="header-anchor">#</a> for 循环</h3> <p>而使用使用 let/const 关键字声明变量的 for 循环，除了会创建块级作用域，let/const 还会将它绑定到每个循环中，确保对上个循环结束时候的值进行重新赋值</p> <p>即给每次循环创建一个块级作用域</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// do something</span>
+<span class="token punctuation">}</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 10</span>
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// do something</span>
+<span class="token punctuation">}</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Uncaught ReferenceError: i is not defined</span>
+</code></pre></div><h3 id="暂时性死区"><a href="#暂时性死区" aria-hidden="true" class="header-anchor">#</a> 暂时性死区</h3> <p>使用 let/const 声明的变量，从一开始就形成了封闭作用域，在声明变量之前是无法使用这个变量的，这个特点也是为了弥补 var 的缺陷（var 声明的变量有变量提升）</p> <p>在没有 let/const 之前。typeof 运算符是百分之百安全额，永远不会报错。现在这一点不成立了。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token number">1.</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  name <span class="token operator">=</span> <span class="token string">&quot;a&quot;</span><span class="token punctuation">;</span> <span class="token comment">// VM326:2 Uncaught ReferenceError: Cannot access 'name' before initialization</span>
+  <span class="token keyword">let</span> name<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token number">2.</span>
+<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">typeof</span> a<span class="token punctuation">;</span> <span class="token comment">// undefined</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">typeof</span> a<span class="token punctuation">;</span> <span class="token comment">// VM792:2 Uncaught ReferenceError: Cannot access 'a' before initialization</span>
+  <span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="const-声明变量的时候必须赋值"><a href="#const-声明变量的时候必须赋值" aria-hidden="true" class="header-anchor">#</a> const 声明变量的时候必须赋值</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> x<span class="token punctuation">;</span> <span class="token comment">// Uncaught SyntaxError: Invalid or unexpected token</span>
+</code></pre></div><h3 id="let-const-不是全局变量"><a href="#let-const-不是全局变量" aria-hidden="true" class="header-anchor">#</a> let/const 不是全局变量</h3> <p>let/const 在全局声明的变量是在一个叫 script 作用域下的，而 var 声明的变量因为变量提升所以提升到了全局变量 window 对象中，这使我们能放心的使用新语法，不用担心污染全局的 window 对象</p> <h2 id="箭头函数"><a href="#箭头函数" aria-hidden="true" class="header-anchor">#</a> 箭头函数</h2> <ol><li>箭头函数没有 arguments（建议使用更好的语法，剩余运算符替代）</li> <li>箭头函数没有 prototype 属性，不能用作构造函数（不能用 new 关键字调用）</li> <li>箭头函数没有自己 this，它的 this 是词法的，引用的是上下文的 this，即在你写这行代码的时候就箭头函数的 this 就已经和外层执行上下文的 this 绑定了(这里个人认为并不代表完全是静态的,因为外层的上下文仍是动态的可以使用 call,apply,bind 修改,这里只是说明了箭头函数的 this 始终等于它上层上下文中的 this)</li></ol> <h2 id="iterator-迭代器"><a href="#iterator-迭代器" aria-hidden="true" class="header-anchor">#</a> iterator 迭代器</h2> <p>可迭代的数据解构，ES6 在内部部署了一个[Symbol.iterator]属性，它是一个函数，执行后会返回 iterator 对象（也叫迭代器对象），而生成 iterator 对象[Symbol.iterator]属性叫 iterator 接口,有这个接口的数据结构即被视为可迭代的</p> <p>默认部署 iterator 接口的数据结构有以下几个，注意普通对象默认是没有 iterator 接口的（可以自己创建 iterator 接口让普通对象也可以迭代）</p> <ul><li>Array</li> <li>Map</li> <li>Set</li> <li>String</li> <li>TypedArray（类数组）</li> <li>函数的 arguments 对象</li> <li>NodeList 对象</li></ul> <h2 id="for-of-循环"><a href="#for-of-循环" aria-hidden="true" class="header-anchor">#</a> for ... of 循环</h2> <p>for ... of 是作为 ES6 新增的遍历方式,允许遍历一个含有 iterator 接口的数据结构并且返回各项的值,和 ES3 中的 for ... in 的区别如下</p> <ol><li>for ... of 只能用在可迭代对象上,获取的是迭代器返回的 value 值,for ... in 可以获取所有对象的键名</li> <li>for ... in 会遍历对象的整个原型链,性能非常差不推荐使用,而 for ... of 只遍历当前对象不会遍历它的原型链</li> <li>对于数组的遍历,for ... in 会返回数组中所有可枚举的属性(包括原型链上可枚举的属性),for ... of 只返回数组的下标对应的属性值</li></ol> <h2 id="函数默认值"><a href="#函数默认值" aria-hidden="true" class="header-anchor">#</a> 函数默认值</h2> <p>如果使用了函数默认参数,在函数的参数的区域(括号里面),它会作为一个单独的块级作用域,并且拥有 let/const 方法的一些特性,比如暂时性死区</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">let</span> w <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  z <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token parameter">x <span class="token operator">=</span> w <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> y <span class="token operator">=</span> x <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> z <span class="token operator">=</span> z <span class="token operator">+</span> <span class="token number">1</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> z<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Uncaught ReferenceError: z is not defined</span>
+<span class="token punctuation">}</span>
+<span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">bar</span><span class="token punctuation">(</span><span class="token function-variable function">func</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> foo<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> foo <span class="token operator">=</span> <span class="token string">'inner'</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token function">bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// ReferrenceError: foo is not defined</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="参考文献"><a href="#参考文献" aria-hidden="true" class="header-anchor">#</a> 参考文献</h3> <ul><li>近一万字的 ES6 语法知识点补充：<a href="https://juejin.im/post/5c6234f16fb9a049a81fcca5" target="_blank" rel="noopener noreferrer">https://juejin.im/post/5c6234f16fb9a049a81fcca5<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">2022/2/15 下午3:38:50</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/tech/代码实现.html" class="prev">
+        代码实现
+      </a></span> <span class="next"><a href="/tech/TypeScript.html">
+        TypeScript
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.a3917c08.js" defer></script><script src="/assets/js/2.143bf0e2.js" defer></script><script src="/assets/js/39.e5a858e9.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Markdown 常用语法 | NMSN</title>
+    <meta name="description" content="Somebody has to win, so why not be me?">
+    <meta name="generator" content="VuePress 1.4.0">
+    <link rel="icon" href="/favicon.ico">
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6594ba1364804631f0a8fd4452766fed";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+  <script aysnc="true" src="https://www.googletagmanager.com/gtag/js?id=UA-127895888-1"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-127895888-1');
+  </script>
+    
+    <link rel="preload" href="/assets/css/0.styles.ec7a9dc7.css" as="style"><link rel="preload" href="/assets/js/app.a3917c08.js" as="script"><link rel="preload" href="/assets/js/2.143bf0e2.js" as="script"><link rel="preload" href="/assets/js/17.e5bd374d.js" as="script"><link rel="prefetch" href="/assets/js/10.bfb12f17.js"><link rel="prefetch" href="/assets/js/11.95c30092.js"><link rel="prefetch" href="/assets/js/12.02d03ade.js"><link rel="prefetch" href="/assets/js/13.ed7b9bad.js"><link rel="prefetch" href="/assets/js/14.8b04c144.js"><link rel="prefetch" href="/assets/js/15.62e6c8b5.js"><link rel="prefetch" href="/assets/js/16.58442e8f.js"><link rel="prefetch" href="/assets/js/18.aadb3349.js"><link rel="prefetch" href="/assets/js/19.8cb53d4b.js"><link rel="prefetch" href="/assets/js/20.24639fc6.js"><link rel="prefetch" href="/assets/js/21.f95ffdf3.js"><link rel="prefetch" href="/assets/js/22.2482e250.js"><link rel="prefetch" href="/assets/js/23.2e87cad5.js"><link rel="prefetch" href="/assets/js/24.ac878c31.js"><link rel="prefetch" href="/assets/js/25.5be9f82b.js"><link rel="prefetch" href="/assets/js/26.2a5b4ac3.js"><link rel="prefetch" href="/assets/js/27.935732a6.js"><link rel="prefetch" href="/assets/js/28.c12cbcea.js"><link rel="prefetch" href="/assets/js/29.5b94311f.js"><link rel="prefetch" href="/assets/js/3.13e2822a.js"><link rel="prefetch" href="/assets/js/30.f4d6df45.js"><link rel="prefetch" href="/assets/js/31.bf46b8c3.js"><link rel="prefetch" href="/assets/js/32.633ca84c.js"><link rel="prefetch" href="/assets/js/33.e267b1b5.js"><link rel="prefetch" href="/assets/js/34.83fdc5e8.js"><link rel="prefetch" href="/assets/js/35.2078f29f.js"><link rel="prefetch" href="/assets/js/36.cfbb8f18.js"><link rel="prefetch" href="/assets/js/37.c832ebab.js"><link rel="prefetch" href="/assets/js/38.665cfa69.js"><link rel="prefetch" href="/assets/js/39.e5a858e9.js"><link rel="prefetch" href="/assets/js/4.5a3029b5.js"><link rel="prefetch" href="/assets/js/40.e32b8d9a.js"><link rel="prefetch" href="/assets/js/41.b05a12ad.js"><link rel="prefetch" href="/assets/js/42.b88c39a2.js"><link rel="prefetch" href="/assets/js/43.7b60d519.js"><link rel="prefetch" href="/assets/js/44.2f2414b2.js"><link rel="prefetch" href="/assets/js/45.85718f44.js"><link rel="prefetch" href="/assets/js/46.2bc30dd4.js"><link rel="prefetch" href="/assets/js/47.d15abaed.js"><link rel="prefetch" href="/assets/js/48.1e4e667c.js"><link rel="prefetch" href="/assets/js/49.6b1a9b49.js"><link rel="prefetch" href="/assets/js/5.ed6093fe.js"><link rel="prefetch" href="/assets/js/50.d3cc69ed.js"><link rel="prefetch" href="/assets/js/51.5c6a9aaf.js"><link rel="prefetch" href="/assets/js/52.fac8e285.js"><link rel="prefetch" href="/assets/js/53.e52aa3fd.js"><link rel="prefetch" href="/assets/js/54.18b8b153.js"><link rel="prefetch" href="/assets/js/55.67f9bbbf.js"><link rel="prefetch" href="/assets/js/56.1a846f2d.js"><link rel="prefetch" href="/assets/js/57.6a72fd81.js"><link rel="prefetch" href="/assets/js/58.85b90b3e.js"><link rel="prefetch" href="/assets/js/59.f66f3400.js"><link rel="prefetch" href="/assets/js/6.6b149b80.js"><link rel="prefetch" href="/assets/js/60.7f20d436.js"><link rel="prefetch" href="/assets/js/61.2070b510.js"><link rel="prefetch" href="/assets/js/62.dbcc46f4.js"><link rel="prefetch" href="/assets/js/7.473a6114.js"><link rel="prefetch" href="/assets/js/8.0cbdd451.js"><link rel="prefetch" href="/assets/js/9.8148293e.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ec7a9dc7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">NMSN</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/tech/" class="nav-link router-link-active">
+  快查总结
+</a></div><div class="nav-item"><a href="/excerpt/" class="nav-link">
+  摘录
+</a></div><div class="nav-item"><a href="/interviewQuestions/" class="nav-link">
+  面试题
+</a></div><div class="nav-item"><a href="/readingNotes/" class="nav-link">
+  读书笔记
+</a></div><div class="nav-item"><a href="/work/" class="nav-link">
+  工作总结
+</a></div> <a href="https://github.com/nmsn" target="_blank" rel="noopener noreferrer" class="repo-link">
+    Github
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/tech/" class="nav-link router-link-active">
+  快查总结
+</a></div><div class="nav-item"><a href="/excerpt/" class="nav-link">
+  摘录
+</a></div><div class="nav-item"><a href="/interviewQuestions/" class="nav-link">
+  面试题
+</a></div><div class="nav-item"><a href="/readingNotes/" class="nav-link">
+  读书笔记
+</a></div><div class="nav-item"><a href="/work/" class="nav-link">
+  工作总结
+</a></div> <a href="https://github.com/nmsn" target="_blank" rel="noopener noreferrer" class="repo-link">
+    Github
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>快查总结</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/tech/Markdown.html" class="active sidebar-link">Markdown 常用语法</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tech/Markdown.html#标题" class="sidebar-link">标题</a></li><li class="sidebar-sub-header"><a href="/tech/Markdown.html#区块引用" class="sidebar-link">区块引用</a></li><li class="sidebar-sub-header"><a href="/tech/Markdown.html#列表" class="sidebar-link">列表</a></li><li class="sidebar-sub-header"><a href="/tech/Markdown.html#分隔线" class="sidebar-link">分隔线</a></li><li class="sidebar-sub-header"><a href="/tech/Markdown.html#链接" class="sidebar-link">链接</a></li><li class="sidebar-sub-header"><a href="/tech/Markdown.html#强调" class="sidebar-link">强调</a></li><li class="sidebar-sub-header"><a href="/tech/Markdown.html#代码" class="sidebar-link">代码</a></li><li class="sidebar-sub-header"><a href="/tech/Markdown.html#图片" class="sidebar-link">图片</a></li><li class="sidebar-sub-header"><a href="/tech/Markdown.html#表格" class="sidebar-link">表格</a></li><li class="sidebar-sub-header"><a href="/tech/Markdown.html#其他" class="sidebar-link">其他</a></li></ul></li><li><a href="/tech/Console.html" class="sidebar-link">Console方法详解</a></li><li><a href="/tech/Git.html" class="sidebar-link">Git相关介绍</a></li><li><a href="/tech/RegEx.html" class="sidebar-link">正则表达式</a></li><li><a href="/tech/Github.html" class="sidebar-link">Github</a></li><li><a href="/tech/JS继承.html" class="sidebar-link">JS继承</a></li><li><a href="/tech/前端性能优化之雅虎35条军规.html" class="sidebar-link">前端性能优化之雅虎35条军规</a></li><li><a href="/tech/排序算法.html" class="sidebar-link">排序算法</a></li><li><a href="/tech/代码实现.html" class="sidebar-link">代码实现</a></li><li><a href="/tech/ES6.html" class="sidebar-link">ES6</a></li><li><a href="/tech/TypeScript.html" class="sidebar-link">TypeScript</a></li><li><a href="/tech/字符编码.html" class="sidebar-link">字符编码</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="markdown-常用语法"><a href="#markdown-常用语法" aria-hidden="true" class="header-anchor">#</a> Markdown 常用语法</h1> <h2 id="标题"><a href="#标题" aria-hidden="true" class="header-anchor">#</a> 标题</h2> <p>标题分为两种类型（类 Setext 形式/类 Atx 形式）</p> <h3 id="类-atx-标题"><a href="#类-atx-标题" aria-hidden="true" class="header-anchor">#</a> 类 Atx 标题</h3> <p>一般使用 h1-h3 分别作为文章标题段落（个人常用类型）</p> <div class="language-markdown extra-class"><pre class="language-markdown"><code><span class="token title important"><span class="token punctuation">#</span> 一级标题 h1</span>
+
+<span class="token title important"><span class="token punctuation">##</span> 二级标题 h2</span>
+
+<span class="token title important"><span class="token punctuation">###</span> 二级标题 h3</span>
+
+<span class="token title important"><span class="token punctuation">####</span> 二级标题 h4</span>
+
+<span class="token title important"><span class="token punctuation">#####</span> 二级标题 h5</span>
+
+<span class="token title important"><span class="token punctuation">######</span> 六级标题 h6</span>
+</code></pre></div><h3 id="类-setext-标题"><a href="#类-setext-标题" aria-hidden="true" class="header-anchor">#</a> 类 Setext 标题</h3> <p>=（最高阶标题） -（第二阶标题） 数量&gt;=1</p> <div class="language-markdown extra-class"><pre class="language-markdown"><code><span class="token title important"><span class="token punctuation">#</span> aaa</span>
+
+<span class="token title important"><span class="token punctuation">##</span> bbb</span>
+</code></pre></div><h2 id="区块引用"><a href="#区块引用" aria-hidden="true" class="header-anchor">#</a> 区块引用</h2> <p>Markdown 标记区块引用是使用类似 emaigit 起来像是你自己先断好行，然后在每行的最前面加上 &gt; ：</p> <div class="language-markdown extra-class"><pre class="language-markdown"><code><span class="token blockquote punctuation">&gt;</span> 第一段
+<span class="token blockquote punctuation">&gt;</span> 第二段
+</code></pre></div><p>Markdown 也允许你偷懒只在整个段落的第一行最前面加上 &gt;</p> <div class="language-markdown extra-class"><pre class="language-markdown"><code><span class="token blockquote punctuation">&gt;</span> 第一段
+<span class="token blockquote punctuation">&gt;</span> 第二段
+</code></pre></div><p>且区块引用支持嵌套</p> <div class="language-markdown extra-class"><pre class="language-markdown"><code><span class="token blockquote punctuation">&gt;</span> 第一段
+<span class="token blockquote punctuation">&gt;</span>
+<span class="token blockquote punctuation">&gt; &gt;</span> 第二段
+</code></pre></div><p>引用的区块内也可以使用其他的 Markdown 语法，包括标题、列表、代码区块等：</p> <div class="language-markdown extra-class"><pre class="language-markdown"><code><span class="token blockquote punctuation">&gt;</span> <span class="token title important"><span class="token punctuation">##</span> 这是一个标题。</span>
+<span class="token blockquote punctuation">&gt;</span>
+<span class="token blockquote punctuation">&gt;</span> <span class="token list punctuation">1.</span>  这是第一行列表项。
+<span class="token blockquote punctuation">&gt;</span> <span class="token list punctuation">2.</span>  这是第二行列表项。
+<span class="token blockquote punctuation">&gt;</span>
+<span class="token blockquote punctuation">&gt;</span> 给出一些例子代码：
+<span class="token blockquote punctuation">&gt;</span>
+<span class="token blockquote punctuation">&gt;</span><span class="token code keyword">     return shell_exec(&quot;echo $input | $markdown_script&quot;)</span>
+</code></pre></div><h2 id="列表"><a href="#列表" aria-hidden="true" class="header-anchor">#</a> 列表</h2> <p>Markdown 支持有序列表和无序列表</p> <h3 id="无序列表"><a href="#无序列表" aria-hidden="true" class="header-anchor">#</a> 无序列表</h3> <p>无序列表使用星号、加号或是减号作为列表标记</p> <div class="language-markdown extra-class"><pre class="language-markdown"><code><span class="token list punctuation">-</span> 星号
+
+<span class="token list punctuation">*</span> 加号
+
+<span class="token list punctuation">-</span> 减号
+</code></pre></div><h3 id="有序列表"><a href="#有序列表" aria-hidden="true" class="header-anchor">#</a> 有序列表</h3> <p>有序列表则使用数字接着一个英文句点</p> <div class="language-markdown extra-class"><pre class="language-markdown"><code><span class="token list punctuation">1.</span> 第一项
+<span class="token list punctuation">2.</span> 第二项
+<span class="token list punctuation">3.</span> 第三项
+</code></pre></div><p>注意：列表符号与文本间需要至少一个空格隔开</p> <h2 id="分隔线"><a href="#分隔线" aria-hidden="true" class="header-anchor">#</a> 分隔线</h2> <p>你可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他东西。你也可以在星号或是减号中间插入空格。下面每种写法都可以建立分隔线：</p> <div class="language-markdown extra-class"><pre class="language-markdown"><code><span class="token hr punctuation">---</span>
+
+<span class="token hr punctuation">---</span>
+
+<span class="token hr punctuation">---</span>
+
+<span class="token hr punctuation">---</span>
+
+<span class="token hr punctuation">---</span>
+</code></pre></div><h2 id="链接"><a href="#链接" aria-hidden="true" class="header-anchor">#</a> 链接</h2> <p>Markdown 支持两种形式的链接语法： 行内式和参考式两种形式。</p> <div class="language-markdown extra-class"><pre class="language-markdown"><code>This is <span class="token url">[an example](http://example.com/ <span class="token string">&quot;Title&quot;</span>)</span> inline link.
+</code></pre></div><p>This is <a href="http://example.com/" title="Title" target="_blank" rel="noopener noreferrer">an example<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> inline link.</p> <p>如果你是要链接到同样主机的资源，你可以使用相对路径：</p> <div class="language-markdown extra-class"><pre class="language-markdown"><code>See my <span class="token url">[About](/about/)</span> page for details.
+</code></pre></div><p>See my <a href="/about/">About</a> page for details.</p> <p>参考式的链接是在链接文字的括号后面再接上另一个方括号，而在第二个方括号里面要填入用以辨识链接的标记：</p> <div class="language-markdown extra-class"><pre class="language-markdown"><code>This is <span class="token url">[an example][<span class="token variable">id</span>]</span> reference-style link.
+<span class="token url-reference url"><span class="token punctuation">[</span><span class="token variable">id</span><span class="token punctuation">]</span><span class="token punctuation">:</span> http://example.com/ <span class="token string">&quot;Optional Title Here&quot;</span></span>
+</code></pre></div><p>This is <a href="http://example.com/" title="Optional Title Here" target="_blank" rel="noopener noreferrer">an example<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> reference-style link.</p> <p>参考式的链接其实重点不在于它比较好写，而是它比较好读，比较一下上面的范例，使用参考式的文章本身只有 81 个字符，但是用行内形式的却会增加到 176 个字元，如果是用纯 HTML 格式来写，会有 234 个字元，在 HTML 格式中，标签比文本还要多。</p> <p>使用 Markdown 的参考式链接，可以让文件更像是浏览器最后产生的结果，让你可以把一些标记相关的元数据移到段落文字之外，你就可以增加链接而不让文章的阅读感觉被打断。</p> <h2 id="强调"><a href="#强调" aria-hidden="true" class="header-anchor">#</a> 强调</h2> <p>Markdown 使用星号（_）和底线（_）作为标记强调字词的符号，被 _ 或 _ 包围的字词会被转成用 <code>&lt;em&gt;</code> 标签包围，用两个 * 或 _ 包起来的话，则会被转成 <code>&lt;strong&gt;</code>，例如：</p> <div class="language-markdown extra-class"><pre class="language-markdown"><code><span class="token italic"><span class="token punctuation">_</span>single asterisks<span class="token punctuation">_</span></span>
+
+<span class="token italic"><span class="token punctuation">_</span>single underscores<span class="token punctuation">_</span></span>
+
+<span class="token bold"><span class="token punctuation">**</span>double asterisks<span class="token punctuation">**</span></span>
+
+<span class="token bold"><span class="token punctuation">**</span>double underscores<span class="token punctuation">**</span></span>
+</code></pre></div><p><em>single asterisks</em></p> <p><em>single underscores</em></p> <p><strong>double asterisks</strong></p> <p><strong>double underscores</strong></p> <h2 id="代码"><a href="#代码" aria-hidden="true" class="header-anchor">#</a> 代码</h2> <p>如果要标记一小段行内代码，你可以用反引号把它包起来（`），例如：</p> <div class="language-markdown extra-class"><pre class="language-markdown"><code>Use the <span class="token code keyword">`printf()`</span> function.
+</code></pre></div><p>Use the <code>printf()</code> function.</p> <p>如果要在代码区段内插入反引号，你可以用多个反引号来开启和结束代码区段：</p> <div class="language-markdown extra-class"><pre class="language-markdown"><code><span class="token code keyword">`` There is a literal backtick (`) here. ``</span>
+</code></pre></div><p><code>There is a literal backtick (`) here.</code></p> <h2 id="图片"><a href="#图片" aria-hidden="true" class="header-anchor">#</a> 图片</h2> <p>Markdown 使用一种和链接很相似的语法来标记图片，同样也允许两种样式： 行内式和参考式。</p> <div class="language-markdown extra-class"><pre class="language-markdown"><code><span class="token url">![Alt text](../.vuepress/public/images/test.jpg)</span>
+
+<span class="token url">![Alt text](../.vuepress/public/images/test.jpg <span class="token string">&quot;Optional title&quot;</span>)</span>
+</code></pre></div><p><img src="/assets/img/test.34ee0a31.jpg" alt="Alt text"></p> <p><img src="/assets/img/test.34ee0a31.jpg" alt="Alt text" title="Optional title"></p> <h2 id="表格"><a href="#表格" aria-hidden="true" class="header-anchor">#</a> 表格</h2> <p>单元格中的内容默认左对齐；表头单元格中的内容会一直居中对齐（不同的实现可能会有不同表现）。</p> <div class="language-markdown extra-class"><pre class="language-markdown"><code>---- 默认对齐
+<span class="token title important">:--- 左对齐
+<span class="token punctuation">---</span></span>: 右对齐
+:--: 居中对齐
+</code></pre></div><div class="language-markdown extra-class"><pre class="language-markdown"><code>| Tables        |      Are      |   Cool |
+| ------------- | :-----------: | -----: |
+| col 3 is      | right-aligned | \$1600 |
+| col 2 is      |   centered    |   \$12 |
+| zebra stripes |   are neat    |    \$1 |
+</code></pre></div><table><thead><tr><th>Tables</th> <th style="text-align:center;">Are</th> <th style="text-align:right;">Cool</th></tr></thead> <tbody><tr><td>col 3 is</td> <td style="text-align:center;">right-aligned</td> <td style="text-align:right;">$1600</td></tr> <tr><td>col 2 is</td> <td style="text-align:center;">centered</td> <td style="text-align:right;">$12</td></tr> <tr><td>zebra stripes</td> <td style="text-align:center;">are neat</td> <td style="text-align:right;">$1</td></tr></tbody></table> <h2 id="其他"><a href="#其他" aria-hidden="true" class="header-anchor">#</a> 其他</h2> <h3 id="转化链接"><a href="#转化链接" aria-hidden="true" class="header-anchor">#</a> 转化链接</h3> <p>Markdown 支持以比较简短的自动链接形式来处理网址和电子邮件信箱，只要是用方括号包起来， Markdown 就会自动把它转成链接。一般网址的链接文字就和链接地址一样，例如：</p> <div class="language-markdown extra-class"><pre class="language-markdown"><code>&lt;http://example.com/&gt;
+</code></pre></div><p><a href="http://example.com/" target="_blank" rel="noopener noreferrer">http://example.com/<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <div class="language-markdown extra-class"><pre class="language-markdown"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>address@example.com</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p><a href="mailto:address@example.com">address@example.com</a></p> <h3 id="代码-diff"><a href="#代码-diff" aria-hidden="true" class="header-anchor">#</a> 代码 diff</h3> <div class="language-diff extra-class"><pre class="language-diff"><code>const unique = (arr)=&gt;{
+<span class="token deleted">-  return Array.from(new Set(arr))</span>
+<span class="token inserted">+  return [...new Set(arr)]</span>
+}
+</code></pre></div><h3 id="折叠"><a href="#折叠" aria-hidden="true" class="header-anchor">#</a> 折叠</h3> <div class="language-md extra-class"><pre class="language-md"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>details</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>summary</span><span class="token punctuation">&gt;</span></span>展开查看规范<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>summary</span><span class="token punctuation">&gt;</span></span>
+这是展开后的内容1
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>details</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><details><summary>展开查看规范</summary>
+这是展开后的内容1
+</details></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">2022/2/15 下午3:38:50</span></div></footer> <div class="page-nav"><p class="inner"><!----> <span class="next"><a href="/tech/Console.html">
+        Console方法详解
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.a3917c08.js" defer></script><script src="/assets/js/2.143bf0e2.js" defer></script><script src="/assets/js/17.e5bd374d.js" defer></script>
+  </body>
+</html>
